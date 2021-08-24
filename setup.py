@@ -2,6 +2,7 @@ import re
 from setuptools import find_packages, setup
 
 deps = [
+    "appdirs==1.4.4",
     "certifi==2021.5.30",
     "charset-normalizer==2.0.4",
     "click==8.0.1",
@@ -35,7 +36,7 @@ deps = [
     "tqdm==4.62.1",
     "transformers==4.9.2",
     "typing-extensions==3.10.0.0",
-    "urllib3==1.26.6"
+    "urllib3==1.26.6",
 ]
 
 setup(
