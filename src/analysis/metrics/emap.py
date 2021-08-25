@@ -100,10 +100,10 @@ class Emap:
         return np.vstack(output_predictions)
 
     def compute_emap_scores(self, batch_size: int = 32):
-        """Computes the EMAP scores for for the predictor and the dataset.
+        """Computes the EMAP scores for the predictor and the dataset.
 
         Returns:
-            np.ndarray: A numpy array of EMAP scores for a given predictor.
+            np.ndarray: A numpy array of EMAP scores for the given predictor.
         """
 
         emap_predictions = self.compute_predictions("emap", batch_size=batch_size)
