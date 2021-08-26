@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 import numpy as np
 
-from src.analysis.metrics.emap import Emap
+from src.mma.analysis.metrics.emap import Emap
 
 
 class TestEmap(unittest.TestCase):
