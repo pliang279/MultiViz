@@ -5,10 +5,8 @@ for the analysis of how cross-modal a model is. Higher (positive) gap in EMAP sc
 the original model scores indicate a more cross-modal model.
 """
 
-import collections
-from collections import OrderedDict
 from itertools import product
-from typing import Callable
+from typing import Callable, Union, Dict
 
 import numpy as np
 
@@ -17,14 +15,14 @@ class Emap:
     def __init__(
         self,
         predictor_fn: Callable,
-        dataset: "collections.OrderedDict[str, np.ndarray]",
+        dataset: Dict[str, np.ndarray],
     ):
         """Initializes the EMap class.
 
         Args:
             predictor_fn (Callable): A Callable that takes in a dictionary of input np.ndarrays and returns
                 an np.ndarray containing predictions. The predictor_fn should take arguments from the dataset provided.
-            dataset (collections.OrderedDict[str, np.ndarray): A dictionary of numpy array of the dataset to
+            dataset (Dict[str, np.ndarray): A dictionary of numpy array of the dataset to
                 be used for the analysis. Each value is an np.ndarray over different mode inputs as needed by the predictor.
         """
         self.predictor_fn = predictor_fn
@@ -47,14 +45,14 @@ class Emap:
         Args:
             batch_size[int]: The batch size to use for the generator.
         Returns:
-            collections.Ordered[str, List]: A batch of the new dataset which each batch a list of the original input.
+            Dict[str, List]: A batch of the new dataset which each batch a list of the original input.
         """
 
         cartesian_product = self.get_cartesian_product_of_indices()
         keys = list(self.dataset.keys())
 
         for i in range(0, cartesian_product.shape[0], batch_size):
-            output_dict = OrderedDict(zip(keys, [[] for i in range(len(keys))]))
+            output_dict = dict(zip(keys, [[] for i in range(len(keys))]))
             batch_index_products = cartesian_product[i : i + batch_size]
             for index_product in batch_index_products:
                 for j, key in enumerate(keys):
@@ -73,9 +71,7 @@ class Emap:
 
         keys = list(self.dataset.keys())
         for i in range(0, len(self.dataset[keys[0]]), batch_size):
-            yield OrderedDict(
-                {key: self.dataset[key][i : i + batch_size] for key in keys}
-            )
+            yield {key: self.dataset[key][i : i + batch_size] for key in keys}
 
     def compute_predictions(self, typ: str = "emap", batch_size: int = 32):
         """Computes the predictions on the dataset of given type for a given predictor.
