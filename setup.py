@@ -53,7 +53,7 @@ setup(
     url="https://github.com/pliang/multimodal_analysis",
     package_dir={"": "src"},
     packages=find_packages("src"),
-    python_requires=">=3.8.0",
+    python_requires=">=3.7.11",
     install_requires=deps,
     classifiers=[
         "Intended Audience :: Education",
@@ -61,6 +61,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
