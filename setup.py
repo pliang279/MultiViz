@@ -14,6 +14,7 @@ deps = [
     "imageio==2.9.0",
     "joblib==1.0.1",
     "kiwisolver==1.3.1",
+    "lime==0.2.0.1"
     "matplotlib==3.4.3",
     "networkx==2.6.2",
     "numpy==1.21.2",
