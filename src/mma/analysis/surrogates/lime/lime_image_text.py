@@ -135,9 +135,9 @@ class LimeImageTextExplainer:
 
     def forward_selection(
         self,
+        data,
         labels,
-        data=None,
-        weights=None,
+        weights,
         num_features=None,
         num_image_features=None,
         num_text_features=None,
@@ -327,6 +327,7 @@ class LimeImageTextExplainer:
 
             else:
                 weighted_data = coef * data[0]
+
                 feature_weights = sorted(
                     zip(range(data.shape[1]), weighted_data),
                     key=lambda x: np.abs(x[1]),
@@ -381,14 +382,25 @@ class LimeImageTextExplainer:
                     nonzero = coefs.T[i].nonzero()[0]
                     if len(nonzero) <= num_features:
                         break
-            used_features = nonzero
+            if bimodal_constrained:
+                used_features = np.concatenate(
+                    (np.array(image_nonzero), np.array(text_nonzero) + split_index)
+                )
+            else:
+                used_features = np.array(nonzero)
             return used_features
 
         elif method == "auto":
-            if num_features <= 6:
-                n_method = "forward_selection"
+            if bimodal_constrained:
+                if num_image_features + num_text_features <= 6:
+                    n_method = "forward_selection"
+                else:
+                    n_method = "highest_weights"
             else:
-                n_method = "highest_weights"
+                if num_features <= 6:
+                    n_method = "forward_selection"
+                else:
+                    n_method = "highest_weights"
             return self.feature_selection(
                 data,
                 labels,
