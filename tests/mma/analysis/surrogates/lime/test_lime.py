@@ -1,10 +1,11 @@
 import unittest
-from lime.lime_image import ImageExplanation
-from lime.explanation import Explanation
-
 from typing import List
+
 import numpy as np
-from src.mma.analysis.surrogates.lime import Lime
+from lime.explanation import Explanation
+from lime.lime_image import ImageExplanation
+
+from src.mma.analysis.surrogates.lime.lime import Lime
 
 
 class TestLime(unittest.TestCase):
@@ -105,10 +106,12 @@ class TestLime(unittest.TestCase):
         def text_predictor_fn(input_texts: List[str]):
             samples = []
             for text in input_texts:
-                if text.lower().split()==[]:
+                if text.lower().split() == []:
                     samples.append([5])
                 else:
-                    samples.append(list(map(self.text_to_token.get, text.lower().split())))
+                    samples.append(
+                        list(map(self.text_to_token.get, text.lower().split()))
+                    )
             embedding = np.array(
                 [
                     [-1.879321, -0.37232661, 0.80240232, -0.19308255],
