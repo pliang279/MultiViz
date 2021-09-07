@@ -31,8 +31,8 @@ class LimeImageTextExplainer:
     def __init__(
         self,
         image_kernel_width=0.25,  # TODO: Check defaults.
-        text_kernel_width=25,
-        common_kernel_width=10,
+        text_kernel_width=0.25,
+        common_kernel_width=0.25,
         image_kernel=None,
         text_kernel=None,
         common_kernel=None,
@@ -442,6 +442,7 @@ class LimeImageTextExplainer:
             assert image_distances is not None
 
             image_weights = self.image_kernel_fn(image_distances)
+
             labels_column = neighborhood_labels[:, label]
             used_image_features = self.feature_selection(
                 neighborhood_image_data,
@@ -452,6 +453,7 @@ class LimeImageTextExplainer:
             )
 
             text_weights = self.text_kernel_fn(text_distances)
+
             labels_column = neighborhood_labels[:, label]
             used_text_features = self.feature_selection(
                 neighborhood_text_data,
@@ -512,6 +514,8 @@ class LimeImageTextExplainer:
                 bimodal_constrained=True,
             )
 
+            used_data = neighborhood_common_data[:, used_features]
+
         if model_regressor is None:
             model_regressor = Ridge(
                 alpha=1, fit_intercept=True, random_state=self.random_state
@@ -535,9 +539,9 @@ class LimeImageTextExplainer:
         return (
             easy_model.intercept_,
             easy_model.coef_,
-            (used_image_features, used_text_features)
-            if feature_selection_type != "bimodal"
-            else used_features,
+            used_features
+            if feature_selection_type != "unimodal"
+            else (used_image_features, used_text_features),
             prediction_score,
             local_pred,
         )
@@ -550,12 +554,12 @@ class LimeImageTextExplainer:
         labels=(1,),
         hide_color=None,
         top_labels=None,
-        num_image_features=10000,
+        num_image_features=10,
         num_text_features=10,
-        num_common_features=100,
-        num_image_samples=5000,
-        num_text_samples=5,
-        batch_size=10,
+        num_common_features=20,
+        num_image_samples=10,
+        num_text_samples=10,
+        batch_size=4,
         segmentation_fn=None,
         distance_metric="cosine",
         model_regressor=None,
@@ -623,7 +627,7 @@ class LimeImageTextExplainer:
         # Image
 
         if len(image_instance.shape) == 2:
-            image = gray2rgb(image_instance)
+            image_instance = gray2rgb(image_instance)
         if random_seed is None:
             random_seed = self.random_state.randint(0, high=1000)
 
@@ -635,15 +639,15 @@ class LimeImageTextExplainer:
                 ratio=0.2,
                 random_seed=random_seed,
             )
-        segments = segmentation_fn(image)
+        segments = segmentation_fn(image_instance)
 
-        fudged_image = image.copy()
+        fudged_image = image_instance.copy()
         if hide_color is None:
             for x in np.unique(segments):
                 fudged_image[segments == x] = (
-                    np.mean(image[segments == x][:, 0]),
-                    np.mean(image[segments == x][:, 1]),
-                    np.mean(image[segments == x][:, 2]),
+                    np.mean(image_instance[segments == x][:, 0]),
+                    np.mean(image_instance[segments == x][:, 1]),
+                    np.mean(image_instance[segments == x][:, 2]),
                 )
         else:
             fudged_image[:] = hide_color
@@ -658,7 +662,7 @@ class LimeImageTextExplainer:
             text_distances,
         ) = self.data_labels_distances(
             indexed_string,
-            image,
+            image_instance,
             fudged_image,
             segments,
             classifier_fn,
@@ -685,7 +689,7 @@ class LimeImageTextExplainer:
                 features_i,
                 prediction_score_i,
                 local_prediction_i,
-            ) = self.base_exp.explain_instance_with_data(
+            ) = self.explain_instance_with_data(
                 neighborhood_labels=predictions,
                 label=label,
                 neighborhood_common_data=common_data,
@@ -700,6 +704,7 @@ class LimeImageTextExplainer:
                 feature_selection_method=self.feature_selection_method,
                 model_regressor=model_regressor,
                 feature_selection_type=feature_selection_type,
+                split_index=image_data.shape[1],
             )
 
             intercept[label] = intercept_i
@@ -708,7 +713,14 @@ class LimeImageTextExplainer:
             prediction_scores[label] = prediction_score_i
             local_predictions[label] = local_prediction_i
 
-        return intercept, coefs, features, prediction_scores, local_predictions
+        return (
+            intercept,
+            coefs,
+            features,
+            prediction_scores,
+            local_predictions,
+            image_data.shape[1],
+        )
 
     def data_labels_distances(
         self,
@@ -724,12 +736,13 @@ class LimeImageTextExplainer:
         distance_metric="cosine",
     ):
         def distance_fn(x, mul=1):
+
             return (
                 sklearn.metrics.pairwise.pairwise_distances(
-                    x, x[0], metric=distance_metric
+                    x, x[0].reshape(1, -1), metric=distance_metric
                 ).ravel()
                 * mul
-            )  # TODO: Check if a multiplier is required here. For text, multiplier is 100, for images it is 1.
+            )  # NOTE: Maybe a multiplier is required here. For text, multiplier is 100, for images it is 1.
 
         # Text
         doc_size = indexed_string.num_words()
@@ -783,7 +796,6 @@ class LimeImageTextExplainer:
             labels.extend(preds)
 
         # Distances
-
         used_data = np.hstack([repeated_image_data, repeated_text_data])
 
         distances = distance_fn(used_data)
