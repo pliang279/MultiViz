@@ -720,6 +720,9 @@ class LimeImageTextExplainer:
             prediction_scores,
             local_predictions,
             image_data.shape[1],
+            image_instance,
+            segments,
+            indexed_string
         )
 
     def data_labels_distances(
