@@ -7,6 +7,7 @@ inputs constant.
 """
 
 from typing import Callable, Dict
+
 import numpy as np
 from lime.lime_image import LimeImageExplainer
 from lime.lime_text import LimeTextExplainer

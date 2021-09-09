@@ -6,7 +6,7 @@ the original model scores indicate a more cross-modal model.
 """
 
 from itertools import product
-from typing import Callable, Union, Dict, Tuple
+from typing import Callable, Dict, Tuple, Union
 
 import numpy as np
 
