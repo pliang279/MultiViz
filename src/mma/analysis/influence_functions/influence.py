@@ -136,9 +136,7 @@ class Influence:
 
             influence_scores = torch.zeros(len(training_instances))
             for idx, score in enumerate(
-                self._calculate_influence_scores(
-                    test_batch, test_loss_float, test_grads
-                )
+                self._calculate_influence_scores(test_grads, used_params)
             ):
                 influence_scores[idx] = score
 
@@ -225,9 +223,7 @@ class Influence:
             views.append(view)
         return torch.cat(views, 0)
 
-    def _calculate_influence_scores(
-        self, test_batch, test_loss, test_grads, used_params
-    ):
+    def _calculate_influence_scores(self, test_grads, used_params):
 
         inv_hvp = self.get_inverse_hvp_lissa(
             test_grads,
