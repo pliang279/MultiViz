@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from lime.lime_text import IndexedString
 
-from src.mma.analysis.surrogates.lime.lime_image_text import LimeImageTextExplainer
+from mma.analysis.surrogates.lime.lime_image_text import LimeImageTextExplainer
 
 
 class TestLimeImageText(unittest.TestCase):

@@ -8,7 +8,7 @@ Adapted from:
 import torch
 from typing import List, Union
 from torch import autograd
-from torch.data.utils import DataLoader
+from torch.utils.data import DataLoader
 import re
 from tqdm.auto import tqdm
 import numpy as np
@@ -18,7 +18,7 @@ class SimpleInfluence:
     def __init__(
         self,
         model: torch.nn.Module,
-        train_dataset: torch.data.utils.Dataset,
+        train_dataset: torch.utils.data.Dataset,
         influence_on_decision: bool = True,
         params_to_freeze: List[str] = None,
         use_cuda: bool = False,
@@ -54,10 +54,9 @@ class SimpleInfluence:
         self.lissa_loader = DataLoader(
             train_dataset, batch_size=lissa_batch_size, shuffle=True
         )
-
-        # TODO: Check how we can incorporate this into the ihvp
+        
         if isinstance(lissa_depth, float) and lissa_depth > 0.0:
-            self.lissa_recursion_depth = int(len(self.lissa_dataloader) * lissa_depth)
+            self.lissa_recursion_depth = int(len(self.lissa_loader) * lissa_depth)
         elif isinstance(lissa_depth, int) and lissa_depth > 0:
             self.lissa_recursion_depth = lissa_depth
         else:
@@ -85,9 +84,6 @@ class SimpleInfluence:
             # Model should return the loss
             output = self.model(**batch)
             loss = output["loss"]
-
-            # Get the parameters
-            # TODO: Check if we need to have used_params and used_param_names
 
             used_params = []
 
