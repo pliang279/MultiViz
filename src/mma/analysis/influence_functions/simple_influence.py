@@ -8,31 +8,31 @@ Adapted from:
 import torch
 from typing import List, Union
 from torch import autograd
-from torch.data.utils import Dataset, DataLoader
+from torch.data.utils import DataLoader
 import re
 from tqdm.auto import tqdm
 import numpy as np
 
 
-class Influence:
+class SimpleInfluence:
     def __init__(
         self,
         model: torch.nn.Module,
         train_dataset: torch.data.utils.Dataset,
-        test_dataset: torch.data.utils.Dataset,
+        influence_on_decision: bool = True,
         params_to_freeze: List[str] = None,
         use_cuda: bool = False,
         lissa_batch_size: int = 8,
         damping: float = 3e-3,
-        lissa_repeat: int = 0.25,
-        lissa_recursion_depth: Union[int, float] = 1.0,
+        num_samples: int = 1,
+        lissa_depth: Union[int, float] = 0.25,
         scale: float = 1e4,
     ):
 
         self.model = model
         self.train_dataset = train_dataset
-        self.test_dataset = test_dataset
         self.params_to_freeze = params_to_freeze
+        self.influence_on_decision = influence_on_decision
 
         if use_cuda and torch.cuda.is_available():
             self.device = torch.device("cuda")
@@ -41,9 +41,6 @@ class Influence:
 
         self.train_loader = DataLoader(
             train_dataset, batch_size=1, shuffle=False, num_workers=1
-        )
-        self.test_loader = DataLoader(
-            test_dataset, batch_size=1, shuffle=False, num_workers=1
         )
 
         self.model.to(self.device)
@@ -59,18 +56,18 @@ class Influence:
         )
 
         # TODO: Check how we can incorporate this into the ihvp
-        # if isinstance(lissa_recursion_depth, float) and lissa_recursion_depth > 0.0:
-        #     self.lissa_dataloader.batches_per_epoch = int(
-        #         len(self.lissa_dataloader) * lissa_recursion_depth
-        #     )
-        # elif isinstance(lissa_recursion_depth, int) and lissa_recursion_depth > 0:
-        #     self.lissa_dataloader.batches_per_epoch = lissa_recursion_depth
-        # else:
-        #     raise ValueError("'lissa_recursion_depth' should be a positive int or float")
+        if isinstance(lissa_depth, float) and lissa_depth > 0.0:
+            self.lissa_recursion_depth = int(len(self.lissa_dataloader) * lissa_depth)
+        elif isinstance(lissa_depth, int) and lissa_depth > 0:
+            self.lissa_recursion_depth = lissa_depth
+        else:
+            raise ValueError(
+                "'lissa_recursion_depth' should be a positive int or float"
+            )
 
         self.damping = damping
-        self.lissa_repeat = lissa_repeat
-        self.lissa_recursion_depth = lissa_recursion_depth
+        self.num_samples = num_samples
+        # self.lissa_depth = lissa_depth
         self.scale = scale
 
     def compute_training_gradients(self):
@@ -128,7 +125,21 @@ class Influence:
             self.model.eval()
             self.model.zero_grad()
 
+            if self.influence_on_decision:
+                with torch.no_grad():
+                    model_output = self.model(**test_batch)
+                    assert "hidden_states" in model_output
+                    logits = model_output["hidden_states"]
+                    logits = logits.detach().cpu().numpy()
+                    outputs = np.argmax(logits, axis=1)
+
+                    assert "labels" in test_batch
+                    test_batch["labels"] = (
+                        torch.from_numpy(outputs).long().to(self.device)
+                    )
+
             test_output_dict = self.model(**test_batch)
+            assert "loss" in test_output_dict
             test_loss = test_output_dict["loss"]
             test_loss_float = test_loss.detach().item()
 
@@ -136,13 +147,14 @@ class Influence:
 
             influence_scores = torch.zeros(len(training_instances))
             for idx, score in enumerate(
-                self._calculate_influence_scores(test_grads, used_params)
+                self._calculate_influence_scores(
+                    test_grads, used_params, training_instances
+                )
             ):
                 influence_scores[idx] = score
 
             if top_k is not None:
                 top_k_scores, top_k_indices = torch.topk(influence_scores, top_k)
-            # Sort the influence scores
 
             outputs.append(
                 {
@@ -167,17 +179,30 @@ class Influence:
         used_params,
     ):
         inverse_hvps = [torch.tensor(0) for _ in vs]
-        for _ in tqdm(range(self.lissa_repeat), total=self.lissa_repeat):
+        for _ in tqdm(range(self.num_samples), total=self.num_samples):
 
             cur_estimates = vs
+            lissa_iterator = iter(self.lissa_loader)
+            pbar = tqdm(
+                range(self.lissa_recursion_depth), total=self.lissa_recursion_depth
+            )
+            for j in pbar:
+                try:
+                    training_batch = next(lissa_iterator)
+                except StopIteration:
+                    lissa_iterator = iter(self.lissa_loader)
+                    training_batch = next(lissa_iterator)
 
-            pbar = tqdm(self.lissa_data_loader, total=len(self.lissa_data_loader))
+                # Move input to device
+                for key, value in training_batch.items():
+                    training_batch[key] = value.to(self.device)
 
-            for j, training_batch in enumerate(pbar):
                 # NOTE: We are using train mode in the `interpret_instances` method
                 # so no need to  set here
                 self.model.zero_grad()
                 train_output_dict = self.model(**training_batch)
+
+                assert "loss" in train_output_dict
 
                 hvps = self.get_hvp(
                     train_output_dict["loss"], used_params, cur_estimates
@@ -189,7 +214,7 @@ class Influence:
                 ]
 
                 # Update Loss
-                if (j % 50 == 0) or (j == len(self.lissa_data_loader) - 1):
+                if (j % 50 == 0) or (j == len(self.lissa_loader) - 1):
                     norm = np.linalg.norm(
                         self._flatten_tensors(cur_estimates).cpu().numpy()
                     )
@@ -202,7 +227,7 @@ class Influence:
                 for inverse_hvp, cur_estimate in zip(inverse_hvps, cur_estimates)
             ]
         return_ihvp = self._flatten_tensors(inverse_hvps)
-        return_ihvp /= self.lissa_repeat
+        return_ihvp /= self.num_samples
         return return_ihvp
 
     def get_hvp(self, loss, params, vectors):
@@ -223,7 +248,7 @@ class Influence:
             views.append(view)
         return torch.cat(views, 0)
 
-    def _calculate_influence_scores(self, test_grads, used_params):
+    def _calculate_influence_scores(self, test_grads, used_params, training_instances):
 
         inv_hvp = self.get_inverse_hvp_lissa(
             test_grads,
@@ -231,6 +256,6 @@ class Influence:
         )
 
         return [
-            torch.dot(inv_hvp, self._flatten_tensors(x.grads)).item()
-            for x in tqdm(self.train_loader)
+            torch.dot(inv_hvp, self._flatten_tensors(x["grads"])).item()
+            for x in tqdm(training_instances)
         ]
