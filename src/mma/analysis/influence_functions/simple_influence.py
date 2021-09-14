@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader
 import re
 from tqdm.auto import tqdm
 import numpy as np
+from ...utils.misc import set_seed
 
 
 class SimpleInfluence:
@@ -27,6 +28,7 @@ class SimpleInfluence:
         num_samples: int = 1,
         lissa_depth: Union[int, float] = 0.25,
         scale: float = 1e4,
+        seed: int = 1234,
     ):
 
         self.model = model
@@ -50,11 +52,12 @@ class SimpleInfluence:
                 if any([re.match(pattern, name) for pattern in params_to_freeze]):
                     param.requires_grad = False
 
+        set_seed(seed)
         # LiSSA specific code
         self.lissa_loader = DataLoader(
             train_dataset, batch_size=lissa_batch_size, shuffle=True
         )
-        
+
         if isinstance(lissa_depth, float) and lissa_depth > 0.0:
             self.lissa_recursion_depth = int(len(self.lissa_loader) * lissa_depth)
         elif isinstance(lissa_depth, int) and lissa_depth > 0:
@@ -69,9 +72,40 @@ class SimpleInfluence:
         # self.lissa_depth = lissa_depth
         self.scale = scale
 
+        self._train_instances = None
+        self._used_param_names = None
+        self._used_params = None
+
+    @property
+    def used_params(self):
+        if self._used_params is None:
+            self.compute_training_gradients()
+        assert self._used_params is not None
+        return self._used_params
+
+    @property
+    def used_param_names(self):
+        if self._used_param_names is None:
+            self.compute_training_gradients()
+        assert self._used_param_names is not None
+        return self._used_param_names
+
+    @property
+    def train_instances(self):
+        """
+        The training instances along with their corresponding loss and gradients.
+        !!! Note
+            Accessing this property requires calling `self._gather_train_instances_and_compute_gradients()`
+            if it hasn't been called yet, which may take several minutes.
+        """
+        if self._train_instances is None:
+            self.compute_training_gradients()
+        assert self._train_instances is not None
+        return self._train_instances
+
     def compute_training_gradients(self):
         self.model.train()
-        training_instances = []
+        self._train_instances = []
 
         for idx, batch in enumerate(tqdm(self.train_loader)):
 
@@ -85,17 +119,20 @@ class SimpleInfluence:
             output = self.model(**batch)
             loss = output["loss"]
 
-            used_params = []
-
             # TODO: Check what is retain_graph for
             loss.backward(retain_graph=True)
-            for name, param in self.model.named_parameters():
-                if param.requires_grad and param.grad is not None:
-                    used_params.append(param)
 
-            grads = autograd.grad(loss, used_params)
+            if self._used_params is None or self._used_param_names is None:
+                self._used_params = []
+                self._used_param_names = []
+                for name, param in self.model.named_parameters():
+                    if param.requires_grad and param.grad is not None:
+                        self._used_params.append(param)
+                        self._used_param_names.append(name)
 
-            training_instances.append(
+            grads = autograd.grad(loss, self._used_params)
+
+            self._train_instances.append(
                 {
                     "idx": idx,
                     "batch": batch,
@@ -104,13 +141,11 @@ class SimpleInfluence:
                 }
             )
 
-            return training_instances, used_params
-
     def interpret_instances(self, test_instances, top_k=None):
 
-        training_instances, used_params = self.compute_training_gradients()
+        # self.compute_training_gradients()
 
-        outputs = []
+        interpretations = []
 
         for test_idx, test_batch in enumerate(tqdm(test_instances)):
 
@@ -139,20 +174,16 @@ class SimpleInfluence:
             test_loss = test_output_dict["loss"]
             test_loss_float = test_loss.detach().item()
 
-            test_grads = autograd.grad(test_loss, used_params)
+            test_grads = autograd.grad(test_loss, self.used_params)
 
-            influence_scores = torch.zeros(len(training_instances))
-            for idx, score in enumerate(
-                self._calculate_influence_scores(
-                    test_grads, used_params, training_instances
-                )
-            ):
+            influence_scores = torch.zeros(len(self.train_instances))
+            for idx, score in enumerate(self._calculate_influence_scores(test_grads)):
                 influence_scores[idx] = score
 
             if top_k is not None:
                 top_k_scores, top_k_indices = torch.topk(influence_scores, top_k)
 
-            outputs.append(
+            interpretations.append(
                 {
                     "idx": test_idx,
                     "batch": test_batch,
@@ -163,7 +194,7 @@ class SimpleInfluence:
                 }
             )
 
-        return outputs
+        return interpretations
 
     def interpret(self, instance, top_k=None):
 
@@ -172,7 +203,6 @@ class SimpleInfluence:
     def get_inverse_hvp_lissa(
         self,
         vs,
-        used_params,
     ):
         inverse_hvps = [torch.tensor(0) for _ in vs]
         for _ in tqdm(range(self.num_samples), total=self.num_samples):
@@ -201,7 +231,7 @@ class SimpleInfluence:
                 assert "loss" in train_output_dict
 
                 hvps = self.get_hvp(
-                    train_output_dict["loss"], used_params, cur_estimates
+                    train_output_dict["loss"], self.used_params, cur_estimates
                 )
 
                 cur_estimates = [
@@ -222,6 +252,7 @@ class SimpleInfluence:
                 inverse_hvp + cur_estimate / self.scale
                 for inverse_hvp, cur_estimate in zip(inverse_hvps, cur_estimates)
             ]
+
         return_ihvp = self._flatten_tensors(inverse_hvps)
         return_ihvp /= self.num_samples
         return return_ihvp
@@ -238,20 +269,19 @@ class SimpleInfluence:
         views = []
         for p in tensors:
             if p.data.is_sparse:
-                view = p.data.to_dense().view(-1)
+                view = p.data.to_dense().contiguous().view(-1)
             else:
-                view = p.data.view(-1)
+                view = p.data.contiguous().view(-1)
             views.append(view)
         return torch.cat(views, 0)
 
-    def _calculate_influence_scores(self, test_grads, used_params, training_instances):
+    def _calculate_influence_scores(self, test_grads):
 
         inv_hvp = self.get_inverse_hvp_lissa(
             test_grads,
-            used_params,
         )
 
         return [
             torch.dot(inv_hvp, self._flatten_tensors(x["grads"])).item()
-            for x in tqdm(training_instances)
+            for x in tqdm(self.train_instances)
         ]
