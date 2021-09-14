@@ -5,7 +5,7 @@ import numpy as np
 from lime.explanation import Explanation
 from lime.lime_image import ImageExplanation
 
-from src.mma.analysis.surrogates.lime.lime import Lime
+from mma.analysis.surrogates.lime.lime import Lime
 
 
 class TestLime(unittest.TestCase):

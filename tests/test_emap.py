@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.mma.analysis.metrics.emap import Emap
+from mma.analysis.metrics.emap import Emap
 
 
 class TestEmap(unittest.TestCase):
