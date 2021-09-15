@@ -5,13 +5,15 @@ Adapted from:
 - https://github.com/xhan77/influence-function-analysis
 """
 
-import torch
+import re
 from typing import List, Union
+
+import numpy as np
+import torch
 from torch import autograd
 from torch.utils.data import DataLoader
-import re
 from tqdm.auto import tqdm
-import numpy as np
+
 from ...utils.misc import set_seed
 
 
