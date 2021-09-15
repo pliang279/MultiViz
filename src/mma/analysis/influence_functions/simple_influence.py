@@ -107,7 +107,9 @@ class SimpleInfluence:
         self.model.train()
         self._train_instances = []
 
-        for idx, batch in enumerate(tqdm(self.train_loader)):
+        for idx, batch in enumerate(
+            tqdm(self.train_loader, desc="Computing Training Gradients")
+        ):
 
             # Move input to device
             for key, value in batch.items():
@@ -147,7 +149,9 @@ class SimpleInfluence:
 
         interpretations = []
 
-        for test_idx, test_batch in enumerate(tqdm(test_instances)):
+        for test_idx, test_batch in enumerate(
+            tqdm(test_instances, desc="Interpreting Test Instances")
+        ):
 
             # Move input to device
             for key, value in test_batch.items():
@@ -205,12 +209,16 @@ class SimpleInfluence:
         vs,
     ):
         inverse_hvps = [torch.tensor(0) for _ in vs]
-        for _ in tqdm(range(self.num_samples), total=self.num_samples):
+        for _ in tqdm(
+            range(self.num_samples), total=self.num_samples, desc="Lissa Samples"
+        ):
 
             cur_estimates = vs
             lissa_iterator = iter(self.lissa_loader)
             pbar = tqdm(
-                range(self.lissa_recursion_depth), total=self.lissa_recursion_depth
+                range(self.lissa_recursion_depth),
+                total=self.lissa_recursion_depth,
+                desc="LiSSA Recursion Depth",
             )
             for j in pbar:
                 try:
@@ -283,5 +291,5 @@ class SimpleInfluence:
 
         return [
             torch.dot(inv_hvp, self._flatten_tensors(x["grads"])).item()
-            for x in tqdm(self.train_instances)
+            for x in tqdm(self.train_instances, desc="Influence Score Calculation")
         ]
