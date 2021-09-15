@@ -29,6 +29,7 @@ class SimpleInfluence:
         lissa_depth: Union[int, float] = 0.25,
         scale: float = 1e4,
         seed: int = 1234,
+        last_state_key: str = "hidden_states",
     ):
 
         self.model = model
@@ -71,6 +72,7 @@ class SimpleInfluence:
         self.num_samples = num_samples
         # self.lissa_depth = lissa_depth
         self.scale = scale
+        self.last_state_key = last_state_key
 
         self._train_instances = None
         self._used_param_names = None
@@ -159,8 +161,8 @@ class SimpleInfluence:
             if self.influence_on_decision:
                 with torch.no_grad():
                     model_output = self.model(**test_batch)
-                    assert "hidden_states" in model_output
-                    logits = model_output["hidden_states"]
+                    assert self.last_state_key in model_output
+                    logits = model_output[self.last_state_key]
                     logits = logits.detach().cpu().numpy()
                     outputs = np.argmax(logits, axis=1)
 
