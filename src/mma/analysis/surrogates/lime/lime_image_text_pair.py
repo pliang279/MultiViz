@@ -277,11 +277,11 @@ class LimeImageTextPairExplainer:
             total_num_text_features = indexed_string.num_words()
         else:
             total_num_text_features = 0
-            for word in indexed_string.vocab.keys():
+            for idx, word in enumerate(indexed_string.inverse_vocab):
                 if word in ignore_words:
                     continue
                 else:
-                    new_indices.append(indexed_string.vocab[word])
+                    new_indices.append(idx)
                     total_num_text_features += 1
 
         new_indices = np.array(new_indices)
