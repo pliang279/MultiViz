@@ -302,13 +302,14 @@ class LimeImageTextPairExplainer:
         image_data[0, :] = 1
 
         data = np.zeros((num_samples, total_num_text_features*total_num_image_features))
-        data = np.einsum("ij,ik->ijk", image_data, text_data)
-        
+        data = np.einsum("ij,ik->ijk", image_data, text_data).reshape((num_samples, total_num_text_features*total_num_image_features))
+
         labels = []
 
         imgs = []
         txts = []
         rows = tqdm(data) if progress_bar else data
+
         for idx, sample in enumerate(rows):
             excluded_segments = [i for i in image_data[idx] if i == 0]
             excluded_words = [i for i in text_data[idx] if i == 0]
