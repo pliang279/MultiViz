@@ -137,6 +137,7 @@ class TestLimeImageText(unittest.TestCase):
             image_instance,
             segments,
             indexed_string,
+            new_indices,
         ) = self.lime.explain_instance(
             image,
             text,
@@ -291,6 +292,7 @@ class TestLimeImageText(unittest.TestCase):
             distances,
             total_num_image_features,
             total_num_text_features,
+            new_indices,
         ) = self.lime.data_labels_distances(
             indexed_string, image, fudged_image, segments, classifier_fn, num_samples
         )

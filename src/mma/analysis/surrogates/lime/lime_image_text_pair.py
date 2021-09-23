@@ -100,6 +100,7 @@ class LimeImageTextPairExplainer:
         model_regressor=None,
         random_seed=None,
         progress_bar=True,
+        ignore_words=None,
     ):
         """Generates explanations for a prediction.
 
@@ -136,6 +137,7 @@ class LimeImageTextPairExplainer:
                 algorithm. If None, a random integer, between 0 and 1000,
                 will be generated using the internal random number generator.
             progress_bar: if True, show tqdm progress bar.
+            ignore_words: list of words to ignore
 
         Returns:
             An ImageTextExplanation object with the corresponding explanations.
@@ -189,6 +191,7 @@ class LimeImageTextPairExplainer:
             distances,
             total_num_image_features,
             total_num_text_features,
+            new_indices,
         ) = self.data_labels_distances(
             indexed_string,
             image_instance,
@@ -199,6 +202,7 @@ class LimeImageTextPairExplainer:
             batch_size,
             progress_bar,
             distance_metric,
+            ignore_words,
         )
 
         if top_labels:
@@ -241,6 +245,7 @@ class LimeImageTextPairExplainer:
             image_instance,
             segments,
             indexed_string,
+            new_indices,
         )
 
     def data_labels_distances(
@@ -254,6 +259,7 @@ class LimeImageTextPairExplainer:
         batch_size=10,
         progress_bar=True,
         distance_metric="cosine",
+        ignore_words=None,
     ):
         def distance_fn(x, mul=1):
 
@@ -265,7 +271,20 @@ class LimeImageTextPairExplainer:
             )  # NOTE: Maybe a multiplier is required here. For text, multiplier is 100, for images it is 1.
 
         # Text
-        total_num_text_features = indexed_string.num_words()
+
+        new_indices = []
+        if ignore_words is None:
+            total_num_text_features = indexed_string.num_words()
+        else:
+            total_num_text_features = 0
+            for word in indexed_string.vocab.keys():
+                if word in ignore_words:
+                    continue
+                else:
+                    new_indices.append(indexed_string.vocab[word])
+                    total_num_text_features += 1
+
+        new_indices = np.array(new_indices)
 
         # Image
         total_num_image_features = np.unique(segments).shape[0]
@@ -309,7 +328,12 @@ class LimeImageTextPairExplainer:
                 mask[segments == z] = True
             temp[mask] = fudged_image[mask]
             imgs.append(temp)
-            txts.append(indexed_string.inverse_removing(excluded_words))
+            if ignore_words is None:
+                txts.append(indexed_string.inverse_removing(excluded_words))
+            else:
+                txts.append(
+                    indexed_string.inverse_removing(new_indices[excluded_words])
+                )
             if len(imgs) == batch_size:
                 preds = classifier_fn(np.array(imgs), txts)
                 labels.extend(preds)
@@ -328,4 +352,5 @@ class LimeImageTextPairExplainer:
             distances,
             total_num_image_features,
             total_num_text_features,
+            new_indices,
         )
