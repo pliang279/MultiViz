@@ -271,7 +271,6 @@ class LimeImageTextPairExplainer:
             )  # NOTE: Maybe a multiplier is required here. For text, multiplier is 100, for images it is 1.
 
         # Text
-
         new_indices = []
         if ignore_words is None:
             total_num_text_features = indexed_string.num_words()
@@ -286,41 +285,33 @@ class LimeImageTextPairExplainer:
 
         new_indices = np.array(new_indices)
 
+        text_data = self.random_state.randint(
+            0, 2, num_samples * total_num_text_features
+        ).reshape((num_samples, total_num_text_features))
+
+        text_data[0] = np.ones(total_num_text_features)
+    
         # Image
         total_num_image_features = np.unique(segments).shape[0]
 
-        data = self.random_state.randint(
-            0, 2, num_samples * total_num_image_features * total_num_text_features
-        ).reshape((num_samples, total_num_image_features * total_num_text_features))
+        image_data = self.random_state.randint(
+            0, 2, num_samples * total_num_image_features
+        ).reshape((num_samples, total_num_image_features))
 
+
+        image_data[0, :] = 1
+
+        data = np.zeros((num_samples, total_num_text_features*total_num_image_features))
+        data = np.einsum("ij,ik->ijk", image_data, text_data)
+        
         labels = []
-
-        data[0, :] = 1
-
-        def sample_to_excluded_tokens(sample):
-            out = list(
-                zip(
-                    *[
-                        (idx // total_num_text_features, idx % total_num_text_features)
-                        for idx, val in enumerate(sample)
-                        if val == 0
-                    ]
-                )
-            )
-
-            if out:
-                excluded_segments, excluded_words = out
-            else:
-                excluded_segments = np.array([])
-                excluded_words = np.array([])
-
-            return np.unique(excluded_segments), np.unique(excluded_words)
 
         imgs = []
         txts = []
         rows = tqdm(data) if progress_bar else data
-        for sample in rows:
-            excluded_segments, excluded_words = sample_to_excluded_tokens(sample)
+        for idx, sample in enumerate(rows):
+            excluded_segments = [i for i in image_data[idx] if i == 0]
+            excluded_words = [i for i in text_data[idx] if i == 0]
             temp = copy.deepcopy(image)
             zeros = excluded_segments
             mask = np.zeros(segments.shape).astype(bool)
