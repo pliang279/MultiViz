@@ -332,7 +332,7 @@ class LimeImageTextPairExplainer:
                 txts.append(indexed_string.inverse_removing(excluded_words))
             else:
                 txts.append(
-                    indexed_string.inverse_removing(new_indices[excluded_words])
+                    indexed_string.inverse_removing([new_indices[i] for i in excluded_words])
                 )
             if len(imgs) == batch_size:
                 preds = classifier_fn(np.array(imgs), txts)
