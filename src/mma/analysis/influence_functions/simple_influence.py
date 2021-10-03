@@ -208,10 +208,7 @@ class SimpleInfluence:
 
         return self.interpret_instances([instance], top_k)
 
-    def get_inverse_hvp_lissa(
-        self,
-        vs,
-    ):
+    def get_inverse_hvp_lissa(self, vs):
         inverse_hvps = [torch.tensor(0) for _ in vs]
         for _ in tqdm(
             range(self.num_samples), total=self.num_samples, desc="Lissa Samples"
@@ -289,9 +286,7 @@ class SimpleInfluence:
 
     def _calculate_influence_scores(self, test_grads):
 
-        inv_hvp = self.get_inverse_hvp_lissa(
-            test_grads,
-        )
+        inv_hvp = self.get_inverse_hvp_lissa(test_grads)
 
         return [
             torch.dot(inv_hvp, self._flatten_tensors(x["grads"])).item()

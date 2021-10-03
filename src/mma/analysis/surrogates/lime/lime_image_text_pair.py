@@ -290,7 +290,7 @@ class LimeImageTextPairExplainer:
         ).reshape((num_samples, total_num_text_features))
 
         text_data[0] = np.ones(total_num_text_features)
-    
+
         # Image
         total_num_image_features = np.unique(segments).shape[0]
 
@@ -298,11 +298,14 @@ class LimeImageTextPairExplainer:
             0, 2, num_samples * total_num_image_features
         ).reshape((num_samples, total_num_image_features))
 
-
         image_data[0, :] = 1
 
-        data = np.zeros((num_samples, total_num_text_features*total_num_image_features))
-        data = np.einsum("ij,ik->ijk", image_data, text_data).reshape((num_samples, total_num_text_features*total_num_image_features))
+        data = np.zeros(
+            (num_samples, total_num_text_features * total_num_image_features)
+        )
+        data = np.einsum("ij,ik->ijk", image_data, text_data).reshape(
+            (num_samples, total_num_text_features * total_num_image_features)
+        )
 
         labels = []
 
@@ -311,8 +314,12 @@ class LimeImageTextPairExplainer:
         rows = tqdm(data) if progress_bar else data
 
         for idx, sample in enumerate(rows):
-            excluded_segments = [i for i in image_data[idx] if i == 0]
-            excluded_words = [i for i in text_data[idx] if i == 0]
+            excluded_segments = [
+                i for i in range(len(image_data[idx])) if image_data[idx][i] == 0
+            ]
+            excluded_words = [
+                i for i in range(len(text_data[idx])) if text_data[idx][i] == 0
+            ]
             temp = copy.deepcopy(image)
             zeros = excluded_segments
             mask = np.zeros(segments.shape).astype(bool)
@@ -324,7 +331,9 @@ class LimeImageTextPairExplainer:
                 txts.append(indexed_string.inverse_removing(excluded_words))
             else:
                 txts.append(
-                    indexed_string.inverse_removing([new_indices[i] for i in excluded_words])
+                    indexed_string.inverse_removing(
+                        [new_indices[i] for i in excluded_words]
+                    )
                 )
             if len(imgs) == batch_size:
                 preds = classifier_fn(np.array(imgs), txts)

@@ -265,13 +265,7 @@ def hf_bucket_url(model_id: str, filename: str, use_cdn=True) -> str:
         return f"{endpoint}/{model_id}/{filename}"
 
 
-def http_get(
-    url,
-    temp_file,
-    proxies=None,
-    resume_size=0,
-    user_agent=None,
-):
+def http_get(url, temp_file, proxies=None, resume_size=0, user_agent=None):
     ua = "python/{}".format(sys.version.split()[0])
     if _torch_available:
         ua += "; torch/{}".format(torch.__version__)
@@ -288,11 +282,7 @@ def http_get(
     content_length = response.headers.get("Content-Length")
     total = resume_size + int(content_length) if content_length is not None else None
     progress = tqdm(
-        unit="B",
-        unit_scale=True,
-        total=total,
-        initial=resume_size,
-        desc="Downloading",
+        unit="B", unit_scale=True, total=total, initial=resume_size, desc="Downloading"
     )
     for chunk in response.iter_content(chunk_size=1024):
         if chunk:  # filter out keep-alive new chunks

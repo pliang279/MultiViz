@@ -2,7 +2,6 @@ import unittest
 
 import numpy as np
 from lime.lime_text import IndexedString
-
 from mma.analysis.surrogates.lime.lime_image_text_pair import LimeImageTextPairExplainer
 
 
@@ -24,14 +23,7 @@ class TestLimeImageText(unittest.TestCase):
             return segments
 
         text = "This is an example text"
-        text_to_token = {
-            "this": 0,
-            "is": 1,
-            "an": 2,
-            "example": 3,
-            "text": 4,
-            "": 5,
-        }
+        text_to_token = {"this": 0, "is": 1, "an": 2, "example": 3, "text": 4, "": 5}
 
         def classifier_fn(images, texts):
             flattened_img = images.reshape(-1, 48)
@@ -180,14 +172,7 @@ class TestLimeImageText(unittest.TestCase):
 
         text = "This is an example text"
         indexed_string = IndexedString(text)
-        text_to_token = {
-            "this": 0,
-            "is": 1,
-            "an": 2,
-            "example": 3,
-            "text": 4,
-            "": 5,
-        }
+        text_to_token = {"this": 0, "is": 1, "an": 2, "example": 3, "text": 4, "": 5}
 
         def classifier_fn(images, texts):
             flattened_img = images.reshape(-1, 48)
@@ -305,10 +290,7 @@ class TestLimeImageText(unittest.TestCase):
 
         self.assertEqual(
             data.shape,
-            (
-                num_samples,
-                np.unique(segments).shape[0] * indexed_string.num_words(),
-            ),
+            (num_samples, np.unique(segments).shape[0] * indexed_string.num_words()),
         )
 
         self.assertEqual(labels.shape, (num_samples, 2))

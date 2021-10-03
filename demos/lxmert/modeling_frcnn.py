@@ -394,8 +394,7 @@ def _fmt_box_list(box_tensor, batch_index: int):
 
 def convert_boxes_to_pooler_format(box_lists: List[torch.Tensor]):
     pooler_fmt_boxes = torch.cat(
-        [_fmt_box_list(box_list, i) for i, box_list in enumerate(box_lists)],
-        dim=0,
+        [_fmt_box_list(box_list, i) for i, box_list in enumerate(box_lists)], dim=0
     )
     return pooler_fmt_boxes
 
@@ -1618,9 +1617,7 @@ class RPN(nn.Module):
         )
         self.box2box_transform = Box2BoxTransform(weights=cfg.RPN.BBOX_REG_WEIGHTS)
         self.anchor_matcher = Matcher(
-            cfg.RPN.IOU_THRESHOLDS,
-            cfg.RPN.IOU_LABELS,
-            allow_low_quality_matches=True,
+            cfg.RPN.IOU_THRESHOLDS, cfg.RPN.IOU_LABELS, allow_low_quality_matches=True
         )
         self.rpn_head = RPNHead(cfg, [input_shape[f] for f in self.in_features])
 
@@ -1803,8 +1800,7 @@ class GeneralizedRCNN(nn.Module):
                 else:
                     raise EnvironmentError(
                         "Error no file named {} found in directory {} ".format(
-                            WEIGHTS_NAME,
-                            pretrained_model_name_or_path,
+                            WEIGHTS_NAME, pretrained_model_name_or_path
                         )
                     )
             elif os.path.isfile(pretrained_model_name_or_path) or is_remote_url(

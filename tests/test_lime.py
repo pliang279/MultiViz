@@ -4,7 +4,6 @@ from typing import List
 import numpy as np
 from lime.explanation import Explanation
 from lime.lime_image import ImageExplanation
-
 from mma.analysis.surrogates.lime.lime import Lime
 
 
@@ -97,11 +96,7 @@ class TestLime(unittest.TestCase):
 
     def test_explain_text_instance(self):
         init_params = {"class_names": ["happy", "sad"]}
-        explanation_params = {
-            "num_features": 5,
-            "num_samples": 100,
-            "top_labels": 1,
-        }
+        explanation_params = {"num_features": 5, "num_samples": 100, "top_labels": 1}
 
         def text_predictor_fn(input_texts: List[str]):
             samples = []

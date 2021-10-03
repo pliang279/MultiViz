@@ -1,7 +1,6 @@
 import unittest
 
 import numpy as np
-
 from mma.analysis.metrics.emap import Emap
 
 
@@ -126,9 +125,7 @@ class TestEmap(unittest.TestCase):
 
         self.assertTrue(
             np.allclose(
-                orig_predictions,
-                self.emap_obj.predictor_fn(**self.dataset),
-                atol=1e-5,
+                orig_predictions, self.emap_obj.predictor_fn(**self.dataset), atol=1e-5
             )
         )
 
@@ -368,9 +365,7 @@ class TestEmapTuple(unittest.TestCase):
 
         self.assertTrue(
             np.allclose(
-                orig_predictions,
-                self.emap_obj.predictor_fn(**self.dataset),
-                atol=1e-5,
+                orig_predictions, self.emap_obj.predictor_fn(**self.dataset), atol=1e-5
             )
         )
 
@@ -486,7 +481,7 @@ class TestEmapDict(unittest.TestCase):
                         [-1.29928076, -0.49100054],
                         [-0.2341222, 0.40688819],
                     ]
-                ),
+                )
             },
         }
 
@@ -581,7 +576,7 @@ class TestEmapDict(unittest.TestCase):
                         [0.7282957, 0.57181146],
                         [-1.29928076, -0.49100054],
                     ]
-                ),
+                )
             },
         }
 
@@ -615,9 +610,7 @@ class TestEmapDict(unittest.TestCase):
 
         self.assertTrue(
             np.allclose(
-                orig_predictions,
-                self.emap_obj.predictor_fn(**self.dataset),
-                atol=1e-5,
+                orig_predictions, self.emap_obj.predictor_fn(**self.dataset), atol=1e-5
             )
         )
 
