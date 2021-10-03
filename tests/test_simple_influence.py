@@ -3,9 +3,8 @@ import unittest
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, Dataset
-
 from mma.analysis.influence_functions.simple_influence import SimpleInfluence
+from torch.utils.data import DataLoader, Dataset
 
 
 def recursive_match(actual, expected):

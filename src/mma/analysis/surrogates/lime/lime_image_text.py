@@ -531,10 +531,7 @@ class LimeImageTextExplainer:
 
         if self.verbose:
             print("Intercept", easy_model.intercept_)
-            print(
-                "Prediction_local",
-                local_pred,
-            )
+            print("Prediction_local", local_pred)
             print("Right:", neighborhood_labels[0, label])
         return (
             easy_model.intercept_,

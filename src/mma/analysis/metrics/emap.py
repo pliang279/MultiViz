@@ -46,10 +46,7 @@ class Emap:
         elif isinstance(test_value, Dict):
             # Take the length of the first key in the dictionary for that mode
             input_lengths = list(
-                map(
-                    lambda x: len(x[list(x.keys())[0]]),
-                    self.dataset.values(),
-                )
+                map(lambda x: len(x[list(x.keys())[0]]), self.dataset.values())
             )
         else:
             raise NotImplementedError(
