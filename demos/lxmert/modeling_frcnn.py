@@ -2007,6 +2007,7 @@ class GeneralizedRCNN(nn.Module):
             "return_tensors": kwargs.get("return_tensors", None),
             "pad_value": kwargs.get("pad_value", 0),
             "padding": kwargs.get("padding", None),
+            "location": kwargs.get("location",None)
         }
         preds_per_image = torch.tensor([p.size(0) for p in boxes])
         boxes = pad_list_tensors(boxes, preds_per_image, **subset_kwargs)
