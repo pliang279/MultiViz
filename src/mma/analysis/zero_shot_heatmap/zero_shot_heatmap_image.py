@@ -74,16 +74,18 @@ class ZeroShotHeatmapImage:
         resize_size=224,
         pixel_size=10,
         iter=3,
+        batch_size=4,
     ):
         text_embedding = text_encoder_fn(text)
         images, masks = self.gen_image_batch(
             image, resize_size=resize_size, pixel_size=pixel_size
         )
 
-        if image_preprocessor_fn is not None:
-            images = torch.stack([image_preprocessor_fn(image) for image in images])
-
-        image_embeddings = image_encoder_fn(images)
+        image_embeddings = []
+        for i in range(0, len(images), batch_size):
+            if image_preprocessor_fn is not None:
+                images_batch = torch.stack([image_preprocessor_fn(image) for image in images[i:i+batch_size]])
+            image_embeddings.append(image_encoder_fn(images_batch))
 
         sims = []
         scores = []
