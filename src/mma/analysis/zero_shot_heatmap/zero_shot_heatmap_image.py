@@ -80,7 +80,7 @@ class ZeroShotHeatmapImage:
         )
 
         if image_preprocessor_fn is not None:
-            images = np.stack([image_preprocessor_fn(image) for image in images])
+            images = torch.stack([image_preprocessor_fn(image) for image in images])
 
         image_embeddings = image_encoder_fn(images)
 
