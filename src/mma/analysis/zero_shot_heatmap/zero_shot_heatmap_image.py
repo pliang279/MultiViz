@@ -93,8 +93,6 @@ class ZeroShotHeatmapImage:
         mask_val = np.zeros_like(masks[0])
 
         for e, m in zip(image_embeddings, masks):
-            print(e.shape)
-            print(text_embedding.shape)
             sim = np.matmul(e, text_embedding.T)
             sims.append(sim)
             if len(sims) > 1:
