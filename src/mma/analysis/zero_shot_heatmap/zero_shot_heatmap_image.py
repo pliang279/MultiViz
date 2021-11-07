@@ -107,7 +107,7 @@ class ZeroShotHeatmapImage:
         score = (score - np.min(score)) / (np.max(score) - np.min(score))
         return np.asarray(score)
 
-    def plot_image_and_scores(image, text, scores):
+    def plot_image_and_scores(self, image, text, scores):
         fig = plt.figure(figsize=(15, 30), facecolor="white")
         ax1 = fig.add_subplot(131)
         ax2 = fig.add_subplot(133)
