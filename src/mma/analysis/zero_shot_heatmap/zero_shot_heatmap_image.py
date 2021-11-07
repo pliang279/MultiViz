@@ -86,7 +86,7 @@ class ZeroShotHeatmapImage:
             if image_preprocessor_fn is not None:
                 images_batch = torch.stack([image_preprocessor_fn(image) for image in images[i:i+batch_size]])
             image_embeddings.append(image_encoder_fn(images_batch))
-        image_embeddings = torch.stack(image_embeddings)
+        image_embeddings = np.stack(image_embeddings)
 
         sims = []
         scores = []
