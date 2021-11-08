@@ -14,6 +14,16 @@ class ZeroShotHeatmapText:
     """
 
     # Copied from the reference implementation
+    def pad_to_square(self, image, size=224):
+        old_size = image.size
+        ratio = float(size) / max(old_size)
+        new_size = tuple([int(x * ratio) for x in old_size])
+        image = image.resize(new_size, Image.ANTIALIAS)
+        new_image = Image.new("RGB", size=(size, size), color=(128, 128, 128))
+        new_image.paste(image, ((size - new_size[0]) // 2, (size - new_size[1]) // 2))
+        return new_image
+
+    # Copied from the reference implementation
     def gen_text_batch(self, text: str, max_window_size=None):
 
         words = text.split()
@@ -51,10 +61,13 @@ class ZeroShotHeatmapText:
         text_encoder_fn: Callable,
         image_preprocessor_fn: Callable = None,
         max_window_size: int = None,
+        resize_size:int = 224,
         iter: int = 3,
         batch_size: int = 4,
     ):
-
+        
+        image = self.pad_to_square(image, resize_size)
+        
         if image_preprocessor_fn is not None:
             image = image_preprocessor_fn(image)
         image_embedding = image_encoder_fn(image)
