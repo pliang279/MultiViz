@@ -38,7 +38,7 @@ class ZeroShotHeatmapText:
        
         # Entire Text
         text_batch.append(text)
-        masks.append(mask)
+        masks.append(1-mask)
 
         # Horizontal Pass
         for window_size in range(1, max_window_size):
