@@ -8,10 +8,11 @@ Adapted from:
 import re
 from typing import List, Union
 
-import numpy as np
 import torch
 from torch import autograd
 from torch.utils.data import DataLoader
+
+import numpy as np
 from tqdm.auto import tqdm
 
 from ...utils.misc import set_seed
