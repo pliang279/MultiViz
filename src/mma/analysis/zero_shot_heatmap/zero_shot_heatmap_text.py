@@ -38,7 +38,7 @@ class ZeroShotHeatmapText:
        
         # Entire Text
         text_batch.append(text)
-        masks.append(1-mask)
+        masks.append(mask)
 
         # Horizontal Pass
         for window_size in range(1, max_window_size):
@@ -47,8 +47,7 @@ class ZeroShotHeatmapText:
                 m[:start_idx] = 0
                 m[start_idx + window_size :] = 0
                 text_batch.append(" ".join(words[start_idx : start_idx + window_size]))
-                masks.append(1-m)  # We compare against entire text
-                # if similarity has greater change, it means that it is more important
+                masks.append(m)
 
         return text_batch, masks
 
