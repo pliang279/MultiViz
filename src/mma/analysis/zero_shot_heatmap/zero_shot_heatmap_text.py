@@ -35,20 +35,20 @@ class ZeroShotHeatmapText:
         masks = []
 
         mask = np.ones(num_words)
-
-        if max_window_size < num_words:
-            # Entire Text
-            text_batch.append(text)
-            masks.append(mask)
+       
+        # Entire Text
+        text_batch.append(text)
+        masks.append(mask)
 
         # Horizontal Pass
-        for window_size in range(1, max_window_size+1):
+        for window_size in range(1, max_window_size):
             for start_idx in range(num_words-window_size+1):
                 m = mask.copy()
                 m[:start_idx] = 0
                 m[start_idx + window_size :] = 0
                 text_batch.append(" ".join(words[start_idx : start_idx + window_size]))
-                masks.append(m)
+                masks.append(1-m)  # We compare against entire text
+                # if similarity has greater change, it means that it is more important
 
         return text_batch, masks
 
