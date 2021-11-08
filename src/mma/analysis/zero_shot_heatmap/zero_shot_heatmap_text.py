@@ -85,7 +85,7 @@ class ZeroShotHeatmapText:
         scores = []
         mask_val = np.zeros_like(masks[0])
 
-        for t, e, m in zip(text, text_embeddings, masks):
+        for t, e, m in zip(texts, text_embeddings, masks):
             sim = np.matmul(e, image_embedding.T)
             if verbose:
                 print("Text", t, " Similarity:", sim)
