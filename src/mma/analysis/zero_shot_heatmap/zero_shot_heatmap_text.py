@@ -42,7 +42,7 @@ class ZeroShotHeatmapText:
             masks.append(mask)
 
         # Horizontal Pass
-        for window_size in range(1, max_window_size):
+        for window_size in range(1, max_window_size+1):
             for start_idx in range(num_words-window_size+1):
                 m = mask.copy()
                 m[:start_idx] = 0
