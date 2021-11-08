@@ -1,17 +1,16 @@
 import unittest
 from typing import List
 
-import torch
 from PIL import Image
 
 import numpy as np
-from mma.analysis.zero_shot_heatmap.zero_shot_heatmap_image import ZeroShotHeatmapImage
+from mma.analysis.zero_shot_heatmap.zero_shot_heatmap_text import ZeroShotHeatmapText
 
 
-class TestZeroShotHeatmapImage(unittest.TestCase):
+class TestZeroShotHeatmapText(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.zshi = ZeroShotHeatmapImage()
+        cls.zsht = ZeroShotHeatmapText()
         cls.image = Image.fromarray(np.uint8(np.random.randint(0, 256, (4, 4, 3))))
         cls.text = "This is an example text"
         cls.text_to_token = {
@@ -26,7 +25,6 @@ class TestZeroShotHeatmapImage(unittest.TestCase):
     def test_explain_instance(self):
         def image_preprocessor_fn(image: Image):
             image = np.asarray(image) // 255
-            image = torch.from_numpy(image)
             return image
 
         def image_encoder_fn(input_arr: np.ndarray):
@@ -88,8 +86,15 @@ class TestZeroShotHeatmapImage(unittest.TestCase):
 
             return out
 
-        def text_encoder_fn(text: str):
-            word_embeds = list(map(self.text_to_token.get, text.lower().split()))
+        def text_encoder_fn(input_texts: List[str]):
+            samples = []
+            for text in input_texts:
+                if text.lower().split() == []:
+                    samples.append([5])
+                else:
+                    samples.append(
+                        list(map(self.text_to_token.get, text.lower().split()))
+                    )
             embedding = np.array(
                 [
                     [-1.879321, -0.37232661, 0.80240232, -0.19308255],
@@ -101,22 +106,25 @@ class TestZeroShotHeatmapImage(unittest.TestCase):
                 ]
             )
 
-            out = embedding[word_embeds[0]]
-            for j in range(1, len(word_embeds)):
-                out += embedding[word_embeds[j]]
+            out = []
+            for sample in samples:
+                out.append(embedding[sample[0]])
+                for j in range(1, len(sample)):
+                    out[-1] += embedding[sample[j]]
+
+            out = np.array(out)
 
             out /= np.linalg.norm(out)
 
             return out
 
-        scores = self.zshi.explain_instance(
+        scores = self.zsht.explain_instance(
             self.image,
             self.text,
             image_encoder_fn,
             text_encoder_fn,
             image_preprocessor_fn=image_preprocessor_fn,
-            resize_size=4,
-            pixel_size=2,
+            max_window_size=5,
         )
 
         assert isinstance(scores, np.ndarray)

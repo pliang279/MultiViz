@@ -1,10 +1,10 @@
 from typing import Callable
 
+import torch
 from PIL import Image
 
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 
 
 class ZeroShotHeatmapImage:
@@ -84,7 +84,12 @@ class ZeroShotHeatmapImage:
         image_embeddings = []
         for i in range(0, len(images), batch_size):
             if image_preprocessor_fn is not None:
-                images_batch = torch.stack([image_preprocessor_fn(image) for image in images[i:i+batch_size]])
+                images_batch = torch.stack(
+                    [
+                        image_preprocessor_fn(image)
+                        for image in images[i : i + batch_size]
+                    ]
+                )
             image_embeddings.append(image_encoder_fn(images_batch))
         image_embeddings = np.vstack(image_embeddings)
 

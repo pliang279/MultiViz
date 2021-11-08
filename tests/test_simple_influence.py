@@ -1,10 +1,11 @@
 import unittest
 
-import numpy as np
 import torch
 import torch.nn as nn
-from mma.analysis.influence_functions.simple_influence import SimpleInfluence
 from torch.utils.data import DataLoader, Dataset
+
+import numpy as np
+from mma.analysis.influence_functions.simple_influence import SimpleInfluence
 
 
 def recursive_match(actual, expected):
