@@ -64,6 +64,7 @@ class ZeroShotHeatmapText:
         resize_size:int = 224,
         iter: int = 3,
         batch_size: int = 4,
+        verbose = False,
     ):
         
         image = self.pad_to_square(image, resize_size)
@@ -84,8 +85,11 @@ class ZeroShotHeatmapText:
         scores = []
         mask_val = np.zeros_like(masks[0])
 
-        for e, m in zip(text_embeddings, masks):
+        for t, e, m in zip(text, text_embeddings, masks):
             sim = np.matmul(e, image_embedding.T)
+            if verbose:
+                print("Text", t, " Similarity:", sim)
+                print("Mask: ", m)
             sims.append(sim)
             if len(sims) > 1:
                 scores.append(sim * m)
