@@ -101,3 +101,39 @@ text_exp = Lime.explain_text_instance(
 fig = text_exp.as_pyplot_figure(label=label_idx)
 plt.show()
 ```
+#### Lime Image-Text Explainer
+```python
+import numpy as np
+from mma.analysis.surrogates.lime.lime_image_text import LimeImageTextExplainer
+
+image = ...
+text = ...
+label_idx = ...
+
+def predictor_fn(images, texts):
+  ...
+
+explainer = LimeImageTextExplainer()
+
+out = explainer.explain_instance(
+  np.array(images),
+  text,
+  classifier_fn,
+  labels=(1403,) # Index of the predicted label
+  num_image_samples=5,
+  num_text_samples=5
+)
+
+(
+  intercept,
+  coefs,
+  features,
+  prediction_scores,
+  local_predictions,
+  split_index,
+  image,
+  segments,
+  indexed_string
+) = out
+```
+
