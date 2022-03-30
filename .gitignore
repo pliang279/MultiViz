@@ -142,3 +142,7 @@ mma_env*
 
 # VSCode
 .vscode*
+
+# data
+structured-framework/data/*
+structured-framework/tmp/*
