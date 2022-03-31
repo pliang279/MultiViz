@@ -5,6 +5,7 @@ sys.path.insert(1,os.getcwd())
 VQA_URL = "https://raw.githubusercontent.com/airsplay/lxmert/master/data/vqa/trainval_label2ans.json"
 from models.lxmert_extras import utils
 import json
+import random
 
 # download train split or val split
 def download_data(split = 'val'):
@@ -36,6 +37,20 @@ class VQADataset():
         return imgfile,ques,aword,label
     def length(self):
         return len(self.q['questions'])
+    def classnames(self):
+        return self.answermapping
+    def sample(self,num,noNone=True):
+        sampled=[]
+        nums=[]
+        for i in range(self.length()):
+            nums.append(i)
+        random.shuffle(nums)
+        while(len(sampled) < num):
+            a = self.getdata(nums[i])
+            if a[-1] is not None or not noNone:
+                sampled.append(a)
+        return sampled
+
 
 
 

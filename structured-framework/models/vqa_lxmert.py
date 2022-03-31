@@ -82,12 +82,14 @@ class VQALXMERT(analysismodel):
         for di in datainstances:
             outs.append(self.forward(di))
         return outs
+    def getlogitsize(self):
+        return 3129
     def getlogit(self,resultobj):
         return resultobj[0]
     def getprelinear(self,resultobj):
         return resultobj[1]
     def getpredlabel(self,resultobj):
-        return resultobj[0].argmax(-1)
+        return resultobj[0].argmax(-1).item()
     def replaceunimodaldata(self,datainstance,modality,newinput):
         if modality == 'image':
             randname = 'tmp/vqa'+str(random.randint(0,100000000))+'.jpg'

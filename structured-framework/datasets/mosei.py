@@ -16,7 +16,7 @@ from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader, Dataset
 
 np.seterr(divide='ignore', invalid='ignore')
-
+torch.multiprocessing.set_sharing_strategy('file_system')
 class MOSEIDataset:
     def __init__(self,split='test',path='/home/paul/MultiBench/mosei_senti_data.pkl'):
         if split == 'train':
@@ -32,6 +32,18 @@ class MOSEIDataset:
         return self.dataset[idx]
     def length(self):
         return len(self.dataset)
+    def classnames(self):
+        return ['negative','positive']
+    def sample(self,num):
+        sampled=[]
+        nums=[]
+        for i in range(self.length()):
+            nums.append(i)
+        random.shuffle(nums)
+        while(len(sampled) < num):
+            a = self.getdata(nums[i])
+            sampled.append(a)
+        return sampled
         
 
 

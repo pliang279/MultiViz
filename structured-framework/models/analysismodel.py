@@ -19,6 +19,9 @@ class analysismodel():
     # compute the output of the model with the given list of datainstance, returning a list of result objects (this may allow batching)
     def forwardbatch(self,datainstances):
         raise NotImplementedError
+    # get the size of the pre-softmax logit
+    def getlogitsize(self):
+        raise NotImplementedError
     # returns the pre-softmax logits of the result
     def getlogit(self,resultobj):
         raise NotImplementedError
