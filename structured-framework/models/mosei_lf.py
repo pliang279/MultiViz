@@ -28,9 +28,9 @@ class MOSEILF(analysismodel):
                     model_features = input[0]
                 handle = self.model.head.fc2.register_forward_hook(hook)
                 out = self.model([jj.float().to(self.device) for jj in j[:-1]])
-                handle.remove()
                 for i in range(len(j[0])):
                     outs.append((out[i],model_features[i]))
+                handle.remove()
         return outs
     def getlogitsize(self):
         return 2
@@ -40,6 +40,8 @@ class MOSEILF(analysismodel):
         return resultobj[1]
     def getpredlabel(self,resultobj):
         return resultobj[0].argmax(-1).item()
+    def getprelinearsize(self):
+        return 400
     def replaceunimodaldata(self,datainstance,modality,newdata):
         c = copy.deepcopy(datainstance)
         c[self.modalitynames.index(modality)] = newdata

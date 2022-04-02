@@ -36,6 +36,11 @@ class analysismodel():
         raise NotImplementedError
     # replace data in one modality in an instance with a different data
     def replaceunimodaldata(self,datainstance,modality,newinput):
-        raise NotImplementedError 
+        raise NotImplementedError
+    # get size of prelinear
+    def getprelinearsize(self):
+        raise NotImplementedError
+        
+
     
 

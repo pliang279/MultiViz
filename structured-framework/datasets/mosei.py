@@ -14,7 +14,7 @@ import torchtext as text
 from collections import defaultdict
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader, Dataset
-
+import random
 np.seterr(divide='ignore', invalid='ignore')
 torch.multiprocessing.set_sharing_strategy('file_system')
 class MOSEIDataset:
@@ -40,9 +40,11 @@ class MOSEIDataset:
         for i in range(self.length()):
             nums.append(i)
         random.shuffle(nums)
+        idx=0
         while(len(sampled) < num):
-            a = self.getdata(nums[i])
+            a = self.getdata(nums[idx])
             sampled.append(a)
+            idx += 1
         return sampled
         
 

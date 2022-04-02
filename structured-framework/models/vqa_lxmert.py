@@ -90,6 +90,8 @@ class VQALXMERT(analysismodel):
         return resultobj[1]
     def getpredlabel(self,resultobj):
         return resultobj[0].argmax(-1).item()
+    def getprelinearsize(self):
+        return 1536
     def replaceunimodaldata(self,datainstance,modality,newinput):
         if modality == 'image':
             randname = 'tmp/vqa'+str(random.randint(0,100000000))+'.jpg'

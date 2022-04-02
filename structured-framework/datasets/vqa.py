@@ -45,10 +45,12 @@ class VQADataset():
         for i in range(self.length()):
             nums.append(i)
         random.shuffle(nums)
+        idx=0
         while(len(sampled) < num):
-            a = self.getdata(nums[i])
+            a = self.getdata(nums[idx])
             if a[-1] is not None or not noNone:
                 sampled.append(a)
+            idx += 1
         return sampled
 
 

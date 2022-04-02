@@ -19,6 +19,9 @@ def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,
             logits = [analysismodel.getlogit(result) for result in results]
         return np.asarray([tryconverttonp(logit) for logit in logits])
     additionalparam={}
+    totallabels = analysismodel.getlogitsize()
+    if on_sparse:
+        totallabels = analysismodel.getprelinearsize()
     if modalitytype == 'image':
         lime_explainer = lime_image.LimeImageExplainer()
         additionalparam['hide_color']=0
@@ -29,10 +32,10 @@ def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,
         lime_explainer = lime_tabular.LimeTabularExplainer(class_names = class_names, categorical_names = None)
     elif modalitytype == 'timeseries':
         lime_explainer = EmbeddingTimeSeriesExplainer()
-        additionalparam['totallabels'] = analysismodel.getlogitsize()
+        additionalparam['totallabels'] = totallabels
     elif modalitytype == 'timeseriesC':
         lime_explainer = CategoricalTimeSeriesExplainer()
-        additionalparam['totallabels'] = analysismodel.getlogitsize() 
+        additionalparam['totallabels'] = totallabels
     else:
         raise NotImplemented
     return lime_explainer.explain_instance(originstance,classify,num_samples = num_samples, labels = labels, **additionalparam)
