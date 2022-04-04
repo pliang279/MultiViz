@@ -5,7 +5,7 @@ import copy
 import sys
 class MOSEILF(analysismodel):
     def __init__(self,pretrained_model_path,multibench_path,device='cuda:0',batch_size=32):
-        sys.path.insert(2,multibench_path)
+        sys.path.insert(2, multibench_path)
         self.model = torch.load(pretrained_model_path).to(device)
         self.modalitynames = ['image','audio','text']
         self.modalitytypes = ['timeseries','timeseries','timeseries']
