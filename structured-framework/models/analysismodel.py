@@ -40,7 +40,11 @@ class analysismodel():
     # get size of prelinear
     def getprelinearsize(self):
         raise NotImplementedError
-        
+    # get grad w.r.t. one modality input
+    def getgrad(self,datainstance,modality,target):
+        raise NotImplementedError
+
+
 
     
 

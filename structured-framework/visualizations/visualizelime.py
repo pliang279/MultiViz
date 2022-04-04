@@ -26,7 +26,18 @@ def visualizelime(explanation,modalitytype,label,savedir = 'visuals/lime.png',sh
         _ = plt.bar(locs,vals,color=colors,width=framelength,align='edge')
 
     elif modalitytype == 'timeseriesC':
-        raise NotImplementedError
+        exps = explanation[str(label)]
+        locs = []
+        vals = []
+        colors = []
+        for a,b in exps[1]:
+            locs.append(a)
+            vals.append(b)
+            if b > 0:
+                colors.append('green')
+            else:
+                colors.append('red')
+        _ = plt.bar(locs,vals,color=colors,width=0.7)
     else:
         raise ValueError
     if show:
