@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from analysis.utils import tryconverttonp
 
 
-def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,num_samples=100, batch_size=5, on_sparse=False, post_softmax=False, class_names = None, categorical_names = None):
+def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,num_samples=100, batch_size=5, on_sparse=False, post_softmax=False, class_names = None, feature_names = None, tabularbase=None):
     originstance = analysismodel.getunimodaldata(datainstance, modalityname)
     def classify(inputs):
         modifiedinputs = [analysismodel.replaceunimodaldata(datainstance,modalityname,i) for i in inputs]
@@ -29,7 +29,7 @@ def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,
     elif modalitytype == 'text':
         lime_explainer = lime_text.LimeTextExplainer(class_names = class_names)
     elif modalitytype == 'tabular':
-        lime_explainer = lime_tabular.LimeTabularExplainer(class_names = class_names, categorical_names = None)
+        lime_explainer = lime_tabular.LimeTabularExplainer(class_names = class_names, feature_names = feature_names,training_data=tabularbase)
     elif modalitytype == 'timeseries':
         lime_explainer = EmbeddingTimeSeriesExplainer()
         additionalparam['totallabels'] = totallabels
@@ -80,7 +80,7 @@ class CategoricalTimeSeriesExplainer:
             else:   
                 datas[i]=np.einsum("ij,j->ij",inp,masks[i])
                 distances[i]=spatial.distance.cosine(masks[0],masks[i])
-            llabels[i]=classfn(datas[i])
+            llabels[i]=classfn(datas[i:i+1])
         ret={}
         for corr in correct:
             ret[str(corr)] = self.base.explain_instance_with_data(masks,llabels,distances,corr,len(inp[0]),feature_selection=self.fs)
