@@ -25,3 +25,11 @@ def get_saliency_map(datainstance,analysismodel,target,multiplyorig=False):
             rets.append(grad_to_saliency2(orig[i],grad[i]))
     return rets
 
+def get_double_grad(targetval,in1,in2,atargets):
+    k=torch.autograd.grad(targetval,in1,create_graph=True)
+    rets=[]
+    for a in atargets:
+        rets.append(torch.autograd.grad(k[a],in2))
+    return rets
+
+
