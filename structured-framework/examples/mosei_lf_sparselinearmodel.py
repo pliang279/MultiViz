@@ -26,4 +26,5 @@ sparsityaccgraph(res,'visuals/moseispartsityaccplot.png')
 # get data point to analyze
 datainstance = instance3[0]
 # visualize unimodal lime on top 5 features
-analyzepointandvisualizeall(params,datainstance,analysismodel,analysismodel.getpredlabel(analysismodel.forward(datainstance)),'visuals/vqa-lxmert-sparse')
+# analyzepointandvisualizeall(params,datainstance,analysismodel,analysismodel.getpredlabel(analysismodel.forward(datainstance)),'visuals/vqa-lxmert-sparse')
+analyzefeaturesandvisualizeall(params, instance3, analysismodel, 1, 'visuals/vqa-lxmert-sparse', prelinear=None, pathnum=95, k=5)

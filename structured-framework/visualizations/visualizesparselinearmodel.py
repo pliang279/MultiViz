@@ -41,7 +41,7 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
         # get prelinear features if not specified already
         if prelinear == None:
             model_outs = analysismodel.forwardbatch(datainstances)
-            prelinear = torch.zeros((len(model_outs, analysismodel.getprelinearsize())))
+            prelinear = torch.zeros((len(model_outs), analysismodel.getprelinearsize()))
             for j, model_out in enumerate(model_outs):
                 prelinear[j] = model_out[1]
 

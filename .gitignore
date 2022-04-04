@@ -147,3 +147,4 @@ mma_env*
 structured-framework/data/*
 structured-framework/tmp/*
 structured-framework/visuals/*
+structured-framework/ckpt/*
