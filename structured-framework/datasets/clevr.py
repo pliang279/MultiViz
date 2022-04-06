@@ -5,6 +5,7 @@ sys.path.insert(1,os.getcwd())
 import json
 import random
 
+
 # download train, test, and val split
 def download_data():
     os.system('bash datasets/clevr_extras/clevrdownload.sh')
@@ -16,8 +17,8 @@ class CLEVRDataset():
         self.answermapping = ["yes", "no", "small", "large", "gray", "red", "blue", "green", "brown", 
                               "purple", "cyan", "yellow", "cube", "sphere", "cylinder", "rubber", "metal", 
                               0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-        with open("data/raw/CLEVR_v1.0/questions/CLEVR_"+split+"_questions.json") as f:
-            q = json.load(f)
+        with open("data/CLEVR_v1.0/questions/CLEVR_"+split+"_questions.json") as f:
+            self.q = json.load(f)
         self.split = split
 
     def getdata(self,idx):
@@ -26,7 +27,7 @@ class CLEVRDataset():
         question = question_info['question']
         question_id = question_info['question_index']
         answer = question_info['answer']
-        imgfile = f"data/CLEVR_v1.0/images/"+split+"/CLEVR_"+split+"_{image_id:06d}.png"
+        imgfile = "data/CLEVR_v1.0/images/"+self.split+"/CLEVR_"+self.split+f"_{image_id:06d}.png"
         return imgfile, question, answer
 
     def length(self):

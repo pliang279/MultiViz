@@ -19,7 +19,7 @@ def getembeds(datainstances,analysismodel,reallabel=True):
     return embeds
 
 def get_sparse_linear_model(analysismodel,trainembeds,valembeds,testembeds,modelsavedir='ckpt/sparselinearmodel.pt',model_idxs=np.arange(100)):
-    linear = torch.nn.Linear(len(trainembeds[0][0]),analysismodel.getlogitsize()).to(analysismodel.device)
+    linear = torch.nn.Linear(analysismodel.getprelinearsize(),analysismodel.getlogitsize()).to(analysismodel.device)
     torch.nn.init.constant_(linear.weight, 0)
     torch.nn.init.constant_(linear.bias, 0)
     training_loader = DataLoader(trainembeds,shuffle=True,batch_size=64)
@@ -46,7 +46,7 @@ def get_sparse_linear_model(analysismodel,trainembeds,valembeds,testembeds,model
     torch.save(params,modelsavedir)
     accuracies = []
     sparse_cnts = []
-    for model_idx in model_idxs:
+    for model_idx in tqdm(model_idxs):
         pretrained_weights = params['path'][model_idx]['weight']
         pretrained_bias = params['path'][model_idx]['bias']
         linear.load_state_dict({'weight': pretrained_weights, 'bias': pretrained_bias})
@@ -57,7 +57,22 @@ def get_sparse_linear_model(analysismodel,trainembeds,valembeds,testembeds,model
         accuracies.append(accuracy)  
     return params, (accuracies,sparse_cnts)
 
+def getresonly(params,analysismodel,testembeds,model_idxs=np.arange(100)):
 
+    test_loader = DataLoader(testembeds,shuffle=False,batch_size=64)
+    linear = torch.nn.Linear(analysismodel.getprelinearsize(),analysismodel.getlogitsize()).to(analysismodel.device)
+    accuracies = []
+    sparse_cnts = []
+    for model_idx in tqdm(model_idxs):
+        pretrained_weights = params['path'][model_idx]['weight']
+        pretrained_bias = params['path'][model_idx]['bias']
+        linear.load_state_dict({'weight': pretrained_weights, 'bias': pretrained_bias})
+        linear.eval()
+        accuracy, sparse_cnt, numel = evaluate_sparse_linear_model(test_loader, linear, analysismodel.device)
+        # sparsity = sparse_cnt/numel
+        sparse_cnts.append(sparse_cnt.cpu().item())
+        accuracies.append(accuracy)  
+    return params, (accuracies,sparse_cnts)
 
 
 def evaluate_sparse_linear_model(test_loader, model,device):

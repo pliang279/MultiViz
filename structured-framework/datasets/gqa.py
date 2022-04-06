@@ -24,7 +24,7 @@ class CLEVRDataset():
         question = question_info['question']
         question_id = question_info['question_index']
         answer = question_info['answer']
-        imgfile = f"data/CLEVR_v1.0/images/"+split+"/CLEVR_"+split+"_{image_id:06d}.png"
+        imgfile = "data/CLEVR_v1.0/images/"+split+"/CLEVR_"+split+f"_{image_id:06d}.png"
         return imgfile, question, answer
 
     def length(self):

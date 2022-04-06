@@ -38,7 +38,7 @@ def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,
         additionalparam['totallabels'] = totallabels
     else:
         raise NotImplemented
-    return lime_explainer.explain_instance(originstance,classify,num_samples = num_samples, labels = labels, **additionalparam)
+    return lime_explainer.explain_instance(originstance,classify,num_samples = num_samples, labels = labels, top_labels=None,**additionalparam)
 
 
         

@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
 import torch
 
-def sparsityaccgraph(res,savedir,show=False):
+def sparsityaccgraph(res,savedir,show=False,scatter=False):
     plt.clf()
-    plt.plot(res[1],res[0])
+    if scatter:
+        plt.scatter(res[1],res[0])
+    else:
+        plt.plot(res[1],res[0])
     if show:
         plt.show()
     plt.savefig(savedir)
@@ -43,7 +46,7 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
             model_outs = analysismodel.forwardbatch(datainstances)
             prelinear = torch.zeros((len(model_outs), analysismodel.getprelinearsize()))
             for j, model_out in enumerate(model_outs):
-                prelinear[j] = model_out[1]
+                prelinear[j] = analysismodel.getprelinear(model_outs[j])
 
         maximal_idx = torch.argmax(prelinear, dim=0)
         for j in range(k):

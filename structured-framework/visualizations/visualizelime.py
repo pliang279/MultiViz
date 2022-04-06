@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import torch
 from skimage.segmentation import mark_boundaries
 def visualizelime(explanation,modalitytype,label,savedir = 'visuals/lime.png',show=False,num_features = 10, hide_rest = False,positive_only=False):
     plt.clf()
