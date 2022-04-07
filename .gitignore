@@ -148,3 +148,5 @@ structured-framework/data/*
 structured-framework/tmp/*
 structured-framework/visuals/*
 structured-framework/ckpt/*
+# remove later
+structured-framework/scratch.ipynb
