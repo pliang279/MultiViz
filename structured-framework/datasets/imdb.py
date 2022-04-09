@@ -10,6 +10,7 @@ import os
 import sys
 import numpy as np
 import torch
+import random
 
 
 class IMDBDataset:
@@ -52,4 +53,12 @@ class IMDBDataset:
         raise NotImplementedError
 
     def sample(self, num):
-        raise NotImplementedError
+        sampled=[]
+        nums = list(range(self.length()))
+        random.shuffle(nums)
+        idx = 0
+        while(len(sampled) < num):
+            a = self.getdata(nums[idx])
+            sampled.append(a)
+            idx += 1
+        return sampled

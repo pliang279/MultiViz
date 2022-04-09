@@ -13,8 +13,17 @@ pretrained_model_path = '/home/paul/nihalj/multimodal_analysis/structured-framew
 multibench_path = '/home/paul/yiwei/MultiBench'
 
 train_dataset = IMDBDataset(data_path, 'train', vggfeature=True)
-trainloader = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4)
 val_dataset = IMDBDataset(data_path, 'val', vggfeature=True)
-valloader = DataLoader(val_dataset, batch_size=128, shuffle=False, num_workers=4)
+test_dataset = IMDBDataset(data_path, 'test', vggfeature=True)
 
 analysismodel = IMDb_LF(pretrained_model_path, multibench_path)
+
+train_instances = train_dataset.sample(train_dataset.length())
+val_instances = val_dataset.sample(val_dataset.length())
+test_instances = test_dataset.sample(test_dataset.length())
+
+# TODO: SLM currently only works for classification; Deal with multilabel classification SLM
+params,res = get_sparse_linear_model(analysismodel, getembeds(train_instances, analysismodel), 
+                                     getembeds(val_instances, analysismodel), 
+                                     getembeds(test_instances,analysismodel,
+                                     reallabel=True))

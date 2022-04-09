@@ -9,6 +9,7 @@ class IMDb_LF(analysismodel):
     def __init__(self, pretrained_model_path, multibench_path, device='cuda:0', batch_size=32):
         sys.path.insert(2, multibench_path)
         self.model = torch.load(pretrained_model_path).to(device)
+        self.model.eval()
         self.modalitynames = [] # TODO
         self.modalitytypes = [] # TODO
         self.device = device
@@ -57,7 +58,6 @@ class IMDb_LF(analysismodel):
 
     def replaceunimodaldata(self,datainstance,modality,newdata):
         raise NotImplementedError
-
 
 
 def main():
