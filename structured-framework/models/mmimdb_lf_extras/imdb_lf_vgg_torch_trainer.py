@@ -2,9 +2,8 @@ import os
 import sys
 import torch
 
-multibench_path = '/home/paul/nihalj/MultiBench'
+multibench_path = '/home/paul/yiwei/MultiBench'
 sys.path.append(multibench_path)
-sys.path.append('/home/paul/MultiBench/datasets/imdb')
 
 from torch.utils.data import Dataset, DataLoader
 import h5py
@@ -58,7 +57,7 @@ head = Linear(1024, 23).cuda()
 fusion = Concat().cuda()
 
 
-model_save_fn = 'imdb_best_lf_vgg_torch.pth'
+model_save_fn = 'imdb_best_lf_vgg_torch_yiwei.pth'
 train(encoders, fusion, head, traindata, validdata, 1000, early_stop=True, task="multilabel",
       save=model_save_fn, optimtype=torch.optim.AdamW, lr=8e-3, weight_decay=0.01, objective=torch.nn.BCEWithLogitsLoss())
 

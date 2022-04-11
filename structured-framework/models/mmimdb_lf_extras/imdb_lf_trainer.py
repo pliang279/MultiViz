@@ -2,9 +2,8 @@ import os
 import sys
 import torch
 
-multibench_path = '/home/paul/nihalj/MultiBench'
+multibench_path = '/home/paul/yiwei/MultiBench'
 sys.path.append(multibench_path)
-sys.path.append('/home/paul/MultiBench/datasets/imdb')
 
 from torch.utils.data import Dataset, DataLoader
 import h5py

@@ -15,18 +15,18 @@ class IMDb_LF(analysismodel):
         self.device = device
         self.batch_size = batch_size
 
-    def getunimodaldata(self,datainstance,modality):
+    def getunimodaldata(self, datainstance, modality):
         raise NotImplementedError
         return datainstance[self.modalitynames.index(modality)]
 
-    def getcorrectlabel(self,datainstance):
+    def getcorrectlabel(self, datainstance):
         return datainstance[-1]
 
     def forward(self, datainstance):
         return self.forwardbatch([datainstance])[0]
 
-    def forwardbatch(self,datainstances):
-        loader = DataLoader(datainstances,num_workers=0,batch_size=self.batch_size, shuffle=False)
+    def forwardbatch(self, datainstances):
+        loader = DataLoader(datainstances, num_workers=0, batch_size=self.batch_size, shuffle=False)
         outs = []
         with torch.no_grad():
             for j in loader:
@@ -56,13 +56,13 @@ class IMDb_LF(analysismodel):
     def getprelinearsize(self):
         return 1024
 
-    def replaceunimodaldata(self,datainstance,modality,newdata):
+    def replaceunimodaldata(self, datainstance, modality, newdata):
         raise NotImplementedError
 
 
 def main():
-    pretrained_model_path = '/home/paul/multimodal_analysis/structured_framework/visuals/best_lf.pth'
-    multibench_path = '/home/paul/MultiBench'
+    pretrained_model_path = '/home/paul/nihalj/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch_yiwei.pth'
+    multibench_path = '/home/paul/yiwei/MultiBench'
     imdb_lf = IMDb_LF(pretrained_model_path, multibench_path, device='cuda', batch_size=128)
     return
 

@@ -1,16 +1,56 @@
 """Implements dataloaders for IMDB dataset"""
 
-from tqdm import tqdm
-from PIL import Image
-import json
-from torch.utils.data import Dataset, DataLoader
 import h5py
-from gensim.models import KeyedVectors
-import os
-import sys
-import numpy as np
-import torch
 import random
+
+class IMDBDataset_pd:
+    """Implements a torch Dataset class for the imdb dataset using pd df."""
+    
+    def __init__(self, df, split=None):
+        """Initialize IMDBDataset object.
+
+        Args:
+            df (pd.DataFrame): 
+            start_ind (int): Starting index for dataset
+            end_ind (int): Ending index for dataset
+        """
+        if split == 'train':
+            self.start_ind = 0
+            self.end_ind = 15552
+        elif split == 'val':
+            self.start_ind = 15552
+            self.end_ind = 18160
+        elif split == 'test':
+            self.start_ind = 18160
+            self.end_ind = 25959
+        else:
+            raise NotImplementedError
+        self.size = self.end_ind - self.start_ind
+        self.df = df
+
+    def getdata(self, ind):
+        row = self.df.iloc[ind + self.start_ind]
+        text = row['text_features']
+        image = row['image_features']
+        label = row['labels']
+        return text, image, label
+
+    def length(self):
+        return self.size
+
+    def classnames(self):
+        raise NotImplementedError
+
+    def sample(self, num):
+        sampled=[]
+        nums = list(range(self.length()))
+        random.shuffle(nums)
+        idx = 0
+        while(len(sampled) < num):
+            a = self.getdata(nums[idx])
+            sampled.append(a)
+            idx += 1
+        return sampled
 
 
 class IMDBDataset:
