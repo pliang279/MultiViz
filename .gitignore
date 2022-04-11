@@ -151,4 +151,4 @@ structured-framework/ckpt/*
 # remove later
 structured-framework/scratch.ipynb
 structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl
-structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch.pth
+structured-framework/models/mmimdb_lf_extras/*.pth

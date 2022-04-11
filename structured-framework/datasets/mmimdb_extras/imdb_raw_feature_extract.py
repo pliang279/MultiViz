@@ -19,9 +19,8 @@ raw_imdb_root_path = '/home/paul/nihalj/MultiBench/datasets/imdb/mmimdb/dataset'
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 googleword2vec = KeyedVectors.load_word2vec_format(word2vec_path, binary=True)
-vgg16_model = torchvision.models.vgg16(pretrained=True)
+vgg16_model = torchvision.models.vgg16(pretrained=True).to(device)
 vgg16_model.eval()
-vgg16_model = vgg16_model.to(device)
 
 
 def _process_data(filename, root_path):
@@ -45,7 +44,7 @@ def _process_data(filename, root_path):
     data['image_tensor'] = input_tensor
 
     # process text
-    with open(filepath+".json", "r") as f:
+    with open(filepath + ".json", "r") as f:
         info = json.load(f)
         plot = info["plot"]
         plot_id = np.array([len(p) for p in plot]).argmax()
