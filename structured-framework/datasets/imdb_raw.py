@@ -12,7 +12,7 @@ import torchvision.transforms as transforms
 
 class IMDBDataset:
     
-    def __init__(self, split, raw_data_path, vgg16, word2vec, device='cuda', dataset=None, table_path=None):
+    def __init__(self, split, raw_data_path, dataset=None, table_path=None):
         """Initialize IMDBDataset object.
 
         Args:
@@ -37,40 +37,26 @@ class IMDBDataset:
             raise NotImplementedError
 
         self.size = self.end_ind - self.start_ind
-        if self.dataset == None:
+        if dataset == None:
             assert table_path != None, 'Enter valid path for IMDB data'
             self.dataset = h5py.File(table_path, 'r')
         else:
             self.dataset = dataset
 
         self.raw_imdb_root_path = raw_data_path
-        self.vgg16 = vgg16
-        self.word2vec = word2vec
-        self.device = device
 
+        self.image_preprocess = transforms.Compose([
+                                    transforms.Resize(256),
+                                    transforms.CenterCrop(224)
+                                ])
 
     def getdata(self, ind):
-        
         imdb_id = self.dataset['imdb_ids'][ind].decode('utf-8')
         data = _process_data(imdb_id, self.raw_imdb_root_path)
         labels = self.dataset['genres'][ind]
-        
-        words = data['plot'].split()
-        if len([self.word2vec[w] for w in words if w in self.word2vec]) == 0:
-            text_features = np.zeros((300,))
-        else:
-            text_features = np.array([self.word2vec[w] for w in words if w in self.word2vec]).mean(axis=0)
-
-        image_features = None
-        def hook(module, input, output):
-            nonlocal image_features
-            image_features = input[0].squeeze().cpu()
-        handle = self.vgg16.classifier[6].register_forward_hook(hook)
-        with torch.no_grad():
-            _ = self.vgg16(data['image_tensor'].unsqueeze(0).to(self.device))
-        handle.remove()
-
-        return text_features, image_features, labels
+        text = data['plot']
+        image = np.asarray(self.image_preprocess(data['image']))
+        return text, image, labels
         
 
     def length(self):
@@ -101,16 +87,15 @@ def _process_data(filename, root_path):
     # process image
     with Image.open(filepath + ".jpeg") as f:
         raw_img = f.convert("RGB")
-        image = np.array(raw_img)
-        data["image"] = image
-        preprocess = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ])
-    input_tensor = preprocess(f.convert('RGB'))
-    data['image_tensor'] = input_tensor
+        data["image"] = raw_img
+        # preprocess = transforms.Compose([
+        #     transforms.Resize(256),
+        #     transforms.CenterCrop(224),
+        #     transforms.ToTensor(),
+        #     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        # ])
+    # input_tensor = preprocess(f.convert('RGB'))
+    # data['image_tensor'] = input_tensor
 
     # process text
     with open(filepath + ".json", "r") as f:
