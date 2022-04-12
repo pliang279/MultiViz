@@ -63,7 +63,11 @@ class IMDBDataset:
         return self.size
 
     def classnames(self):
-        raise NotImplementedError
+        return eval(self.dataset['genres'].attrs['target_names'])
+        # ["Drama", "Comedy", "Romance", "Thriller", "Crime", "Action", "Adventure", 
+        # "Horror", "Documentary", "Mystery", "Sci-Fi", "Fantasy", "Family", 
+        # "Biography", "War", "History", "Music", "Animation", "Musical", 
+        # "Western", "Sport", "Short", "Film-Noir"]
 
     def sample(self, num):
 

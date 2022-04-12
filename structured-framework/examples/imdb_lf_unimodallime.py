@@ -4,6 +4,7 @@ import h5py
 import torch
 from gensim.models import KeyedVectors
 import torchvision
+import numpy as np
 
 sys.path.insert(1,os.getcwd())
 
@@ -28,22 +29,27 @@ vgg16_model.eval()
 datas = IMDBDataset('val', raw_data_path, dataset=dataset)
 # get the model
 analysismodel = IMDb_LF(model_path, multibench_path, word2vec, vgg16_model, device, batch_size=32)
-# pick data instance you want to explain
-instance = datas.getdata(0)
-# get the model predicted label
-predlabel = analysismodel.getpredlabel(analysismodel.forward(instance))
-# get the correct label
-correctlabel = analysismodel.getcorrectlabel(instance)
 
-print(predlabel, correctlabel)
 
-# generate lime explanation for image modality on both correct label and predicted label
-explanation1 = rununimodallime(instance, 'image', 'image', analysismodel, (predlabel,correctlabel))
-# generate lime explanation for text modality on both correct label and predicted label
-# explanation2 = rununimodallime(instance,'text','text',analysismodel,(predlabel,correctlabel),class_names=datas.classnames())
-# visualize explanations and save to directory
-visualizelime(explanation1, 'image', predlabel, 'visuals/imdb-lf-0-image-lime-pred.png')
-visualizelime(explanation1, 'image', correctlabel, 'visuals/imdb-lf-0-image-lime-correct.png')
-# visualizelime(explanation2,'text',predlabel,'visuals/vqa-lxmert-0-text-lime-pred.png')
-# visualizelime(explanation2,'text',correctlabel,'visuals/vqa-lxmert-0-text-lime-correct.png')
+np.random.seed(10)
+for i in np.random.randint(low=0, high=datas.length(), size=10):
 
+    instance = datas.getdata(i)
+
+    predlabel = analysismodel.getpredlabel(analysismodel.forward(instance))
+    correctlabel = analysismodel.getcorrectlabel(instance)
+
+    classnames = datas.classnames()
+    print(f'Example {i} -- Predicted: {classnames[predlabel]}, True: {classnames[correctlabel]}')
+
+    explanation1 = rununimodallime(instance, 'image', 'image', analysismodel, (predlabel,correctlabel))
+    explanation2 = rununimodallime(instance, 'text', 'text', analysismodel, (predlabel,correctlabel), class_names=datas.classnames())
+
+    visualizelime(explanation1, 'image', predlabel, f'visuals/imdb/imdb-lf-{i}-image-lime-pred.png')
+    visualizelime(explanation1, 'image', correctlabel, f'visuals/imdb/imdb-lf-{i}-image-lime-correct.png')
+    visualizelime(explanation2,'text', predlabel, f'visuals/imdb/imdb-lf-{i}-text-lime-pred.png')
+    visualizelime(explanation2,'text', correctlabel, f'visuals/imdb/imdb-lf-{i}-text-lime-correct.png')
+
+#527
+#2042
+#1949

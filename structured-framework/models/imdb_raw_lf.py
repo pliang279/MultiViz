@@ -101,11 +101,15 @@ class IMDb_LF(analysismodel):
 
     def replaceunimodaldata(self, datainstance, modality, newdata):
         if modality == 'image':
-            ret = (datainstance[0], newdata, datainstance[1])
+            ret = (datainstance[0], newdata, datainstance[2])
+            assert len(ret) == len(datainstance)
+            return ret
+        elif modality == 'text':
+            ret = (newdata, datainstance[1], datainstance[2])
             assert len(ret) == len(datainstance)
             return ret
         else:
-            raise NotImplementedError
+            raise ValueError(f'{modality} not compatible with this model')
 
 
 def main():
