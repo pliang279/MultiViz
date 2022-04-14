@@ -12,15 +12,12 @@ import torchvision.transforms as transforms
 
 class IMDBDataset:
     
-    def __init__(self, split, raw_data_path, dataset=None, table_path=None):
+    def __init__(self, split, raw_data_path, dataset=None, table_path=None, crop=True):
         """Initialize IMDBDataset object.
 
         Args:
-            dataset (h5py.File): Raw IMDB data table
             split (str): Type of split
             raw_data_path (str): Path to raw IMDB data dir
-            vgg16 : torch model for VGG16
-            word2vec: Google word2vec
             table_path: path to IMDB data table
         """
         
@@ -45,15 +42,20 @@ class IMDBDataset:
 
         self.raw_imdb_root_path = raw_data_path
 
-        self.image_preprocess = transforms.Compose([
-                                    transforms.Resize(256),
-                                    transforms.CenterCrop(224)
+        if crop:
+            self.image_preprocess = transforms.Compose([
+                                    transforms.Resize((256, 256)),
+                                    transforms.CenterCrop((224, 224))
+                                ])
+        else:
+            self.image_preprocess = transforms.Compose([
+                                    transforms.Resize((224, 224))
                                 ])
 
     def getdata(self, ind):
-        imdb_id = self.dataset['imdb_ids'][ind].decode('utf-8')
+        imdb_id = self.dataset['imdb_ids'][self.start_ind + ind].decode('utf-8')
         data = _process_data(imdb_id, self.raw_imdb_root_path)
-        labels = self.dataset['genres'][ind]
+        labels = self.dataset['genres'][self.start_ind + ind]
         text = data['plot']
         image = np.asarray(self.image_preprocess(data['image']))
         return text, image, labels

@@ -10,17 +10,18 @@ class IMDb_LF(analysismodel):
         sys.path.insert(2, multibench_path)
         self.model = torch.load(pretrained_model_path).to(device)
         self.model.eval()
-        self.modalitynames = [] # TODO
-        self.modalitytypes = [] # TODO
+        self.modalitynames = ['text', 'image']
+        self.modalitytypes = ['text', 'image']
         self.device = device
         self.batch_size = batch_size
 
     def getunimodaldata(self, datainstance, modality):
-        raise NotImplementedError
         return datainstance[self.modalitynames.index(modality)]
 
     def getcorrectlabel(self, datainstance):
-        return datainstance[-1]
+        # currently returning the last correct genre
+        # TODO: Discuss how to fix this
+        return datainstance[-1].nonzero()[0][-1]
 
     def forward(self, datainstance):
         return self.forwardbatch([datainstance])[0]
@@ -57,7 +58,16 @@ class IMDb_LF(analysismodel):
         return 1024
 
     def replaceunimodaldata(self, datainstance, modality, newdata):
-        raise NotImplementedError
+        if modality == 'image':
+            ret = (datainstance[0], newdata, datainstance[2])
+            assert len(ret) == len(datainstance)
+            return ret
+        elif modality == 'text':
+            ret = (newdata, datainstance[1], datainstance[2])
+            assert len(ret) == len(datainstance)
+            return ret
+        else:
+            raise ValueError(f'{modality} not compatible with this model')
 
 
 def main():
