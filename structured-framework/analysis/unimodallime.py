@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from analysis.utils import tryconverttonp
 
 
-def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,num_samples=100, batch_size=5, on_sparse=False, post_softmax=False, class_names = None, feature_names = None, tabularbase=None):
+def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,num_samples=100, batch_size=5, on_sparse=False, post_softmax=False, class_names = None, feature_names = None, tabularbase=None, segmentation_fn=None):
     originstance = analysismodel.getunimodaldata(datainstance, modalityname)
     def classify(inputs):
         modifiedinputs = [analysismodel.replaceunimodaldata(datainstance,modalityname,i) for i in inputs]
@@ -26,6 +26,7 @@ def rununimodallime(datainstance,modalityname,modalitytype,analysismodel,labels,
         lime_explainer = lime_image.LimeImageExplainer()
         additionalparam['hide_color']=0
         additionalparam['batch_size']=batch_size
+        additionalparam['segmentation_fn'] = segmentation_fn
     elif modalitytype == 'text':
         lime_explainer = lime_text.LimeTextExplainer(class_names = class_names)
     elif modalitytype == 'tabular':

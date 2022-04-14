@@ -150,6 +150,7 @@ structured-framework/visuals/*
 structured-framework/ckpt/*
 # remove later
 structured-framework/scratch.ipynb
+structured-framework/scratch_analysis.ipynb
 structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl
 structured-framework/models/mmimdb_lf_extras/*.pt
 structured-framework/models/mmimdb_lf_extras/*.pth
