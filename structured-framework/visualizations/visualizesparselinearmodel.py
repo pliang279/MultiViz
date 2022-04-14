@@ -13,7 +13,7 @@ def sparsityaccgraph(res,savedir,show=False,scatter=False):
 
 from analysis.unimodallime import rununimodallime
 from visualizations.visualizelime import visualizelime
-def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,pathnum = 95,k=5):
+def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,pathnum = 95,k=5,numfeats=3):
     glmres = params['path'][pathnum]
     topk = glmres["weight"][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
@@ -22,7 +22,7 @@ def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,p
         modalitytype = analysismodel.getmodalitytypes()[i]
         retters=rununimodallime(datainstance,modalityname,modalitytype,analysismodel,topk,on_sparse=True)
         for j in range(k):
-            visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png')
+            visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png',num_features=numfeats)
     plt.clf()
     fig,ax=plt.subplots(nrows=len(analysismodel.getmodalitynames()),ncols=k,figsize=(30,21))
     
@@ -33,16 +33,18 @@ def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,p
     plt.savefig(prefix+'-all-lime-feats.png')
 
 
-def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, prefix, prelinear=None, pathnum=95, k=5):
+def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, prefix, prelinear=None, pathnum=95, k=5,numfeats=3):
     glmres = params['path'][pathnum]
     topk = glmres['weight'][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
+    idxs=[]
     for i in range(len(analysismodel.getmodalitynames())):
+        idxs.append([])
         modalityname = analysismodel.getmodalitynames()[i]
         modalitytype = analysismodel.getmodalitytypes()[i]
 
         # get prelinear features if not specified already
-        if prelinear == None:
+        if prelinear is None:
             model_outs = analysismodel.forwardbatch(datainstances)
             prelinear = torch.zeros((len(model_outs), analysismodel.getprelinearsize()))
             for j, model_out in enumerate(model_outs):
@@ -50,9 +52,10 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
 
         maximal_idx = torch.argmax(prelinear, dim=0)
         for j in range(k):
+            idxs[i].append(maximal_idx[topk[j]])
             datainstance = datainstances[maximal_idx[topk[j]]] # use the most activating example for this feature
             retters=rununimodallime(datainstance,modalityname,modalitytype,analysismodel,topk,on_sparse=True)
-            visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png')
+            visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png',num_features=numfeats)
     plt.clf()
     fig,ax=plt.subplots(nrows=len(analysismodel.getmodalitynames()),ncols=k,figsize=(30,21))
     
@@ -60,4 +63,5 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
         modalityname = analysismodel.getmodalitynames()[i]
         for j in range(k):
             ax[i][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png'))
+            ax[i][j].title.set_text(str(idxs[i][j]))
     plt.savefig(prefix+'-all-lime-feats.png')

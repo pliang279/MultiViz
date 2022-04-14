@@ -4,7 +4,9 @@ import sys
 sys.path.insert(1,os.getcwd())
 import json
 import random
-
+import numpy as np
+import PIL
+from PIL import Image
 
 # download train, test, and val split
 def download_data():
@@ -16,7 +18,8 @@ class CLEVRDataset():
     def __init__(self,split='val'):
         self.answermapping = ["yes", "no", "small", "large", "gray", "red", "blue", "green", "brown", 
                               "purple", "cyan", "yellow", "cube", "sphere", "cylinder", "rubber", "metal", 
-                              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                              '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', 
+                              '14', '15', '16', '17', '18', '19']
         with open("data/CLEVR_v1.0/questions/CLEVR_"+split+"_questions.json") as f:
             self.q = json.load(f)
         self.split = split
@@ -28,7 +31,9 @@ class CLEVRDataset():
         question_id = question_info['question_index']
         answer = question_info['answer']
         imgfile = "data/CLEVR_v1.0/images/"+self.split+"/CLEVR_"+self.split+f"_{image_id:06d}.png"
-        return imgfile, question, answer
+        image = np.asarray(Image.open(imgfile).convert('RGB'))
+        label = self.answermapping.index(answer)
+        return imgfile, question, answer, label
 
     def length(self):
         return len(self.q['questions'])

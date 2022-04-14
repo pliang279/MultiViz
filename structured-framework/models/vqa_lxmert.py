@@ -101,6 +101,41 @@ class VQALXMERT(analysismodel):
             return datainstance[0],newinput,datainstance[2],datainstance[3]
         else:
             raise ValueError
+    def getgrad(self,datainstance,target):
+        
+        images,sizes,scales_yx = self.image_preprocess(datainstance[0])
+        images.requires_grad=True
+        output_dict = self.frcnn(
+            images.to(self.device),
+            sizes.to(self.device),
+            scales_yx=scales_yx.to(self.device),
+            padding="max_detections",
+            max_detections=self.frcnn_cfg.max_detections,
+            return_tensors="pt",
+            location=self.device
+        )
+        normalized_boxes = output_dict.get("normalized_boxes")
+        features = output_dict.get("roi_features")
+        inputs = self.lxmert_tokenizer(
+            [datainstance[1]],
+            padding="max_length",
+            max_length=20,
+            truncation=True,
+            return_token_type_ids=True,
+            return_attention_mask=True,
+            add_special_tokens=True,
+            return_tensors="pt"
+        )
+        output_vqa = self.lxmert_vqa(
+            input_ids=inputs.input_ids.to(self.device),
+            attention_mask=inputs.attention_mask.to(self.device),
+            visual_feats=features.to(self.device),
+            visual_pos=normalized_boxes.to(self.device),
+            token_type_ids=inputs.token_type_ids.to(self.device),
+            output_attentions=False,
+        )
+        output_vqa['question_answering_score'][0][target].backward()
+        return images.grad.detach()[0]
 
 
 
