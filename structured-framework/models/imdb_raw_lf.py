@@ -111,6 +111,9 @@ class IMDb_LF(analysismodel):
         else:
             raise ValueError(f'{modality} not compatible with this model')
 
+    def getgrad(self, datainstance, target):
+        raise NotImplementedError
+
 
 def main():
     pretrained_model_path = '/home/paul/multimodal_analysis/structured_framework/visuals/best_lf.pth'
