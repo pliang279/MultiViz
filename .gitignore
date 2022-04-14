@@ -148,6 +148,8 @@ structured-framework/data/*
 structured-framework/tmp/*
 structured-framework/visuals/*
 structured-framework/ckpt/*
+structured-framework/*.out
+structured-framework/*.png
 # remove later
 structured-framework/scratch.ipynb
 structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl

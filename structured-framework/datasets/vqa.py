@@ -52,6 +52,11 @@ class VQADataset():
                 sampled.append(a)
             idx += 1
         return sampled
+    def getseqdata(self,start,end):
+        a=[]
+        for i in range(start,end):
+            a.append(self.getdata(i))
+        return a
 
 
 
