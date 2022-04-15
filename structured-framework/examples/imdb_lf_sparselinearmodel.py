@@ -18,7 +18,7 @@ np.random.seed(0)
 
 table_path = '/home/paul/yiwei/MultiBench/multimodal_imdb.hdf5'
 dataset = h5py.File(table_path, 'r')
-model_path = '/home/paul/nihalj/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch.pth'
+model_path = '/home/paul/nihalj/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch_yiwei.pth'
 multibench_path = '/home/paul/nihalj/MultiBench'
 word2vec_path = '/home/paul/nihalj/MultiBench/datasets/imdb/GoogleNews-vectors-negative300.bin.gz'
 raw_imdb_root_path = '/home/paul/nihalj/MultiBench/datasets/imdb/mmimdb/dataset'

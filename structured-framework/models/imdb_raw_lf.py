@@ -111,8 +111,39 @@ class IMDb_LF(analysismodel):
         else:
             raise ValueError(f'{modality} not compatible with this model')
 
+
     def getgrad(self, datainstance, target):
-        raise NotImplementedError
+        
+        # text
+        text_features = np.zeros((1, 300))
+        raw_text = datainstance[0]
+        words = raw_text.split()
+        if len([self.word2vec[w] for w in words if w in self.word2vec]) == 0:
+            text_features[0, :] = np.zeros((300,))
+        else:
+            text_features[0, :] = np.array([self.word2vec[w] for w in words if w in self.word2vec]).mean(axis=0)
+        text_features = torch.from_numpy(text_features).to(self.device)
+        text_features.requires_grad = True
+
+        # image
+        input_tensors = torch.zeros((1, 3, 224, 224))
+        input_tensors[0] = self.image_preprocess(datainstance[1])
+        image_features = None
+        def hook(module, input, output):
+            nonlocal image_features
+            image_features = input[0]
+        handle = self.vgg16.classifier[6].register_forward_hook(hook)
+        input_tensors.requires_grad = True
+        _ = self.vgg16(input_tensors.to(self.device))
+        handle.remove()
+
+        model_inp = [text_features.float(), image_features.float()]
+
+        out = self.model(model_inp)
+        out[0][target].backward()
+
+        grads = [text_features.grad.detach()[0], input_tensors.grad.detach()[0]]
+        return model_inp, grads
 
 
 def main():
