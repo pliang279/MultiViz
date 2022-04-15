@@ -157,6 +157,52 @@ class CLEVRMDETR(analysismodel):
         grad = normed_image.grad.detach()
         return normed_image, grad, imgfile
 
+    def getgradtext(self, datainstance, target):
+        self.model.zero_grad()
+        image = PIL.Image.open(datainstance[0]).convert('RGB')
+        normed_image = self.get_normed(image, self.dummy_info)
+        samples = torch.unsqueeze(normed_image, 0).to(self.device)
+        captions = [datainstance[1]]
+
+        text_embedding = None
+        text_ids = None
+        #grad = None
+        def hook_forward(module, input, output):
+            nonlocal text_embedding, text_ids
+            text_embedding = output[0]
+            text_ids = input[0]
+
+
+        handle = self.model.transformer.text_encoder.embeddings.word_embeddings.register_forward_hook(hook_forward)
+        #handle2 = self.model.transformer.text_encoder.embeddings.word_embeddings.register_backward_hook(hook_backward)
+
+        memory_cache = self.model(samples, captions, encode_and_save=True)
+        outputs = self.model(samples, captions, encode_and_save=False, memory_cache=memory_cache)
+        pred_answer_binary_comp = -outputs['pred_answer_binary']
+        probas = torch.cat((outputs['pred_answer_binary'].unsqueeze(0).T, pred_answer_binary_comp.unsqueeze(0).T, 
+                                outputs['pred_answer_attr'], outputs['pred_answer_reg']), 1)
+   
+        #print(self.model.transformer.text_encoder.embeddings.word_embeddings.weight[2264])
+        
+        #probas[0][target].backward()
+        handle.remove()
+        #handle2.remove()
+        embeds=torch.zeros(len(text_ids),768)
+        for i in range(len(text_ids)):
+            embeds[i] = self.model.transformer.text_encoder.embeddings.word_embeddings.weight[i]
+        grad = torch.autograd.grad(probas[0][target],text_embedding,create_graph=True)
+        res = torch.sum(embeds * grad, dim=1)
+        return res, datainstance[1],normed_image
+
+    def getdoublegrad(self,datainstance,target,targetwords):
+        res, _,normed_image = self.getgradtext(datainstance,target)
+        normed_image.requires_grad = True
+        ac = 0.0
+        for id in targetwords:
+            ac += res[id]
+        rets = torch.autograd.grad(ac,normed_image)
+        return rets
+
 if __name__ == '__main__':
     dataset = CLEVRDataset()
     model = CLEVRMDETR()
@@ -177,6 +223,8 @@ if __name__ == '__main__':
     #visualizelime(exp, 'image', pred_label_idx)
 
     pre_linear = model.getprelinear(resobj)
-    print(pre_linear.shape)'''
+    print(pre_linear.shape)
 
-    print(model.getgrad(datainstance, 0))
+    print(model.getgrad(datainstance, 0))'''
+    #print(model.getgradtext(datainstance, 0))
+    print(model.getdoublegrad(datainstance, 19, [13,14,15]))
