@@ -157,57 +157,75 @@ class CLEVRMDETR(analysismodel):
         grad = normed_image.grad.detach()
         return normed_image, grad, imgfile
 
-    def getgradtext(self, datainstance, target):
+    def getgradtext(self, datainstance, target,alltarget=False):
         self.model.zero_grad()
         image = PIL.Image.open(datainstance[0]).convert('RGB')
         normed_image = self.get_normed(image, self.dummy_info)
+        normed_image.requires_grad=True
         samples = torch.unsqueeze(normed_image, 0).to(self.device)
         captions = [datainstance[1]]
 
         text_embedding = None
         text_ids = None
-        #grad = None
+        gradd = None
         def hook_forward(module, input, output):
             nonlocal text_embedding, text_ids
             text_embedding = output[0]
             text_ids = input[0]
-
-
+        def hook_backward(module,input,output):
+            nonlocal gradd
+            print('called4')
+            gradd = output[0][0]
+            #print(grad)
         handle = self.model.transformer.text_encoder.embeddings.word_embeddings.register_forward_hook(hook_forward)
-        #handle2 = self.model.transformer.text_encoder.embeddings.word_embeddings.register_backward_hook(hook_backward)
+        handle2 = self.model.transformer.text_encoder.embeddings.word_embeddings.register_backward_hook(hook_backward)
 
         memory_cache = self.model(samples, captions, encode_and_save=True)
+        #print('mid')
         outputs = self.model(samples, captions, encode_and_save=False, memory_cache=memory_cache)
         pred_answer_binary_comp = -outputs['pred_answer_binary']
         probas = torch.cat((outputs['pred_answer_binary'].unsqueeze(0).T, pred_answer_binary_comp.unsqueeze(0).T, 
                                 outputs['pred_answer_attr'], outputs['pred_answer_reg']), 1)
    
         #print(self.model.transformer.text_encoder.embeddings.word_embeddings.weight[2264])
-        
-        #probas[0][target].backward()
+        if alltarget:
+            torch.sum(probas[0]).backward(create_graph=True)
+        else:
+            probas[0][target].backward(create_graph=True)
+        #print(gradd)
+        #gradd[12][13].backward()
         handle.remove()
-        #handle2.remove()
-        embeds=torch.zeros(len(text_ids),768)
-        for i in range(len(text_ids)):
-            embeds[i] = self.model.transformer.text_encoder.embeddings.word_embeddings.weight[i]
-        grad = torch.autograd.grad(probas[0][target],text_embedding,create_graph=True)
-        res = torch.sum(embeds * grad, dim=1)
-        return res, datainstance[1],normed_image
+        handle2.remove()
+        #gradd = torch.autograd.grad(probas[0][target],,create_graph=True)
+        res = torch.sum(text_embedding * gradd, dim=1)
+        return res, datainstance[1],normed_image,text_ids
 
-    def getdoublegrad(self,datainstance,target,targetwords):
-        res, _,normed_image = self.getgradtext(datainstance,target)
-        normed_image.requires_grad = True
+    def getdoublegrad(self,datainstance,target,targetwords,alltarget=True):
+        #graddd=None
+        #def hook_backward(module,input,output):
+        #    nonlocal graddd
+        #    print('called2!')
+        #    graddd = input[0][0]
+        #handle3 = self.model.backbone[0].body.conv1.register_backward_hook(hook_backward)
+        #def hook_forward(module,input,output):
+        #    print('called1!')
+        #handle = self.model.backbone[0].body.conv1.register_forward_hook(hook_forward)
+        res, di,normed_image,text_ids = self.getgradtext(datainstance,target,alltarget=alltarget)
         ac = 0.0
         for id in targetwords:
-            ac += res[id]
+            ac += torch.abs(res[id])
+        #ac.backward()
+        #print(graddd.size())
+        #handle3.remove()
+        #return graddd
         rets = torch.autograd.grad(ac,normed_image)
-        return rets
+        return rets[0],di,text_ids
 
 if __name__ == '__main__':
     dataset = CLEVRDataset()
     model = CLEVRMDETR()
 
-    datainstance = dataset.getdata(5)
+    datainstance = dataset.getdata(10)
     '''print(datainstance)
     resobj = model.forward(datainstance)
     pred_label_idx = model.getpredlabel(resobj)
@@ -226,5 +244,12 @@ if __name__ == '__main__':
     print(pre_linear.shape)
 
     print(model.getgrad(datainstance, 0))'''
-    #print(model.getgradtext(datainstance, 0))
-    print(model.getdoublegrad(datainstance, 19, [13,14,15]))
+    #print(model.getgradtext(datainstance, 19))
+    grads,di,tids=model.getdoublegrad(datainstance, datainstance[-1], [13,14,15,16])
+    print(di)
+    print(tids)
+    from visualizations.visualizegradient import *
+    t=normalize255(torch.sum(torch.abs(grads),dim=0))
+    heatmap2d(t,'gss2.png',datainstance[0])
+
+

@@ -66,5 +66,5 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
         for j in range(k):
             for jj in range(pointsperfeat):
                 ax[i*pointsperfeat+jj][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png'))
-                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][j]))
+                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][jj]))
     plt.savefig(prefixall+'-all-lime-feats.png')
