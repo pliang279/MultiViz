@@ -148,6 +148,7 @@ structured-framework/data/*
 structured-framework/tmp/*
 structured-framework/visuals/*
 structured-framework/ckpt/*
+structured-framework/ckpt2/*
 structured-framework/*.out
 structured-framework/*.png
 # remove later

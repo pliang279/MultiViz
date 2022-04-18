@@ -13,7 +13,7 @@ def sparsityaccgraph(res,savedir,show=False,scatter=False):
 
 from analysis.unimodallime import rununimodallime
 from visualizations.visualizelime import visualizelime
-def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,pathnum = 95,k=5,numfeats=3):
+def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,prefixall,pathnum = 95,k=5,numfeats=3):
     glmres = params['path'][pathnum]
     topk = glmres["weight"][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
@@ -30,10 +30,10 @@ def analyzepointandvisualizeall(params,datainstance,analysismodel,label,prefix,p
         modalityname = analysismodel.getmodalitynames()[i]
         for j in range(k):
             ax[i][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png'))
-    plt.savefig(prefix+'-all-lime-feats.png')
+    plt.savefig(prefixall+'-all-lime-feats.png')
 
 
-def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, prefix, prelinear=None, pathnum=95, k=5,numfeats=3):
+def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, prefix, prefixall, prelinear=None, pathnum=95, k=5,numfeats=3,pointsperfeat=1):
     glmres = params['path'][pathnum]
     topk = glmres['weight'][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
@@ -52,16 +52,19 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
 
         maximal_idx = torch.argmax(prelinear, dim=0)
         for j in range(k):
-            idxs[i].append(maximal_idx[topk[j]])
-            datainstance = datainstances[maximal_idx[topk[j]]] # use the most activating example for this feature
-            retters=rununimodallime(datainstance,modalityname,modalitytype,analysismodel,topk,on_sparse=True)
-            visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png',num_features=numfeats)
+            maximal_idxs = prelinear[:,topk[j]].argsort()[-pointsperfeat:]
+            for jj in range(pointsperfeat):
+                idxs[i].append(maximal_idxs[jj])
+                datainstance = datainstances[maximal_idxs[jj]] # use the most activating example for this feature
+                retters=rununimodallime(datainstance,modalityname,modalitytype,analysismodel,topk,on_sparse=True)
+                visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png',num_features=numfeats)
     plt.clf()
-    fig,ax=plt.subplots(nrows=len(analysismodel.getmodalitynames()),ncols=k,figsize=(30,21))
+    fig,ax=plt.subplots(nrows=len(analysismodel.getmodalitynames())*pointsperfeat,ncols=k,figsize=(30,21))
     
     for i in range(len(analysismodel.getmodalitynames())):
         modalityname = analysismodel.getmodalitynames()[i]
         for j in range(k):
-            ax[i][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'.png'))
-            ax[i][j].title.set_text(str(idxs[i][j]))
-    plt.savefig(prefix+'-all-lime-feats.png')
+            for jj in range(pointsperfeat):
+                ax[i*pointsperfeat+jj][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png'))
+                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][jj]))
+    plt.savefig(prefixall+'-all-lime-feats.png')
