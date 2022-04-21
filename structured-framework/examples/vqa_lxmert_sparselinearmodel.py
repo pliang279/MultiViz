@@ -35,10 +35,11 @@ for i in range(len(pl)):
 def analyze(i):
     datainstance = datas.getdata(i)
     predlabel = analysismodel.getpredlabel(analysismodel.forward(datainstance))
-    analyzefeaturesandvisualizeall(params, sampledata, analysismodel, predlabel, 'visuals/tmp/vqa-lxmert-sparse-'+str(i)+'-sampled-', 'visuals/alls/vqa-lxmert-sparse-'+str(i)+'-sampled-',  prelinear=pl.float(), pathnum=95, k=5,pointsperfeat=3)
+    #analyzefeaturesandvisualizeall(params, sampledata, analysismodel, predlabel, 'visuals/tmp/vqa-lxmert-sparse-'+str(i)+'-sampled-', 'visuals/alls/vqa-lxmert-sparse-'+str(i)+'-sampled-',  prelinear=pl.float(), pathnum=95, k=5,pointsperfeat=3)
     analyzepointandvisualizeall(params,datainstance,analysismodel,analysismodel.getpredlabel(analysismodel.forward(datainstance)),'visuals/tmp/vqa-lxmert-sparse-'+str(i)+'-','visuals/alls/vqa-lxmert-sparse-'+str(i)+'-',pathnum=95,k=5)
-for i in range(0,150):
-    analyze(i*50+5)
+#for i in range(0,150):
+#    analyze(i*50+5)
+analyze(554)
 #"""
 
 

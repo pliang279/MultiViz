@@ -6,7 +6,8 @@ VQA_URL = "https://raw.githubusercontent.com/airsplay/lxmert/master/data/vqa/tra
 from models.lxmert_extras import utils
 import json
 import random
-
+from PIL import Image
+import matplotlib.pyplot as plt
 # download train split or val split
 def download_data(split = 'val'):
     os.system('bash datasets/vqa_extras/vqadownload'+split+'.sh')
@@ -57,7 +58,16 @@ class VQADataset():
         for i in range(start,end):
             a.append(self.getdata(i))
         return a
-
+    def makepic(self,id,pr=None):
+        plt.clf()
+        d=self.getdata(id)
+        imgfile,ques,aword,label = d
+        plt.imshow(Image.open(imgfile))
+        title="Question: "+ques+"\nid: "+str(id)+" Correct answer: "+aword
+        if pr is not None:
+            title+=(" Pred Answer: "+self.classnames()[pr])
+        plt.title(title)
+        plt.savefig("visuals/data/vqa-"+self.split+"-"+str(id)+".png")
 
 
 

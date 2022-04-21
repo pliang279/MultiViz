@@ -23,6 +23,7 @@ class CLEVRDataset():
         with open("data/CLEVR_v1.0/questions/CLEVR_"+split+"_questions.json") as f:
             self.q = json.load(f)
         self.split = split
+         
 
     def getdata(self,idx):
         question_info = self.q["questions"][idx]

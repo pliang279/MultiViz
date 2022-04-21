@@ -2,14 +2,16 @@ import torch
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
-def normalize255(t):
+def normalize255(t,fac=255.0):
     upmost = torch.max(torch.abs(t))
-    return (255.0*t/upmost).long()
+    return (fac*t/upmost).long()
 
 
 
 def heatmap2d(t,savename,orig=None):
+    plt.clf()
     pxs=torch.zeros(len(t),len(t[0]),3)
+    t = torch.clamp(t,-255,255)
     for i in range(len(t)):
         for j in range(len(t[0])):
             if t[i,j] >= 0:
@@ -20,7 +22,26 @@ def heatmap2d(t,savename,orig=None):
     if orig is not None:
         img2 = Image.open(orig)
         plt.imshow(img2)
-        plt.imshow(img,alpha=0.7)
+        plt.imshow(img,alpha=0.75)
     else:
         plt.imshow(img)
     plt.savefig(savename)
+
+def textmap(words,weights,savedir,tops=10):
+    c=torch.argsort(torch.abs(weights))
+    if len(c) > tops:
+        c=c[-tops:]
+    c=c.cpu().tolist()
+    plt.clf()
+    vals=[]
+    names=[]
+    for i in c:
+        vals.append(weights[i].item())
+        names.append(words[i])
+    colors = ['green' if x < 0 else 'red' for x in vals]
+    pos = np.arange(len(colors))+.5
+    plt.barh(pos,vals,align='center',color=colors)
+    plt.yticks(pos,names)
+    plt.savefig(savedir)
+
+

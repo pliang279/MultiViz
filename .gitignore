@@ -151,6 +151,7 @@ structured-framework/ckpt/*
 structured-framework/ckpt2/*
 structured-framework/*.out
 structured-framework/*.png
+structured-framework/*.json
 # remove later
 structured-framework/scratch.ipynb
 structured-framework/scratch_analysis.ipynb

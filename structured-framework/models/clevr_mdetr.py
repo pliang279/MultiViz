@@ -15,9 +15,11 @@ from models.analysismodel import analysismodel
 import models.mdetr.dataset.transforms as T
 import PIL
 import random
+import tqdm
 
 from datasets.clevr import CLEVRDataset
 from analysis.unimodallime import*
+from analysis.SparseLinearEncoding import*
 from visualizations.visualizelime import visualizelime
 
 
@@ -83,6 +85,7 @@ class CLEVRMDETR(analysismodel):
 
             model_features=[]
             def hook(module, input, output):
+                nonlocal model_features
                 model_feat = input
                 model_features.append(model_feat[0][0])
             handle1 = self.model.answer_type_head.register_forward_hook(hook)
@@ -111,7 +114,7 @@ class CLEVRMDETR(analysismodel):
         return outs
         
     def getlogitsize(self):
-        return 27
+        return 37
 
     def getlogit(self,resultobj):
         return resultobj[0]
@@ -135,7 +138,7 @@ class CLEVRMDETR(analysismodel):
         else:
             raise ValueError
 
-    def getgrad(self, datainstance, target):
+    def getgrad(self, datainstance, target,prelinear=False):
         self.model.zero_grad()
         imgfile = datainstance[0]
         image = PIL.Image.open(imgfile).convert('RGB')
@@ -146,18 +149,39 @@ class CLEVRMDETR(analysismodel):
         samples = torch.unsqueeze(normed_image, 0).to(self.device)
         captions = [datainstance[1]]
 
+        if prelinear:
+            model_features=[]
+            def hook(module, input, output):
+                nonlocal model_features
+                model_feat = input
+                model_features.append(model_feat[0][0])
+
+            handle1 = self.model.answer_type_head.register_forward_hook(hook)
+            handle2 = self.model.answer_binary_head.register_forward_hook(hook)
+            handle3 = self.model.answer_attr_head.register_forward_hook(hook)
+            handle4 = self.model.answer_reg_head.register_forward_hook(hook)
+
         memory_cache = self.model(samples, captions, encode_and_save=True)
         outputs = self.model(samples, captions, encode_and_save=False, memory_cache=memory_cache)
         pred_answer_binary_comp = -outputs['pred_answer_binary']
         probas = torch.cat((outputs['pred_answer_binary'].unsqueeze(0).T, pred_answer_binary_comp.unsqueeze(0).T, 
                             outputs['pred_answer_attr'], outputs['pred_answer_reg']), 1)
         
-    
-        probas[0][target].backward()
+        if prelinear:
+            feats=torch.cat(model_features) 
+            feats[target].backward()
+        else:
+            probas[0][target].backward()
         grad = normed_image.grad.detach()
+        if prelinear:
+            
+            handle1.remove()
+            handle2.remove()        
+            handle3.remove()        
+            handle4.remove()                            
         return normed_image, grad, imgfile
 
-    def getgradtext(self, datainstance, target,alltarget=False):
+    def getgradtext(self, datainstance, target,alltarget=False,prelinear=False):
         self.model.zero_grad()
         image = PIL.Image.open(datainstance[0]).convert('RGB')
         normed_image = self.get_normed(image, self.dummy_info)
@@ -178,8 +202,19 @@ class CLEVRMDETR(analysismodel):
             gradd = output[0][0]
             #print(grad)
         handle = self.model.transformer.text_encoder.embeddings.word_embeddings.register_forward_hook(hook_forward)
-        handle2 = self.model.transformer.text_encoder.embeddings.word_embeddings.register_backward_hook(hook_backward)
+        handle22 = self.model.transformer.text_encoder.embeddings.word_embeddings.register_backward_hook(hook_backward)
 
+        if prelinear:
+            model_features=[]
+            def hook(module, input, output):
+                nonlocal model_features
+                model_feat = input
+                model_features.append(model_feat[0][0])
+
+            handle1 = self.model.answer_type_head.register_forward_hook(hook)
+            handle2 = self.model.answer_binary_head.register_forward_hook(hook)
+            handle3 = self.model.answer_attr_head.register_forward_hook(hook)
+            handle4 = self.model.answer_reg_head.register_forward_hook(hook)
         memory_cache = self.model(samples, captions, encode_and_save=True)
         #print('mid')
         outputs = self.model(samples, captions, encode_and_save=False, memory_cache=memory_cache)
@@ -190,15 +225,24 @@ class CLEVRMDETR(analysismodel):
         #print(self.model.transformer.text_encoder.embeddings.word_embeddings.weight[2264])
         if alltarget:
             torch.sum(probas[0]).backward(create_graph=True)
+        elif prelinear:
+            feats=torch.cat(model_features) 
+            feats[target].backward()
         else:
-            probas[0][target].backward(create_graph=True)
+            probas[0][target].backward()
         #print(gradd)
         #gradd[12][13].backward()
         handle.remove()
-        handle2.remove()
+        handle22.remove()
         #gradd = torch.autograd.grad(probas[0][target],,create_graph=True)
         res = torch.sum(text_embedding * gradd, dim=1)
-        return res, datainstance[1],normed_image,text_ids
+        if prelinear:
+            
+            handle1.remove()
+            handle2.remove()        
+            handle3.remove()        
+            handle4.remove()                            
+        return res, parse(datainstance[1]),normed_image,text_ids
 
     def getdoublegrad(self,datainstance,target,targetwords,alltarget=True):
         #graddd=None
@@ -220,6 +264,16 @@ class CLEVRMDETR(analysismodel):
         #return graddd
         rets = torch.autograd.grad(ac,normed_image)
         return rets[0],di,text_ids
+
+
+def parse(sent):
+    words=[]
+    for word in sent[:-1].split(' '):
+        words.append(word)
+    words.append('?')
+    words.append('<end>')
+    words.insert(0,'<start>')
+    return words
 
 if __name__ == '__main__':
     dataset = CLEVRDataset()
@@ -243,13 +297,26 @@ if __name__ == '__main__':
     pre_linear = model.getprelinear(resobj)
     print(pre_linear.shape)
 
-    print(model.getgrad(datainstance, 0))'''
-    #print(model.getgradtext(datainstance, 19))
+    print(model.getgrad(datainstance, 0))
     grads,di,tids=model.getdoublegrad(datainstance, datainstance[-1], [13,14,15,16])
     print(di)
     print(tids)
     from visualizations.visualizegradient import *
     t=normalize255(torch.sum(torch.abs(grads),dim=0))
-    heatmap2d(t,'gss2.png',datainstance[0])
+    heatmap2d(t,'gss2.png',datainstance[0])'''
 
+    train_dataset = CLEVRDataset('train')
+    val_dataset = CLEVRDataset('val')
+    
+    idxs_train = np.random.choice(699900, 20000)
+    idxs_val = np.random.choice(149900, 20000)
+
+    val_instances = [val_dataset.getdata(i) for i in tqdm(idxs_val)]
+    train_instances = [train_dataset.getdata(i) for i in tqdm(idxs_train)]
+
+    train_embeds = getembeds(train_instances, model)
+    val_embeds = getembeds(val_instances, model)
+
+    params, (accuracies,sparse_cnts) = get_sparse_linear_model(model, train_embeds, val_embeds, 
+                                                               val_embeds, modelsavedir='ckpt/clevrsparselinearmodel_random.pt')
 

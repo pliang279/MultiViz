@@ -1,0 +1,173 @@
+{
+    "metadata": {
+        "dataset": "VQA",
+        "split": "val",
+        "id": 554
+    },
+    "instance": {
+        "image": "vqa-lxmert-554-origimage.png",
+        "text": "What is the table made of?",
+        "correct-answer": "glass",
+        "correct-answer-id": 2353,
+        "pred-answer": "glass",
+        "pred-id": 2353
+    },
+    "labels": {
+        "2353": {
+            "overviews": {
+                "LIME": {
+                    "image": "vqa-lxmert-554-image-lime-pred.png",
+                    "text": "vqa-lxmert-554-text-lime-pred.png"
+                },
+                "DIME": {
+                    "image-uni": "vqa-lxmert-554-image-dime-pred-uni.png",
+                    "text-uni": "vqa-lxmert-554-text-dime-pred-uni.png",
+                    "image-multi": "vqa-lxmert-554-image-dime-pred-multi.png",
+                    "text-multi": "vqa-lxmert-554-text-dime-pred-multi.png"
+                }
+            },
+            "features": [
+                {
+                    "id": 0,
+                    "weight": 0.162,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-554--image-lime-feat83.png",
+                        "text": "vqa-lxmert-sparse-554--text-lime-feat83.png"
+                    },
+                    "backward": [
+                        {
+                            "id": 6115,
+                            "orig": "vqa-val-6115.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat83-0.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat83-0.png"
+                        },
+                        {
+                            "id": 554,
+                            "orig": "vqa-val-554.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat83-1.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat83-1.png"
+                        },
+                        {
+                            "id": 4272,
+                            "orig": "vqa-val-4272.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat83-2.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat83-2.png"
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "weight": 0.0701,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-554--image-lime-feat569.png",
+                        "text": "vqa-lxmert-sparse-554--text-lime-feat569.png"
+                    },
+                    "backward": [
+                        {
+                            "id": 6788,
+                            "orig": "vqa-val-6788.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat569-0.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat569-0.png"
+                        },
+                        {
+                            "id": 9383,
+                            "orig": "vqa-val-9383.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat569-1.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat569-1.png"
+                        },
+                        {
+                            "id": 3321,
+                            "orig": "vqa-val-3321.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat569-2.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat569-2.png"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "weight": 0.2832,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-554--image-lime-feat1134.png",
+                        "text": "vqa-lxmert-sparse-554--text-lime-feat1134.png"
+                    },
+                    "backward": [
+                        {
+                            "id": 1162,
+                            "orig": "vqa-val-1162.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1134-0.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1134-0.png"
+                        },
+                        {
+                            "id": 5238,
+                            "orig": "vqa-val-5238.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1134-1.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1134-1.png"
+                        },
+                        {
+                            "id": 9702,
+                            "orig": "vqa-val-9702.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1134-2.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1134-2.png"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "weight": 0.1663,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-554--image-lime-feat1278.png",
+                        "text": "vqa-lxmert-sparse-554--text-lime-feat1278.png"
+                    },
+                    "backward": [
+                        {
+                            "id": 8217,
+                            "orig": "vqa-val-8217.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1278-0.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1278-0.png"
+                        },
+                        {
+                            "id": 1031,
+                            "orig": "vqa-val-1031.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1278-1.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1278-1.png"
+                        },
+                        {
+                            "id": 8996,
+                            "orig": "vqa-val-8996.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1278-2.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1278-2.png"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "weight": 0.0,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-554--image-lime-feat1535.png",
+                        "text": "vqa-lxmert-sparse-554--text-lime-feat1535.png"
+                    },
+                    "backward": [
+                        {
+                            "id": 578,
+                            "orig": "vqa-val-578.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1535-0.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1535-0.png"
+                        },
+                        {
+                            "id": 3979,
+                            "orig": "vqa-val-3979.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1535-1.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1535-1.png"
+                        },
+                        {
+                            "id": 3920,
+                            "orig": "vqa-val-3920.png",
+                            "image": "vqa-lxmert-sparse-554-sampled-image-lime-feat1535-2.png",
+                            "text": "vqa-lxmert-sparse-554-sampled-text-lime-feat1535-2.png"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -27,7 +27,7 @@ def dime(fullsamples,instanceid,analysismodel,labels,samplematrix=None,modal1=0,
             samplematrix[counts // fullsize, counts % fullsize]= analysismodel.getlogit(outs[counts])
         torch.save(samplematrix,samplematrixsavedir)
     template = fullsamples[instanceid]
-    def classify1(self,ins):
+    def classify1(ins):
         reps = preprocessor1(ins)
         allvals=[]
         for rep in reps:
@@ -39,7 +39,7 @@ def dime(fullsamples,instanceid,analysismodel,labels,samplematrix=None,modal1=0,
                 ins.append(newinstance)
             reses = analysismodel.forwardbatch(ins)
             for i in range(fullsize):
-                cpmatrix[instanceid][i]=analysismodel.getlogit(res)
+                cpmatrix[instanceid][i]=analysismodel.getlogit(reses[i])
             avg0 = torch.mean(cpmatrix,dim=1)
             avg1 = torch.mean(cpmatrix,dim=0)
             avgs = torch.mean(avg0,dim=0)
@@ -52,7 +52,7 @@ def dime(fullsamples,instanceid,analysismodel,labels,samplematrix=None,modal1=0,
             allvals.append(line)
         return np.array(allvals)
     
-    def classify2(self,ins):
+    def classify2(ins):
         reps = preprocessor2(ins)
         allvals=[]
         for rep in reps:
@@ -64,7 +64,7 @@ def dime(fullsamples,instanceid,analysismodel,labels,samplematrix=None,modal1=0,
                 ins.append(newinstance)
             reses = analysismodel.forwardbatch(ins)
             for i in range(fullsize):
-                cpmatrix[i][instanceid]=analysismodel.getlogit(res)
+                cpmatrix[i][instanceid]=analysismodel.getlogit(reses[i])
             avg0 = torch.mean(cpmatrix,dim=1)
             avg1 = torch.mean(cpmatrix,dim=0)
             avgs = torch.mean(avg0,dim=0)
