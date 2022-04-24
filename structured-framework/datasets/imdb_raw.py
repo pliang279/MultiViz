@@ -52,12 +52,15 @@ class IMDBDataset:
                                     transforms.Resize((224, 224))
                                 ])
 
-    def getdata(self, ind):
+    def getdata(self, ind, return_fpath=False):
         imdb_id = self.dataset['imdb_ids'][self.start_ind + ind].decode('utf-8')
         data = _process_data(imdb_id, self.raw_imdb_root_path)
         labels = self.dataset['genres'][self.start_ind + ind]
         text = data['plot']
         image = np.asarray(self.image_preprocess(data['image']))
+        if return_fpath:
+            fpath = os.path.join(self.raw_imdb_root_path, f'{imdb_id}.jpeg')
+            return text, image, labels, fpath
         return text, image, labels
         
 
@@ -94,14 +97,6 @@ def _process_data(filename, root_path):
     with Image.open(filepath + ".jpeg") as f:
         raw_img = f.convert("RGB")
         data["image"] = raw_img
-        # preprocess = transforms.Compose([
-        #     transforms.Resize(256),
-        #     transforms.CenterCrop(224),
-        #     transforms.ToTensor(),
-        #     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        # ])
-    # input_tensor = preprocess(f.convert('RGB'))
-    # data['image_tensor'] = input_tensor
 
     # process text
     with open(filepath + ".json", "r") as f:
