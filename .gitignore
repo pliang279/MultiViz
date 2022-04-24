@@ -152,6 +152,8 @@ structured-framework/ckpt2/*
 structured-framework/*.out
 structured-framework/*.png
 structured-framework/*.json
+structured-framework/*.pt
+structured-framework/private_test_scripts/visuals/*
 # remove later
 structured-framework/scratch.ipynb
 structured-framework/scratch_analysis.ipynb

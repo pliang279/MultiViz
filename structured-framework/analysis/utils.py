@@ -18,7 +18,7 @@ def accuracy(preds, labels, k=1):
         correct += (pred == label).any()
         total += 1
     return correct / total
-
+import torch
 import pickle
 import pandas as pd
 def loadpickle(filename):
@@ -35,6 +35,19 @@ def processvqalxmertfeat(f,startid):
         li.append([embed,label,i+startid])
     return li
 
+def processvqalxmertfeatsbinary(f):
+    a=loadpickle(f)
+    li=[]
+    for i in range(len(a)):
+        row = a.iloc[i]
+        embed = row.lxmert_features
+        label1 = row.gt_answer_class
+        label2 = row.lxmert_answer_class
+        if label1 == label2:
+            li.append([torch.abs(embed),0])
+        else:
+            li.append([torch.abs(embed),1])
+    return li
 
 def loadvqalxmertfeats(fs):
     alls=[]

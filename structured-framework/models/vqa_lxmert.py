@@ -137,6 +137,32 @@ class VQALXMERT(analysismodel):
         output_vqa['question_answering_score'][0][target].backward()
         return images.grad.detach()[0]
 
+    def private_prep(self,datainstance):
+        with torch.no_grad():
+            images,sizes,scales_yx = self.image_preprocess(datainstance[0])
+            output_dict = self.frcnn(
+                images.to(self.device),
+                sizes.to(self.device),
+                scales_yx=scales_yx.to(self.device),
+                padding="max_detections",
+                max_detections=self.frcnn_cfg.max_detections,
+                return_tensors="pt",
+                location=self.device
+            )
+            normalized_boxes = output_dict.get("normalized_boxes")
+            features = output_dict.get("roi_features")
+            inputs = self.lxmert_tokenizer(
+                [datainstance[1]],
+                padding="max_length",
+                max_length=20,
+                truncation=True,
+                return_token_type_ids=True,
+                return_attention_mask=True,
+                add_special_tokens=True,
+                return_tensors="pt"
+            )
+        return normalized_boxes.cpu(),features.cpu(),inputs
+
 
 
 

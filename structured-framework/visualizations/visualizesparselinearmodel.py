@@ -148,6 +148,47 @@ def analyzefeaturesandvisualizeall(params, datainstances, analysismodel, label, 
         for j in range(k):
             for jj in range(pointsperfeat):
                 ax[i*pointsperfeat+jj][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png'))
-                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][jj]))
+                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][jj*pointsperfeat+j]))
+    plt.savefig(prefixall+'-all-lime-feats.png')
+    plt.close()
+
+
+
+
+def makefeats(topk,datainstances, analysismodel, prefix, prefixall, prelinear=None, numfeats=3,pointsperfeat=3):
+    idxs=[]
+    k=len(topk)
+    for i in range(len(analysismodel.getmodalitynames())):
+        idxs.append([])
+        modalityname = analysismodel.getmodalitynames()[i]
+        modalitytype = analysismodel.getmodalitytypes()[i]
+
+        # get prelinear features if not specified already
+        if prelinear is None:
+            model_outs = analysismodel.forwardbatch(datainstances)
+            prelinear = torch.zeros((len(model_outs), analysismodel.getprelinearsize()))
+            for j, model_out in enumerate(model_outs):
+                prelinear[j] = analysismodel.getprelinear(model_outs[j])
+
+        maximal_idx = torch.argmax(prelinear, dim=0)
+        for j in range(k):
+            maximal_idxs = prelinear[:,topk[j]].argsort()[-pointsperfeat:]
+            print(maximal_idxs) 
+            for jj in range(pointsperfeat):
+                idxs[i].append(maximal_idxs[jj])
+                datainstance = datainstances[maximal_idxs[jj]] # use the most activating example for this feature
+                pred=analysismodel.getpredlabel(analysismodel.forward(datainstance))
+                print(str(pred)+" "+str(analysismodel.getcorrectlabel(datainstance)))
+                retters=rununimodallime(datainstance,modalityname,modalitytype,analysismodel,topk,on_sparse=True)
+                visualizelime(retters,modalitytype,topk[j],prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png',num_features=numfeats)
+    plt.clf()
+    fig,ax=plt.subplots(nrows=len(analysismodel.getmodalitynames())*pointsperfeat,ncols=k,figsize=(30,21))
+    
+    for i in range(len(analysismodel.getmodalitynames())):
+        modalityname = analysismodel.getmodalitynames()[i]
+        for j in range(k):
+            for jj in range(pointsperfeat):
+                ax[i*pointsperfeat+jj][j].imshow(plt.imread(prefix+'-'+modalityname+'-lime-feat'+str(topk[j])+'-'+str(jj)+'.png'))
+                ax[i*pointsperfeat+jj][j].title.set_text(str(idxs[i][jj*pointsperfeat+j]))
     plt.savefig(prefixall+'-all-lime-feats.png')
     plt.close()
