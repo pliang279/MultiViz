@@ -61,7 +61,7 @@ def rununimodallime(
         lime_explainer = CategoricalTimeSeriesExplainer()
         additionalparam["totallabels"] = totallabels
     else:
-        raise NotImplemented
+        raise NotImplementedError("Modality type not supported")
     return lime_explainer.explain_instance(
         originstance,
         classify,
