@@ -88,8 +88,8 @@ class Flickr30KClip(analysismodel):
             inputs[k] = v.to(self.device)
         inputs.pixel_values.requires_grad = True
         outputs = self.model(**inputs)
-        outputs.logis_per_image[0][target_idx].backward()
-        return inputs.pixel_values.grad.detach()[0]
+        outputs.logits_per_image[0][target_idx].backward()
+        return [inputs.pixel_values.detach()[0]], [inputs.pixel_values.grad.detach()[0]]
 
     # TODO: If this is correct
     def private_prep(self, datainstance):

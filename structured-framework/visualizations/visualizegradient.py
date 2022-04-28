@@ -2,7 +2,7 @@ import torch
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
-
+import cv2
 
 def normalize255(t, fac=255.0):
     upmost = torch.max(torch.abs(t))
@@ -21,7 +21,7 @@ def heatmap2d(t, savename, orig=None):
                 pxs[i, j, 0] = 0 - 1 - t[i, j]
     img = Image.fromarray(pxs.long().numpy().astype(np.uint8))
     if orig is not None:
-        img2 = Image.open(orig)
+        img2 = cv2.resize(np.asarray(Image.open(orig)), (pxs.shape[1],pxs.shape[0]))
         plt.imshow(img2)
         plt.imshow(img, alpha=0.75)
     else:

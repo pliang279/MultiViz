@@ -9,14 +9,14 @@ from analysis.unimodallime import rununimodallime
 from visualizations.visualizelime import visualizelime
 
 # get the dataset
-datas = Flickr30kDataset("valid")
+data = Flickr30kDataset("valid")
 # set target sentence idx
 target_idx = 3
 
 # get the model
 analysismodel = Flickr30KClip(target_idx=3)
 # pick data instance you want to explain
-instance = datas.getdata(554)
+instance = data.getdata(554)
 
 # generate lime explanation for image modality on both correct label and predicted label
 explanation1 = rununimodallime(
