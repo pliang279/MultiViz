@@ -88,21 +88,21 @@ class LimeImageTextExplainer:
         if image_kernel is None:
 
             def image_kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+                return np.sqrt(np.exp(-(d**2) / kernel_width**2))
 
         self.image_kernel_fn = partial(image_kernel, image_kernel_width)
 
         if text_kernel is None:
 
             def text_kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+                return np.sqrt(np.exp(-(d**2) / kernel_width**2))
 
         self.text_kernel_fn = partial(text_kernel, text_kernel_width)
 
         if common_kernel is None:
 
             def common_kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+                return np.sqrt(np.exp(-(d**2) / kernel_width**2))
 
         self.common_kernel_fn = partial(common_kernel, common_kernel_width)
 

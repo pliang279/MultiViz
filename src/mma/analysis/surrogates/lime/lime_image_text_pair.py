@@ -67,7 +67,7 @@ class LimeImageTextPairExplainer:
         if kernel is None:
 
             def kernel(d, kernel_width):
-                return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+                return np.sqrt(np.exp(-(d**2) / kernel_width**2))
 
         kernel_fn = partial(kernel, kernel_width)
 

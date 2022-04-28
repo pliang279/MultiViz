@@ -35,14 +35,14 @@ class ZeroShotHeatmapText:
         masks = []
 
         mask = np.ones(num_words)
-       
+
         # Entire Text
         text_batch.append(text)
         masks.append(mask)
 
         # Horizontal Pass
         for window_size in range(1, max_window_size):
-            for start_idx in range(num_words-window_size+1):
+            for start_idx in range(num_words - window_size + 1):
                 m = mask.copy()
                 m[:start_idx] = 0
                 m[start_idx + window_size :] = 0
@@ -60,14 +60,14 @@ class ZeroShotHeatmapText:
         text_encoder_fn: Callable,
         image_preprocessor_fn: Callable = None,
         max_window_size: int = None,
-        resize_size:int = 224,
+        resize_size: int = 224,
         iter: int = 3,
         batch_size: int = 4,
-        verbose = False,
+        verbose=False,
     ):
-        
+
         image = self.pad_to_square(image, resize_size)
-        
+
         if image_preprocessor_fn is not None:
             image = image_preprocessor_fn(image)
         image_embedding = image_encoder_fn(image)
