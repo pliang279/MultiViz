@@ -5,6 +5,6 @@ mkdir -p data/flickr30k
 cd data/flickr30k
 
 git clone https://github.com/BryanPlummer/flickr30k_entities
-unzip flickr30k_entities/annotations.zip
-rm -r flickr30k_entities
+unzip -n flickr30k_entities/annotations.zip
+rm -rf flickr30k_entities
 cd ../..

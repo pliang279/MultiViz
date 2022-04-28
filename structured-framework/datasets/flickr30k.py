@@ -8,8 +8,9 @@ import random
 from PIL import Image
 import matplotlib.pyplot as plt
 
+# TODO: Check if we want to add negative sampler
 # NOTE: We need this data to clone have the flickr30kentities data
-os.system("bash datasets/flickr30k_extras/flickr30k" + type + "downloadannot.sh")
+os.system("bash datasets/flickr30k_extras/flickr30kentitiesdownloadannot.sh")
 from datasets.flickr30k_extras.flickr30k_entities_utils import get_sentence_data, get_annotations
 
 def download_data(typ="valid"):
@@ -21,7 +22,7 @@ class Flickr30kDataset:
     def __init__(self, split="valid", img_dir='data/flickr30k/flickr30k-images'):
         self.split = split
         self.img_dir = img_dir
-        with open(f"data/flickr30k/{split}_ann.jsonl") as reader:
+        with jsonlines.open(f"data/flickr30k/{split}_ann.jsonl") as reader:
             self.annotations = [line for line in reader]
 
         self.entities_sentences = [get_sentence_data(f'data/flickr30k/Sentences/{annot["id"]}.txt') for annot in self.annotations]
@@ -35,7 +36,7 @@ class Flickr30kDataset:
     def getdata(self, data_idx):
         annot = self.annotations[data_idx]
         img_path = annot['img_path']
-        example_idx = annot['id']
+        # example_idx = annot['id']
         sentences = annot['sentences']
         imgfile = f"{self.img_dir}/{img_path}"
         return imgfile, sentences
@@ -45,7 +46,7 @@ class Flickr30kDataset:
 
     # TODO: Check what should be done with class names
     def classnames(self):
-        pass
+        return None
 
     def sample(self, num):
         sampled = []
