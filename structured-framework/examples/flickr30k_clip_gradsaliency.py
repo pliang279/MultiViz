@@ -11,18 +11,19 @@ from analysis.gradientbased import get_saliency_map
 # get the dataset
 data = Flickr30kDataset("valid")
 # set target sentence idx
-target_idx = 3
+target_idx = 0
 
 # get the model
-analysismodel = Flickr30KClip(target_idx=3)
+analysismodel = Flickr30KClip(target_idx=target_idx)
 
-instance = data.getdata(0)
+for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
+    instance = data.getdata(instance_idx)
 
-# get the model predictions
-preds = analysismodel.forward(instance)
+    # get the model predictions
+    preds = analysismodel.forward(instance)
 
-# compute and print grad saliency with and without multiply orig:
-saliency = get_saliency_map(instance, analysismodel, 0)
-grads = saliency[0]
-t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
-heatmap2d(t, "visuals/flickr30k-clip-0-3-saliency.png", instance[0])
+    # compute and print grad saliency with and without multiply orig:
+    saliency = get_saliency_map(instance, analysismodel, 0)
+    grads = saliency[0]
+    t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
+    heatmap2d(t, f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-saliency.png", instance[0])
