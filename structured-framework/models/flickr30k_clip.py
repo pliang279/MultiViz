@@ -15,7 +15,9 @@ class Flickr30KClip(analysismodel):
     def __init__(self, device="cuda", target_idx=0):
         super(analysismodel, self).__init__()
         self.device = device
-        self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(self.device)
+        self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(
+            self.device
+        )
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
         self.modalitynames = ["image", "text"]
         self.modalitytypes = ["image", "text"]
@@ -28,7 +30,7 @@ class Flickr30KClip(analysismodel):
             return datainstance[1][self.target_idx]
         else:
             raise ValueError
-    
+
     # TODO: Check if this is needed for Flickr30k
     def getcorrectlabel(self, datainstance):
         pass
@@ -37,11 +39,17 @@ class Flickr30KClip(analysismodel):
         with torch.no_grad():
             im = PIL.Image.open(datainstance[0])
             sentences = [datainstance[1][self.target_idx]]
-            inputs = self.processor(text=sentences, images=im, return_tensors="pt", padding='max_length', truncation=True)
+            inputs = self.processor(
+                text=sentences,
+                images=im,
+                return_tensors="pt",
+                padding="max_length",
+                truncation=True,
+            )
             for k, v in inputs.items():
                 inputs[k] = v.to(self.device)
             outputs = self.model(**inputs)
-            return outputs.logits_per_image # image-text similarity score
+            return outputs.logits_per_image  # image-text similarity score
 
     # in this case we don't do batching, so we just do one at a time:
     def forwardbatch(self, datainstances):
@@ -56,7 +64,7 @@ class Flickr30KClip(analysismodel):
     def getlogit(self, resultobj):
         return resultobj[0]
 
-    # TODO: We cannot implement prelinear for this, 
+    # TODO: We cannot implement prelinear for this,
     # as there are two different heads
     def getprelinear(self, resultobj):
         pass
@@ -65,7 +73,7 @@ class Flickr30KClip(analysismodel):
     def getpredlabel(self, resultobj):
         return resultobj[0][[self.target_idx]].item()
 
-    # TODO: We cannot implement prelinear for this, 
+    # TODO: We cannot implement prelinear for this,
     # as there are two different heads
     def getprelinearsize(self):
         pass
@@ -83,7 +91,13 @@ class Flickr30KClip(analysismodel):
     def getgrad(self, datainstance, target_idx):
         im = PIL.Image.open(datainstance[0])
         sentences = [datainstance[1][self.target_idx]]
-        inputs = self.processor(text=sentences, images=im, return_tensors="pt", padding='max_length', truncation=True)
+        inputs = self.processor(
+            text=sentences,
+            images=im,
+            return_tensors="pt",
+            padding="max_length",
+            truncation=True,
+        )
         for k, v in inputs.items():
             inputs[k] = v.to(self.device)
         inputs.pixel_values.requires_grad = True
@@ -96,5 +110,11 @@ class Flickr30KClip(analysismodel):
         with torch.no_grad():
             im = PIL.Image.open(datainstance[0])
         sentences = [datainstance[1][self.target_idx]]
-        inputs = self.processor(text=sentences, images=im, return_tensors="pt", padding='max_length', truncation=True)
+        inputs = self.processor(
+            text=sentences,
+            images=im,
+            return_tensors="pt",
+            padding="max_length",
+            truncation=True,
+        )
         return inputs

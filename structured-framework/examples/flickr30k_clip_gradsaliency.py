@@ -26,4 +26,8 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     saliency = get_saliency_map(instance, analysismodel, 0)
     grads = saliency[0]
     t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
-    heatmap2d(t, f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-saliency.png", instance[0])
+    heatmap2d(
+        t,
+        f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-saliency.png",
+        instance[0],
+    )

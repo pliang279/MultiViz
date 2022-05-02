@@ -22,7 +22,12 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
 
     # generate lime explanation for image modality on both correct label and predicted label
     explanation1 = rununimodallime(
-        instance, "image", "image", analysismodel, (0,), num_samples=500,
+        instance,
+        "image",
+        "image",
+        analysismodel,
+        (0,),
+        num_samples=500,
     )
     # generate lime explanation for text modality on both correct label and predicted label
     explanation2 = rununimodallime(
@@ -36,14 +41,22 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     )
     # visualize explanations and save to directory
     visualizelime(
-        explanation1, "image", 0,f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-image-lime-pred.png"
+        explanation1,
+        "image",
+        0,
+        f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-image-lime-pred.png",
     )
     visualizelime(
-        explanation2, "text", 0, f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-text-lime-pred.png"
+        explanation2,
+        "text",
+        0,
+        f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-text-lime-pred.png",
     )
 
     # copy images to directory
-    os.system(f"cp {instance[0]} visuals/flickr30k-clip-{instance_idx}-{target_idx}-image.png")
+    os.system(
+        f"cp {instance[0]} visuals/flickr30k-clip-{instance_idx}-{target_idx}-image.png"
+    )
     # save text to file
     with open(f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-text.txt", "w") as f:
         f.write(instance[1][target_idx])
