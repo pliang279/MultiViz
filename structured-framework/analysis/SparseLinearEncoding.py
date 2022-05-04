@@ -39,6 +39,7 @@ def get_sparse_linear_model(
     testembeds,
     modelsavedir="ckpt/sparselinearmodel.pt",
     model_idxs=np.arange(100),
+    **sparse_model_args
 ):
     linear = torch.nn.Linear(
         analysismodel.getprelinearsize(), analysismodel.getlogitsize()
@@ -67,6 +68,7 @@ def get_sparse_linear_model(
         group=False,
         epsilon=0.001,
         preprocess=Identity(linear),
+        **sparse_model_args
     )
     torch.save(params, modelsavedir)
     accuracies = []
