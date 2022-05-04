@@ -16,7 +16,7 @@ from datasets.flickr30k_extras.flickr30k_entities_utils import get_sentence_data
 def download_data(typ="valid"):
     # TODO: Check if we want to allow image downloading
     # Currently, we need to fill a form to download image data
-    os.system("bash datasets/flickr30k_extras/flickr30kdownload" + type + "annot.sh")
+    os.system("bash datasets/flickr30k_extras/flickr30kdownload" + typ + "annot.sh")
 
 class Flickr30kDataset:
     def __init__(self, split="valid", img_dir='data/flickr30k/flickr30k-images'):
