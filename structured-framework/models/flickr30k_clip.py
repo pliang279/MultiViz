@@ -109,12 +109,12 @@ class Flickr30KClip(analysismodel):
     def private_prep(self, datainstance):
         with torch.no_grad():
             im = PIL.Image.open(datainstance[0])
-        sentences = [datainstance[1][self.target_idx]]
-        inputs = self.processor(
-            text=sentences,
-            images=im,
-            return_tensors="pt",
-            padding="max_length",
-            truncation=True,
-        )
+            sentences = [datainstance[1][self.target_idx]]
+            inputs = self.processor(
+                text=sentences,
+                images=im,
+                return_tensors="pt",
+                padding="max_length",
+                truncation=True,
+            )
         return inputs
