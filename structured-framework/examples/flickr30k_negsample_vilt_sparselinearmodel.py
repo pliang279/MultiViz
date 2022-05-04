@@ -15,8 +15,8 @@ from visualizations.visualizesparselinearmodel import *
 random.seed(0)
 np.random.seed(0)
 
-os.makedirs('visuals/flickr30k_negsample', exist_ok=True)
-os.makedirs('models/flickr30k_negsample_vilt', exist_ok=True)
+os.makedirs("visuals/flickr30k_negsample", exist_ok=True)
+os.makedirs("models/flickr30k_negsample_vilt", exist_ok=True)
 
 # get the datasets
 train_dataset = Flickr30kNegsampleDataset("train")
@@ -49,4 +49,6 @@ params, res = get_sparse_linear_model(
     modelsavedir="models/flickr30k_negsample_vilt/sparselinearmodel_vilt.pt",
 )
 
-sparsityaccgraph(res, "visuals/flickr30k_negsample/vilt_spartsityaccplot.png", scatter=True)
+sparsityaccgraph(
+    res, "visuals/flickr30k_negsample/vilt_spartsityaccplot.png", scatter=True
+)

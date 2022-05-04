@@ -51,7 +51,10 @@ class Flickr30kNegsampleVilt(analysismodel):
             outputs = self.model(**inputs)
 
             vilt_pooler_output = self.model.vilt(**inputs).pooler_output
-            return outputs.logits[0], vilt_pooler_output[0] # image-text similarity score
+            return (
+                outputs.logits[0],
+                vilt_pooler_output[0],
+            )  # image-text similarity score
 
     # in this case we don't do batching, so we just do one at a time:
     def forwardbatch(self, datainstances):
@@ -62,12 +65,12 @@ class Flickr30kNegsampleVilt(analysismodel):
 
     def getlogitsize(self):
         return 2
-        
+
         # We only get one logit, but for sparse linear model, we will return two
 
     def getlogit(self, resultobj):
         # We need to do this to get logical class values
-        pos_softmax = F.softmax(resultobj[0]) # dimension 1
+        pos_softmax = F.softmax(resultobj[0])  # dimension 1
         neg_softmax = 1 - pos_softmax
         return torch.stack([pos_softmax, neg_softmax], dim=1)
 
@@ -75,7 +78,7 @@ class Flickr30kNegsampleVilt(analysismodel):
         return resultobj[1]
 
     def getpredlabel(self, resultobj):
-        if F.softmax(resultobj[0][0]).item() >0.5:
+        if F.softmax(resultobj[0][0]).item() > 0.5:
             return 1
         else:
             return 0

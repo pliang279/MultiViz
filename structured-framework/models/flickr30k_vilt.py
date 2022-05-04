@@ -53,7 +53,10 @@ class Flickr30KVilt(analysismodel):
             outputs = self.model(**inputs)
 
             vilt_pooler_output = self.model.vilt(**inputs).pooler_output
-            return outputs.logits[0], vilt_pooler_output[0] # image-text similarity score
+            return (
+                outputs.logits[0],
+                vilt_pooler_output[0],
+            )  # image-text similarity score
 
     # in this case we don't do batching, so we just do one at a time:
     def forwardbatch(self, datainstances):
@@ -63,7 +66,9 @@ class Flickr30KVilt(analysismodel):
         return outs
 
     def getlogitsize(self):
-        return 1 # We only get one logit, need to use binary cross entropy during training
+        return (
+            1  # We only get one logit, need to use binary cross entropy during training
+        )
 
     def getlogit(self, resultobj):
         return resultobj[0]

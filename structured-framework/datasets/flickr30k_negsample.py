@@ -13,19 +13,20 @@ import matplotlib.pyplot as plt
 #     # Currently, we need to fill a form to download image data
 #     os.system("bash datasets/flickr30k_extras/flickr30kdownload" + typ + "annot.sh")
 
+
 class Flickr30kNegsampleDataset:
-    def __init__(self, split="valid", img_dir=''):
+    def __init__(self, split="valid", img_dir=""):
         self.split = split
         self.img_dir = img_dir
         with jsonlines.open(f"data/flickr30k/{split}_negative_ann.jsonl") as reader:
             self.annotations = [line for line in reader]
-        
+
     def getdata(self, data_idx):
         annot = self.annotations[data_idx]
-        imgfile = annot['imgfile']
+        imgfile = annot["imgfile"]
         # example_idx = annot['idx']
-        label = annot['label']
-        sentence = annot['sentences']
+        label = annot["label"]
+        sentence = annot["sentences"]
         return imgfile, sentence, label
 
     def length(self):
@@ -57,10 +58,19 @@ class Flickr30kNegsampleDataset:
     def makepic(self, data_idx):
         data_point = self.getdata(data_idx)
         imgfile, sentence, label = data_point
-        
-        title = "Caption: " + sentence + "\n Data Idx: " + str(data_idx)  + "Label: " + str(label)
+
+        title = (
+            "Caption: "
+            + sentence
+            + "\n Data Idx: "
+            + str(data_idx)
+            + "Label: "
+            + str(label)
+        )
 
         plt.clf()
         plt.imshow(Image.open(imgfile))
         plt.title(title)
-        plt.savefig("visuals/data/flickr30k-neg" + self.split + "-" + str(data_idx) + ".png")
+        plt.savefig(
+            "visuals/data/flickr30k-neg" + self.split + "-" + str(data_idx) + ".png"
+        )
