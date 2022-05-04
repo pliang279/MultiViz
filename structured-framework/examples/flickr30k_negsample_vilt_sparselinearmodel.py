@@ -36,10 +36,25 @@ test_instances = test_dataset.sample(test_dataset.length())
 # val_instances = valid_dataset.sample(5)
 # test_instances = test_dataset.sample(5)
 
-# TODO: Move this to a loader
-train_embeds = getembeds(train_instances, analysismodel)
-val_embeds = getembeds(val_instances, analysismodel)
-test_embeds = getembeds(test_instances, analysismodel)
+# train_embeds = getembeds(train_instances, analysismodel)
+# val_embeds = getembeds(val_instances, analysismodel)
+# test_embeds = getembeds(test_instances, analysismodel)
+class EmbeddingDataset(torch.utils.data.Dataset):
+    def __init__(self, instances, model):
+        self.instances = instances
+        self.model = model
+
+    def __getitem__(self, index):
+
+        return getembeds([self.instances[index]], self.model)[0]
+
+    def __len__(self):
+        return len(self.instances)
+
+
+train_embeds = EmbeddingDataset(train_instances, analysismodel)
+val_embeds = EmbeddingDataset(val_instances, analysismodel)
+test_embeds = EmbeddingDataset(test_instances, analysismodel)
 
 params, res = get_sparse_linear_model(
     analysismodel,
