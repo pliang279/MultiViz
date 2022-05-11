@@ -52,7 +52,7 @@ instance_text_target_ids = {
 }
 
 
-for instance_idx in [350]:
+for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     instance = data.getdata(instance_idx)
 
     tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-base-patch32")
