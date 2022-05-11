@@ -42,7 +42,7 @@ instance_text_target_ids = {
     200: {"ids": [11, 12, 13, 14], "text": "white and orange tulips"},
     250: {"ids": [1, 2, 3, 4, 5], "text": "two boys, two girls"},
     300: {"ids": [6, 7, 8, 9, 10], "text": "black shirt and brown pants"},
-    350: {"ids": [8], "text": "suitcase"},
+    350: {"ids": [9], "text": "suitcase"},
     400: {
         "ids": [2, 3, 4, 5, 6, 7, 8, 9],
         "text": "woman in jean jacket and black sunglasses",
@@ -52,13 +52,14 @@ instance_text_target_ids = {
 }
 
 
-for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
+for instance_idx in [350]:
     instance = data.getdata(instance_idx)
 
     tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-base-patch32")
     grads, di, tids = analysismodel.getdoublegrad(
         instance, instance[-1], instance_text_target_ids[instance_idx]["ids"]
     )
+    # print(tokenizer.convert_ids_to_tokens(tids[0].detach().cpu().numpy()))
     print(
         tokenizer.convert_ids_to_tokens(
             tids[0]
@@ -67,10 +68,6 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
             .numpy()[instance_text_target_ids[instance_idx]["ids"]]
         )
     )
-    # Write dict to json with indent
-    # out = dict(zip(tids[0].detach().cpu().numpy().tolist(), tokenizer.convert_ids_to_tokens(tids[0].detach().cpu().numpy())))
-    # with open('out.json', 'a') as f:
-    #     json.dump(out, f, indent=4)
 
     grads = grads[0]
     t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
