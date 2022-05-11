@@ -25,6 +25,7 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     # compute and print grad saliency with and without multiply orig:
     saliency = get_saliency_map(instance, analysismodel, 0)
     grads = saliency[0]
+
     t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
     heatmap2d(
         t,
