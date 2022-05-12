@@ -108,7 +108,6 @@ class Flickr30KClip(analysismodel):
 
     def getgradtext(self, datainstance, target_idx, alltarget=False, prelinear=False):
         self.model.zero_grad()
-        self.model.zero_grad()
         im = PIL.Image.open(datainstance[0])
         sentences = [datainstance[1][self.target_idx]]
         inputs = self.processor(
