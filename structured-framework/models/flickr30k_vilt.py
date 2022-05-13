@@ -109,6 +109,70 @@ class Flickr30KVilt(analysismodel):
         outputs.logits[0].backward()
         return [inputs.pixel_values.detach()[0]], [inputs.pixel_values.grad.detach()[0]]
 
+    def getgradtext(self, datainstance, target_idx, alltarget=False, prelinear=False):
+        self.model.zero_grad()
+        im = PIL.Image.open(datainstance[0])
+        sentences = [datainstance[1][self.target_idx]]
+        inputs = self.processor(
+            text=sentences,
+            images=im,
+            return_tensors="pt",
+            padding="max_length",
+            truncation=True,
+        )
+
+        text_embedding = None
+        text_ids = None
+        text_grad = None
+
+        def hook_forward(module, input, output):
+            nonlocal text_embedding, text_ids
+            text_embedding = output[0]
+            text_ids = input[0]
+
+        def hook_backward(module, input, output):
+            nonlocal text_grad
+            text_grad = output[0][0]
+
+        forward_handle = self.model.vilt.embeddings.text_embeddings.word_embeddings.register_forward_hook(
+            hook_forward
+        )
+        backward_handle = self.model.vilt.embeddings.text_embeddings.word_embeddings.register_backward_hook(
+            hook_backward
+        )
+
+        for k, v in inputs.items():
+            inputs[k] = v.to(self.device)
+
+        inputs.pixel_values.requires_grad = True
+
+        outputs = self.model(**inputs)
+
+        probas = outputs.logits
+        if alltarget:
+            torch.sum(probas[0]).backward(create_graph=True)
+        else:
+            probas[0][target_idx].backward()
+
+        forward_handle.remove()
+        backward_handle.remove()
+
+        res = torch.sum(text_embedding * text_grad, dim=1)
+
+        return res, parse(sentences[0]), inputs.pixel_values, text_ids
+
+    def getdoublegrad(self, datainstance, target, targetwords, alltarget=True):
+
+        res, di, normed_image, text_ids = self.getgradtext(
+            datainstance, target, alltarget=alltarget
+        )
+        ac = 0.0
+        for id in targetwords:
+            ac += torch.abs(res[id])
+
+        rets = torch.autograd.grad(ac, normed_image)
+        return rets[0], di, text_ids
+
     # TODO: If this is correct
     def private_prep(self, datainstance):
         with torch.no_grad():
@@ -122,3 +186,12 @@ class Flickr30KVilt(analysismodel):
                 truncation=True,
             )
         return inputs
+
+
+def parse(sent):
+    words = []
+    for word in sent[:-1].split(" "):
+        words.append(word)
+    words.append("<end>")
+    words.insert(0, "<start>")
+    return words
