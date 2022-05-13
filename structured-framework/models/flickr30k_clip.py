@@ -117,11 +117,11 @@ class Flickr30KClip(analysismodel):
             padding="max_length",
             truncation=True,
         )
-        
+
         text_embedding = None
         text_ids = None
         text_grad = None
-        
+
         def hook_forward(module, input, output):
             nonlocal text_embedding, text_ids
             text_embedding = output[0]
@@ -131,16 +131,20 @@ class Flickr30KClip(analysismodel):
             nonlocal text_grad
             text_grad = output[0][0]
 
-        forward_handle = self.model.text_model.embeddings.token_embedding.register_forward_hook(
-            hook_forward
+        forward_handle = (
+            self.model.text_model.embeddings.token_embedding.register_forward_hook(
+                hook_forward
+            )
         )
-        backward_handle = self.model.text_model.embeddings.token_embedding.register_backward_hook(
-            hook_backward
+        backward_handle = (
+            self.model.text_model.embeddings.token_embedding.register_backward_hook(
+                hook_backward
+            )
         )
-        
+
         for k, v in inputs.items():
             inputs[k] = v.to(self.device)
-        
+
         inputs.pixel_values.requires_grad = True
 
         outputs = self.model(**inputs)
@@ -157,7 +161,7 @@ class Flickr30KClip(analysismodel):
         res = torch.sum(text_embedding * text_grad, dim=1)
 
         return res, parse(sentences[0]), inputs.pixel_values, text_ids
-    
+
     def getdoublegrad(self, datainstance, target, targetwords, alltarget=True):
 
         res, di, normed_image, text_ids = self.getgradtext(
@@ -183,6 +187,7 @@ class Flickr30KClip(analysismodel):
                 truncation=True,
             )
         return inputs
+
 
 def parse(sent):
     words = []
