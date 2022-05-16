@@ -10,6 +10,7 @@ from transformers import ViltProcessor
 import torch.nn.functional as F
 from visualizations.visualizegradient import *
 import random
+from analysis.gradientbased import get_saliency_map
 
 # get the dataset
 data = Flickr30kDataset("valid")
@@ -42,7 +43,6 @@ instance_text_target_ids = {
     50: {"ids": [1, 2, 3, 4, 5, 6], "text": "two black and white homeless men"},
     100: {"ids": [1, 2], "text": "the car"},
     150: {"ids": [1, 2], "text": "two dogs"},
-
     200: {"ids": [13, 14, 15, 16], "text": "shallow wading pool"},
     250: {"ids": [2, 3, 4], "text": "soccer team player"},
     300: {"ids": [1, 2, 3, 4, 5], "text": "two boys, two girls"},
@@ -89,6 +89,20 @@ for instance_idx in [
     
     instance = list(instance)  
     instance[-1] = negative_instance[-1]
+
+    with open(f"visuals/flickr30k-vilt-{instance_idx}-{0}-text.txt", "w") as f:
+        f.write(instance[-1][0])
+
+    # compute and print grad saliency with and without multiply orig:
+    saliency = get_saliency_map(instance, analysismodel, 0)
+    grads = saliency[0]
+
+    t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
+    heatmap2d(
+        t,
+        f"visuals/flickr30k-vilt-{instance_idx}-{target_idx}-saliency.png",
+        instance[0],
+    )
 
     probs, _ = analysismodel.forward(instance)
 
