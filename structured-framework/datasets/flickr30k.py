@@ -40,8 +40,15 @@ class Flickr30kDataset:
         ]
 
     # TODO: Add method to load annotation and sentence data for given example idx
-    def get_entities_data(self, example_idx):
-        pass
+    def get_entities_data_first_sentence(self, example_idx):
+        first_sentence = self.entities_sentences[example_idx][0]
+        entity_annot = self.entities_annotations[example_idx]["boxes"]
+        id_to_phrase = {m["phrase_id"]: m["phrase"] for m in first_sentence["phrases"]}
+        id_to_boxes = {
+            k: v for k, v in entity_annot.items() if k in id_to_phrase.keys()
+        }
+
+        return first_sentence["sentence"], id_to_boxes, id_to_phrase
 
     def getdata(self, data_idx):
         annot = self.annotations[data_idx]
