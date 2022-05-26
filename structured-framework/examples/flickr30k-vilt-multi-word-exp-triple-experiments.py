@@ -140,6 +140,7 @@ for instance_idx, tid_dict in id_to_tids.items():
         key_to_logits[instance_idx][key] = {}
         instance = data.getdata(instance_idx)
         first_sentence, id_to_boxes, id_to_phrase = data.get_entities_data_first_sentence(instance_idx)
+        # print(id_to_boxes, id_to_phrase)
         probs, _ = analysismodel.forward(instance)
 
         logits = probs.detach().cpu().numpy()[0]
@@ -202,14 +203,18 @@ for instance_idx, tid_dict in id_to_tids.items():
 
         boxes_to_drop = []
         for idx, phrase in id_to_phrase.items():
-            if value["text"].lower() in phrase.lower():
+            # Check if there is an intersection between value["text"] and phrase
+            if value["text"].lower() in phrase.lower() or phrase.lower() in value["text"].lower():
                 boxes_to_drop.append(idx)
         
         # drop boxes in image
         for box_id in boxes_to_drop:
-            for box_iter in id_to_boxes[box_id]:
-                x1, y1, x2, y2 = box_iter
-                gt_img[y1:y2, x1:x2] = 0
+            if box_id in id_to_boxes:
+                for box_iter in id_to_boxes[box_id]:
+                    x1, y1, x2, y2 = box_iter
+                    gt_img[y1:y2, x1:x2] = 0
+            else:
+                print("Couldn't find box with box_id: ", box_id)
         gt_img_path = f'visuals/flickr30k-vilt-{key}-gt_img.jpg'
 
         plt.imsave(gt_img_path, gt_img)
