@@ -185,8 +185,10 @@ for instance_idx, tid_dict in id_to_tids.items():
         y_index = np.random.choice(img.shape[1], num_drop_pixels)
         
         # drop random pixels based on x_index and y_index
+        rd_mask = np.zeros(random_img.shape[:-1])
         for i in range(num_drop_pixels):
-            random_img[x_index[i], y_index[i]] = 0 
+            random_img[x_index[i], y_index[i]] = 0
+            rd_mask[x_index[i], y_index[i]] = 1
         random_img_path = f'visuals/flickr30k-vilt-{key}-random_img.jpg'
         plt.imsave(random_img_path, random_img)
 
@@ -208,11 +210,13 @@ for instance_idx, tid_dict in id_to_tids.items():
                 boxes_to_drop.append(idx)
         
         # drop boxes in image
+        mask = np.zeros(gt_img.shape[:-1])
         for box_id in boxes_to_drop:
             if box_id in id_to_boxes:
                 for box_iter in id_to_boxes[box_id]:
                     x1, y1, x2, y2 = box_iter
                     gt_img[y1:y2, x1:x2] = 0
+                    mask[y1:y2, x1:x2] = 1
             else:
                 print("Couldn't find box with box_id: ", box_id)
         gt_img_path = f'visuals/flickr30k-vilt-{key}-gt_img.jpg'
@@ -229,7 +233,12 @@ for instance_idx, tid_dict in id_to_tids.items():
         with open(f'visuals/flickr30k-vilt-{key}-new_text.txt', 'w') as f:
             f.write(new_text)
 
-
+        gt_dg_overlap = ((t>20).astype(np.int64) * mask).sum()
+        gt_rd_overlap = (rd_mask * mask).sum()
+        gt_pixels = mask.sum()
+        key_to_logits[instance_idx][key]['gt_dg_overlap'] = gt_dg_overlap
+        key_to_logits[instance_idx][key]['gt_rd_overlap'] = gt_rd_overlap
+        key_to_logits[instance_idx][key]['gt_pixels'] = gt_pixels
 
 print(key_to_logits)
 # Write key_to_logits to JSON file
