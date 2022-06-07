@@ -12,6 +12,9 @@ from visualizations.visualizegradient import *
 import random
 import copy
 
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
 random.seed(42)
 # get the dataset
 data = Flickr30kDataset("valid")
@@ -19,7 +22,7 @@ data = Flickr30kDataset("valid")
 target_idx = 0
 
 # get the model
-analysismodel = Flickr30KVilt(target_idx=target_idx)
+analysismodel = Flickr30KVilt(target_idx=target_idx, device="cuda")
 
 # unimodal image gradient
 """
@@ -855,7 +858,48 @@ instance_text_target_ids_1000 = {
     },
 }
 
-target_ids_350 = {0: '[CLS]', 1: 'a', 2: 'man', 3: 'standing', 4: 'on', 5: 'a', 6: 'street', 7: 'with', 8: 'a', 9: 'suitcase', 10: 'in', 11: 'front', 12: 'of', 13: 'him', 14: 'while', 15: 'another', 16: 'man', 17: 'bends', 18: 'down', 19: 'to', 20: 'look', 21: 'at', 22: 'what', 23: 'is', 24: 'displayed', 25: 'on', 26: 'top', 27: 'of', 28: 'it', 29: '.', 30: '[SEP]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_350 = {
+    0: "[CLS]",
+    1: "a",
+    2: "man",
+    3: "standing",
+    4: "on",
+    5: "a",
+    6: "street",
+    7: "with",
+    8: "a",
+    9: "suitcase",
+    10: "in",
+    11: "front",
+    12: "of",
+    13: "him",
+    14: "while",
+    15: "another",
+    16: "man",
+    17: "bends",
+    18: "down",
+    19: "to",
+    20: "look",
+    21: "at",
+    22: "what",
+    23: "is",
+    24: "displayed",
+    25: "on",
+    26: "top",
+    27: "of",
+    28: "it",
+    29: ".",
+    30: "[SEP]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_350 = {
     "350_1": {"ids": [2], "text": "man"},
@@ -864,12 +908,56 @@ instance_text_target_ids_350 = {
     "350_4": {"ids": [16], "text": "man"},
     "350_5": {"ids": [15, 16], "text": "another man"},
     "350_6": {"ids": [22], "text": "what"},
-    "350_7": {"ids": [2,3,4,5, 6], "text": "man standing on a street"},
-    "350_8": {"ids": [2, 3, 4, 5, 6, 7, 8, 9], "text": "man standing on a street with a suitcase"},
-    "350_9": {"ids": [16, 17, 18], "text": "man bends down"}
+    "350_7": {"ids": [2, 3, 4, 5, 6], "text": "man standing on a street"},
+    "350_8": {
+        "ids": [2, 3, 4, 5, 6, 7, 8, 9],
+        "text": "man standing on a street with a suitcase",
+    },
+    "350_9": {"ids": [16, 17, 18], "text": "man bends down"},
 }
 
-target_ids_450 = {0: '[CLS]', 1: 'a', 2: 'white', 3: 'dog', 4: 'with', 5: 'brown', 6: 'ears', 7: 'is', 8: 'running', 9: 'on', 10: 'the', 11: 'sidewalk', 12: '.', 13: '[SEP]', 14: '[PAD]', 15: '[PAD]', 16: '[PAD]', 17: '[PAD]', 18: '[PAD]', 19: '[PAD]', 20: '[PAD]', 21: '[PAD]', 22: '[PAD]', 23: '[PAD]', 24: '[PAD]', 25: '[PAD]', 26: '[PAD]', 27: '[PAD]', 28: '[PAD]', 29: '[PAD]', 30: '[PAD]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_450 = {
+    0: "[CLS]",
+    1: "a",
+    2: "white",
+    3: "dog",
+    4: "with",
+    5: "brown",
+    6: "ears",
+    7: "is",
+    8: "running",
+    9: "on",
+    10: "the",
+    11: "sidewalk",
+    12: ".",
+    13: "[SEP]",
+    14: "[PAD]",
+    15: "[PAD]",
+    16: "[PAD]",
+    17: "[PAD]",
+    18: "[PAD]",
+    19: "[PAD]",
+    20: "[PAD]",
+    21: "[PAD]",
+    22: "[PAD]",
+    23: "[PAD]",
+    24: "[PAD]",
+    25: "[PAD]",
+    26: "[PAD]",
+    27: "[PAD]",
+    28: "[PAD]",
+    29: "[PAD]",
+    30: "[PAD]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_450 = {
     "450_1": {"ids": [2], "text": "white"},
@@ -883,7 +971,48 @@ instance_text_target_ids_450 = {
     "450_9": {"ids": [5, 6], "text": "brown ears"},
 }
 
-target_ids_550 = {0: '[CLS]', 1: 'women', 2: 'sit', 3: 'on', 4: 'a', 5: 'beach', 6: 'as', 7: 'they', 8: 'watch', 9: 'men', 10: 'bring', 11: 'in', 12: 'a', 13: 'fishing', 14: 'net', 15: 'filled', 16: 'with', 17: 'fish', 18: 'in', 19: 'front', 20: 'of', 21: 'them', 22: '.', 23: '[SEP]', 24: '[PAD]', 25: '[PAD]', 26: '[PAD]', 27: '[PAD]', 28: '[PAD]', 29: '[PAD]', 30: '[PAD]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_550 = {
+    0: "[CLS]",
+    1: "women",
+    2: "sit",
+    3: "on",
+    4: "a",
+    5: "beach",
+    6: "as",
+    7: "they",
+    8: "watch",
+    9: "men",
+    10: "bring",
+    11: "in",
+    12: "a",
+    13: "fishing",
+    14: "net",
+    15: "filled",
+    16: "with",
+    17: "fish",
+    18: "in",
+    19: "front",
+    20: "of",
+    21: "them",
+    22: ".",
+    23: "[SEP]",
+    24: "[PAD]",
+    25: "[PAD]",
+    26: "[PAD]",
+    27: "[PAD]",
+    28: "[PAD]",
+    29: "[PAD]",
+    30: "[PAD]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_550 = {
     "550_1": {"ids": [1], "text": "women"},
@@ -893,10 +1022,51 @@ instance_text_target_ids_550 = {
     "550_5": {"ids": [13, 14], "text": "fishing net"},
     "550_6": {"ids": [17], "text": "fish"},
     "550_7": {"ids": [1, 2, 3, 4, 5], "text": "women sit on a beach"},
-    "550_8": {"ids": [13, 14, 15, 16, 17], "text": "fishing net filled with fish"}
+    "550_8": {"ids": [13, 14, 15, 16, 17], "text": "fishing net filled with fish"},
 }
 
-target_ids_650 = {0: '[CLS]', 1: 'a', 2: 'man', 3: 'and', 4: 'woman', 5: 'standing', 6: 'against', 7: 'a', 8: 'marble', 9: 'building', 10: ',', 11: 'holding', 12: 'a', 13: 'conversation', 14: 'at', 15: 'night', 16: '.', 17: '[SEP]', 18: '[PAD]', 19: '[PAD]', 20: '[PAD]', 21: '[PAD]', 22: '[PAD]', 23: '[PAD]', 24: '[PAD]', 25: '[PAD]', 26: '[PAD]', 27: '[PAD]', 28: '[PAD]', 29: '[PAD]', 30: '[PAD]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_650 = {
+    0: "[CLS]",
+    1: "a",
+    2: "man",
+    3: "and",
+    4: "woman",
+    5: "standing",
+    6: "against",
+    7: "a",
+    8: "marble",
+    9: "building",
+    10: ",",
+    11: "holding",
+    12: "a",
+    13: "conversation",
+    14: "at",
+    15: "night",
+    16: ".",
+    17: "[SEP]",
+    18: "[PAD]",
+    19: "[PAD]",
+    20: "[PAD]",
+    21: "[PAD]",
+    22: "[PAD]",
+    23: "[PAD]",
+    24: "[PAD]",
+    25: "[PAD]",
+    26: "[PAD]",
+    27: "[PAD]",
+    28: "[PAD]",
+    29: "[PAD]",
+    30: "[PAD]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_650 = {
     "650_1": {"ids": [2], "text": "man"},
@@ -906,10 +1076,54 @@ instance_text_target_ids_650 = {
     "650_5": {"ids": [15], "text": "night"},
     "650_6": {"ids": [2, 3, 4], "text": "man and woman"},
     "650_7": {"ids": [8, 9], "text": "marble building"},
-    "650_8": {"ids": [2, 3, 4, 5, 6, 7, 8, 9], "text": "man and woman standing against a marble building"},
+    "650_8": {
+        "ids": [2, 3, 4, 5, 6, 7, 8, 9],
+        "text": "man and woman standing against a marble building",
+    },
 }
 
-target_ids_750 = {0: '[CLS]', 1: 'a', 2: 'young', 3: 'man', 4: 'in', 5: 'white', 6: 't', 7: '-', 8: 'shirt', 9: 'is', 10: 'sitting', 11: 'on', 12: 'the', 13: 'floor', 14: 'of', 15: 'a', 16: 'living', 17: 'room', 18: 'full', 19: 'of', 20: 'luggage', 21: '.', 22: '[SEP]', 23: '[PAD]', 24: '[PAD]', 25: '[PAD]', 26: '[PAD]', 27: '[PAD]', 28: '[PAD]', 29: '[PAD]', 30: '[PAD]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_750 = {
+    0: "[CLS]",
+    1: "a",
+    2: "young",
+    3: "man",
+    4: "in",
+    5: "white",
+    6: "t",
+    7: "-",
+    8: "shirt",
+    9: "is",
+    10: "sitting",
+    11: "on",
+    12: "the",
+    13: "floor",
+    14: "of",
+    15: "a",
+    16: "living",
+    17: "room",
+    18: "full",
+    19: "of",
+    20: "luggage",
+    21: ".",
+    22: "[SEP]",
+    23: "[PAD]",
+    24: "[PAD]",
+    25: "[PAD]",
+    26: "[PAD]",
+    27: "[PAD]",
+    28: "[PAD]",
+    29: "[PAD]",
+    30: "[PAD]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_750 = {
     "750_1": {"ids": [2], "text": "young"},
@@ -921,11 +1135,51 @@ instance_text_target_ids_750 = {
     "750_7": {"ids": [20], "text": "luggage"},
     "750_8": {"ids": [2, 3], "text": "young man"},
     "750_9": {"ids": [2, 3, 4, 5, 7, 8], "text": "young man in white t-shirt"},
-    "750_10": {"ids": [16, 17, 18, 19, 20],"text": "living room full of luggage"},
-
+    "750_10": {"ids": [16, 17, 18, 19, 20], "text": "living room full of luggage"},
 }
 
-target_ids_850 = {0: '[CLS]', 1: 'a', 2: 'baby', 3: ',', 4: 'wearing', 5: 'a', 6: 'pink', 7: 'knit', 8: '##ted', 9: 'hat', 10: ',', 11: 'sleeps', 12: 'peacefully', 13: 'on', 14: 'a', 15: 'blanket', 16: '.', 17: '[SEP]', 18: '[PAD]', 19: '[PAD]', 20: '[PAD]', 21: '[PAD]', 22: '[PAD]', 23: '[PAD]', 24: '[PAD]', 25: '[PAD]', 26: '[PAD]', 27: '[PAD]', 28: '[PAD]', 29: '[PAD]', 30: '[PAD]', 31: '[PAD]', 32: '[PAD]', 33: '[PAD]', 34: '[PAD]', 35: '[PAD]', 36: '[PAD]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_850 = {
+    0: "[CLS]",
+    1: "a",
+    2: "baby",
+    3: ",",
+    4: "wearing",
+    5: "a",
+    6: "pink",
+    7: "knit",
+    8: "##ted",
+    9: "hat",
+    10: ",",
+    11: "sleeps",
+    12: "peacefully",
+    13: "on",
+    14: "a",
+    15: "blanket",
+    16: ".",
+    17: "[SEP]",
+    18: "[PAD]",
+    19: "[PAD]",
+    20: "[PAD]",
+    21: "[PAD]",
+    22: "[PAD]",
+    23: "[PAD]",
+    24: "[PAD]",
+    25: "[PAD]",
+    26: "[PAD]",
+    27: "[PAD]",
+    28: "[PAD]",
+    29: "[PAD]",
+    30: "[PAD]",
+    31: "[PAD]",
+    32: "[PAD]",
+    33: "[PAD]",
+    34: "[PAD]",
+    35: "[PAD]",
+    36: "[PAD]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_850 = {
     "850_1": {"ids": [2], "text": "baby"},
@@ -933,15 +1187,59 @@ instance_text_target_ids_850 = {
     "850_3": {"ids": [7, 8, 9], "text": "knitted hat"},
     "850_4": {"ids": [9], "text": "hat"},
     "850_5": {"ids": [15], "text": "blanket"},
-    "850_6": {"ids": [2, 3, 4, 5, 6, 7, 8, 9], "text": "baby, wearing a pink knitted hat"}
+    "850_6": {
+        "ids": [2, 3, 4, 5, 6, 7, 8, 9],
+        "text": "baby, wearing a pink knitted hat",
+    },
 }
 
-target_ids_950 = {0: '[CLS]', 1: 'two', 2: 'young', 3: 'girls', 4: 'wearing', 5: 'hi', 6: '##ja', 7: '##bs', 8: 'stand', 9: 'in', 10: 'a', 11: 'dirt', 12: 'courtyard', 13: ',', 14: 'one', 15: 'has', 16: 'her', 17: 'arms', 18: 'folded', 19: 'and', 20: 'looks', 21: 'away', 22: 'the', 23: 'other', 24: 'is', 25: 'staring', 26: 'into', 27: 'the', 28: 'camera', 29: 'with', 30: 'her', 31: 'hands', 32: 'on', 33: 'her', 34: 'hips', 35: '.', 36: '[SEP]', 37: '[PAD]', 38: '[PAD]', 39: '[PAD]'}
+target_ids_950 = {
+    0: "[CLS]",
+    1: "two",
+    2: "young",
+    3: "girls",
+    4: "wearing",
+    5: "hi",
+    6: "##ja",
+    7: "##bs",
+    8: "stand",
+    9: "in",
+    10: "a",
+    11: "dirt",
+    12: "courtyard",
+    13: ",",
+    14: "one",
+    15: "has",
+    16: "her",
+    17: "arms",
+    18: "folded",
+    19: "and",
+    20: "looks",
+    21: "away",
+    22: "the",
+    23: "other",
+    24: "is",
+    25: "staring",
+    26: "into",
+    27: "the",
+    28: "camera",
+    29: "with",
+    30: "her",
+    31: "hands",
+    32: "on",
+    33: "her",
+    34: "hips",
+    35: ".",
+    36: "[SEP]",
+    37: "[PAD]",
+    38: "[PAD]",
+    39: "[PAD]",
+}
 
 instance_text_target_ids_950 = {
     "950_1": {"ids": [1], "text": "two"},
     "950_2": {"ids": [2], "text": "young"},
-    "950_3": {"ids": [3], "text": "girls"}, 
+    "950_3": {"ids": [3], "text": "girls"},
     "950_4": {"ids": [5, 6, 7], "text": "hijabs"},
     "950_5": {"ids": [12], "text": "courtyard"},
     "950_6": {"ids": [17], "text": "arms"},
@@ -952,7 +1250,10 @@ instance_text_target_ids_950 = {
     "950_11": {"ids": [31], "text": "hands"},
     "950_12": {"ids": [34], "text": "hips"},
     "950_13": {"ids": [30, 31], "text": "her hands"},
-    "950_14": {"ids": [23, 24, 25, 26, 27, 28], "text": "other is staring into the camera"}
+    "950_14": {
+        "ids": [23, 24, 25, 26, 27, 28],
+        "text": "other is staring into the camera",
+    },
 }
 
 
@@ -976,11 +1277,15 @@ id_to_tids = {
     650: instance_text_target_ids_650,
     750: instance_text_target_ids_750,
     850: instance_text_target_ids_850,
-    950: instance_text_target_ids_950
-
+    950: instance_text_target_ids_950,
 }
 
-key_to_logits = {}
+
+class NumpyFloatValuesEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.float32):
+            return float(obj)
+        return json.JSONEncoder.default(self, obj)
 
 
 def find_top_k_bounding_boxes(id_to_boxes, pixel_grads, num_gt_boxes):
@@ -1004,6 +1309,7 @@ def find_top_k_bounding_boxes(id_to_boxes, pixel_grads, num_gt_boxes):
 
 
 for instance_idx, tid_dict in id_to_tids.items():
+    key_to_logits = {}
     key_to_logits[str(instance_idx)] = {}
     for key, value in tid_dict.items():
         key_to_logits[str(instance_idx)][key] = {}
@@ -1087,10 +1393,9 @@ for instance_idx, tid_dict in id_to_tids.items():
         boxes_to_drop = []
         for idx, phrase in id_to_phrase.items():
             # Check if there is an intersection between value["text"] and phrase
-            if (
-                value["text"].lower() in phrase.lower()
-                or phrase.lower() in value["text"].lower()
-            ):
+            phr = " " + phrase.lower() + " "
+            val = " " + value["text"].lower() + " "
+            if val in phr or phr in val:
                 boxes_to_drop.append(idx)
 
         # drop boxes in image
@@ -1130,6 +1435,32 @@ for instance_idx, tid_dict in id_to_tids.items():
         new_box_img_path = f"visuals/flickr30k-vilt-{key}-new_box_img.jpg"
         plt.imsave(new_box_img_path, new_box_img)
 
+        new_box_img_unmasked = copy.deepcopy(img)
+
+        # Create figure and axes
+        fig, ax = plt.subplots()
+
+        # Display the image
+        ax.imshow(new_box_img_unmasked)
+
+        for box_id in dg_box_ids:
+            if box_id in id_to_boxes:
+                for box_iter in id_to_boxes[box_id]:
+                    x1, y1, x2, y2 = box_iter
+                    rect = patches.Rectangle(
+                        (x1, y1),
+                        x2 - x1,
+                        y2 - y1,
+                        linewidth=1,
+                        edgecolor="r",
+                        facecolor="none",
+                    )
+                    ax.add_patch(rect)
+
+        # Save the figure
+        plt.savefig(f"visuals/flickr30k-vilt-{key}-new_box_img_with_boxes.jpg")
+        plt.close()
+
         print("Key: ", key)
         print(gt_box_ids, dg_box_ids)
         new_instance = (new_box_img_path, [new_text])
@@ -1167,14 +1498,6 @@ for instance_idx, tid_dict in id_to_tids.items():
         ] = num_random_matching_boxes
         key_to_logits[str(instance_idx)][key]["num_gt_boxes"] = num_gt_boxes
 
-
-class NumpyFloatValuesEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.float32):
-            return float(obj)
-        return json.JSONEncoder.default(self, obj)
-
-
-# Write key_to_logits to JSON file
-with open("key_to_logits-box-acc.json", "w") as f:
-    json.dump(key_to_logits, f, cls=NumpyFloatValuesEncoder)
+    # Write key_to_logits to JSON file
+    with open(f"key_to_logits-box-acc-{instance_idx}.json", "w") as f:
+        json.dump(key_to_logits, f, cls=NumpyFloatValuesEncoder)

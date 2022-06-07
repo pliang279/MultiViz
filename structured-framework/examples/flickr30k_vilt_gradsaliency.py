@@ -16,7 +16,28 @@ target_idx = 0
 # get the model
 analysismodel = Flickr30KVilt(target_idx=target_idx)
 
-for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
+for instance_idx in [
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350,
+    400,
+    450,
+    500,
+    550,
+    600,
+    650,
+    700,
+    750,
+    800,
+    850,
+    900,
+    950,
+    1000,
+]:
     instance = data.getdata(instance_idx)
 
     # get the model predictions
