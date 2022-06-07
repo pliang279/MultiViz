@@ -21,6 +21,7 @@ class Flickr30KVilt(analysismodel):
         self.model = ViltForImageAndTextRetrieval.from_pretrained(
             "dandelin/vilt-b32-finetuned-flickr30k"
         ).to(self.device)
+        self.model.eval()
         self.modalitynames = ["image", "text"]
         self.modalitytypes = ["image", "text"]
         self.target_idx = target_idx

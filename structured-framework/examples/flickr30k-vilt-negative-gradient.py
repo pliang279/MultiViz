@@ -52,42 +52,21 @@ instance_text_target_ids = {
         "ids": [4, 5, 6],
         "text": "the red shirt",
     },
-    500: {"ids": [15, 16], "text": "the foothills"}
+    500: {"ids": [15, 16], "text": "the foothills"},
 }
 
 logits_and_props = {}
 random.seed(42)
-for instance_idx in [
-    50,
-    100,
-    150,
-    200,
-    250,
-    300,
-    350,
-    400,
-    450,
-    500
-]:
+for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     instance = data.getdata(instance_idx)
     # Select another instance randomly which isn't same as current
-    target_idx = random.choice(
-        [
-            idx
-            for idx in range(data.length())
-        ]
-    )
+    target_idx = random.choice([idx for idx in range(data.length())])
     while target_idx == instance_idx:
-        target_idx = random.choice(
-            [
-                idx
-                for idx in range(data.length())
-            ]
-        )
+        target_idx = random.choice([idx for idx in range(data.length())])
 
     negative_instance = data.getdata(target_idx)
-    
-    instance = list(instance)  
+
+    instance = list(instance)
     instance[-1] = negative_instance[-1]
 
     with open(f"visuals/flickr30k-vilt-{instance_idx}-{0}-text.txt", "w") as f:
@@ -111,7 +90,15 @@ for instance_idx in [
         instance, instance[-1], instance_text_target_ids[instance_idx]["ids"]
     )
 
-    print(dict(enumerate(processor.tokenizer.convert_ids_to_tokens(tids[0].detach().cpu().numpy()))))
+    print(
+        dict(
+            enumerate(
+                processor.tokenizer.convert_ids_to_tokens(
+                    tids[0].detach().cpu().numpy()
+                )
+            )
+        )
+    )
 
     print(
         processor.tokenizer.convert_ids_to_tokens(

@@ -193,9 +193,7 @@ logits_and_props = {}
 #     1000: {"logits": 8.121008, "probs": 1.0},
 # }
 print(data.length())
-f = open(
-    f"visuals/flickr30k-vilt-logits-probs.jsonl", "w"
-)
+f = open(f"visuals/flickr30k-vilt-logits-probs.jsonl", "w")
 for instance_idx in tqdm(range(0, data.length())):
     instance = data.getdata(instance_idx)
     for target_idx in [0, 1, 2, 3, 4]:
@@ -234,7 +232,7 @@ for instance_idx in tqdm(range(0, data.length())):
 
         # Write the logits and probabilities to a jsonl file
 
-        f.write(f"{{\"logit\": {logits}, \"prob\": {probs}}}\n")
+        f.write(f'{{"logit": {logits}, "prob": {probs}}}\n')
 
 f.close()
 # print(logits_and_props)
