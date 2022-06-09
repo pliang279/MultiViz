@@ -1,5 +1,20 @@
-# Multimodal Analysis
+# MultiViz: A Framework for Visualizing and Understanding Multimodal Models
+
 This repository contains code and experiments for performing interpretability analysis in a multimodal setting.
+
+[MultiViz website](https://andy-xingbowang.com/multivizSim/)
+
+## Contributors
+
+Correspondence to: 
+  - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
+  - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
+  - [Gunjan Chhablani](https://gchhablani.github.io/) (chhablani.gunjan@gmail.com)
+  - [Nihal Jain](https://nihaljn.github.io/) (nihalj@cs.cmu.edu)
+  - Zihao Deng (zihaoden@andrew.cmu.edu)
+  - [Xingbo Wang](https://andy-xingbowang.com/) (xingbo.wang@connect.ust.hk)
+  - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/) (morency@cs.cmu.edu)
+  - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/) (rsalakhu@cs.cmu.edu)
 
 ## Methods & Usage
 ### EMAP
