@@ -49,7 +49,7 @@ class CLEVRMDETR(analysismodel):
             ]
         )
 
-        raise ValueError(f"unknown {image_set}")
+        #raise ValueError(f'unknown {image_set}')
 
     def get_normed(self, img, target):
         tmp = copy.deepcopy(target)
@@ -283,11 +283,11 @@ class CLEVRMDETR(analysismodel):
         # gradd = torch.autograd.grad(probas[0][target],,create_graph=True)
         res = torch.sum(text_embedding * gradd, dim=1)
         if prelinear:
-
             handle1.remove()
             handle2.remove()
             handle3.remove()
             handle4.remove()
+
         return res, parse(datainstance[1]), normed_image, text_ids
 
     def getdoublegrad(self, datainstance, target, targetwords, alltarget=True):
@@ -329,6 +329,8 @@ if __name__ == "__main__":
     model = CLEVRMDETR()
 
     datainstance = dataset.getdata(10)
+    model.getgradtext(datainstance, 0)
+
     """print(datainstance)
     resobj = model.forward(datainstance)
     pred_label_idx = model.getpredlabel(resobj)
@@ -354,9 +356,16 @@ if __name__ == "__main__":
     t=normalize255(torch.sum(torch.abs(grads),dim=0))
     heatmap2d(t,'gss2.png',datainstance[0])"""
 
-    train_dataset = CLEVRDataset("train")
-    val_dataset = CLEVRDataset("val")
+    #train_dataset = CLEVRDataset("train")
+    #val_dataset = CLEVRDataset("val")
 
+    ###############################
+    # Sparse Linear Model         #
+    ###############################
+    '''
+    train_dataset = CLEVRDataset('train')
+    val_dataset = CLEVRDataset('val')
+    
     idxs_train = np.random.choice(699900, 20000)
     idxs_val = np.random.choice(149900, 20000)
 
@@ -366,10 +375,14 @@ if __name__ == "__main__":
     train_embeds = getembeds(train_instances, model)
     val_embeds = getembeds(val_instances, model)
 
+    params, (accuracies,sparse_cnts) = get_sparse_linear_model(model, train_embeds, val_embeds, 
+                                                               val_embeds, modelsavedir='ckpt/clevrsparselinearmodel_random.pt')
+    
+    
     params, (accuracies, sparse_cnts) = get_sparse_linear_model(
         model,
         train_embeds,
         val_embeds,
         val_embeds,
-        modelsavedir="ckpt/clevrsparselinearmodel_random.pt",
-    )
+        modelsavedir="ckpt/clevrsparselinearmodel_random_test.pt",
+    )'''

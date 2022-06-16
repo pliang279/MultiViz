@@ -1,0 +1,238 @@
+{
+    "metadata": {
+        "dataset": "MOSEI",
+        "split": "val",
+        "id": 22,
+        "labels": {
+            "0": "positive"
+        }
+    },
+    "instance": {
+        "video": "101787.mp4",
+        "script": " It was actually some good scenery in this\n",
+        "correct-answer": "positive",
+        "correct-answer-id": 0,
+        "pred-answer": "positive",
+        "pred-id": 0
+    },
+    "labels": {
+        "0": {
+            "overviews": {
+                "gradient": {
+                    "description": "Gradient-based explanation on the text, vision and audio features ran directly on the output logit",
+                    "video": "mosei_grad_22.mp4",
+                    "text": "mosei_grad_text_22.png",
+                    "vision": "mosei_grad_vision_22.png",
+                    "audio": "mosei_grad_audio_22.png"
+                }
+            },
+            "features": [
+                {
+                    "id": 66,
+                    "weight": 0.7972858548164368,
+                    "forward": {
+                        "video": "mosei_grad_22_feat_66.mp4",
+                        "text": "mosei_grad_text_22_feat_66.png",
+                        "vision": "mosei_grad_vision_22_feat_66.png",
+                        "audio": "mosei_grad_audio_22_feat_66.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 171,
+                            "orig_video": "qmMSumMloAs.mp4",
+                            "orig_script": "And I am here to tell you that we are up to, over 50% funded with the Kickstarter!!! That's amazing!\n",
+                            "video": "mosei_grad_22_feat_66_sample_171.mp4",
+                            "text": "mosei_grad_text_22_feat_66_sample_171.png",
+                            "vision": "mosei_grad_vision_22_feat_66_sample_171.png",
+                            "audio": "mosei_grad_audio_22_feat_66_sample_171.png"
+                        },
+                        {
+                            "id": 298,
+                            "orig_video": "icbUzboLcDQ.mp4",
+                            "orig_script": "RM: I LOVE YOU~ Jin: Are you say ''Hyung-nim, thank you\n",
+                            "video": "mosei_grad_22_feat_66_sample_298.mp4",
+                            "text": "mosei_grad_text_22_feat_66_sample_298.png",
+                            "vision": "mosei_grad_vision_22_feat_66_sample_298.png",
+                            "audio": "mosei_grad_audio_22_feat_66_sample_298.png"
+                        },
+                        {
+                            "id": 111,
+                            "orig_video": "hrLoOAh_8LY.mp4",
+                            "orig_script": "I'm Karen Nguyen, director of small business marketing at Rogers, and I'd like to invite you to the Rogers Business Forum.\n",
+                            "video": "mosei_grad_22_feat_66_sample_111.mp4",
+                            "text": "mosei_grad_text_22_feat_66_sample_111.png",
+                            "vision": "mosei_grad_vision_22_feat_66_sample_111.png",
+                            "audio": "mosei_grad_audio_22_feat_66_sample_111.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 132,
+                    "weight": 0.3957568407058716,
+                    "forward": {
+                        "video": "mosei_grad_22_feat_132.mp4",
+                        "text": "mosei_grad_text_22_feat_132.png",
+                        "vision": "mosei_grad_vision_22_feat_132.png",
+                        "audio": "mosei_grad_audio_22_feat_132.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 171,
+                            "orig_video": "qmMSumMloAs.mp4",
+                            "orig_script": "And I am here to tell you that we are up to, over 50% funded with the Kickstarter!!! That's amazing!\n",
+                            "video": "mosei_grad_22_feat_132_sample_171.mp4",
+                            "text": "mosei_grad_text_22_feat_132_sample_171.png",
+                            "vision": "mosei_grad_vision_22_feat_132_sample_171.png",
+                            "audio": "mosei_grad_audio_22_feat_132_sample_171.png"
+                        },
+                        {
+                            "id": 277,
+                            "orig_video": "Uc_6d-fkZEc.mp4",
+                            "orig_script": "Giotopoulos (Greece - Hellas) Many thanks to the pupils that participated in this project.\n",
+                            "video": "mosei_grad_22_feat_132_sample_277.mp4",
+                            "text": "mosei_grad_text_22_feat_132_sample_277.png",
+                            "vision": "mosei_grad_vision_22_feat_132_sample_277.png",
+                            "audio": "mosei_grad_audio_22_feat_132_sample_277.png"
+                        },
+                        {
+                            "id": 41,
+                            "orig_video": "K0m1tO3Ybyc.mp4",
+                            "orig_script": "It's one thing to make money while you are doing good for your company, for your shareholders, for you workers.\n",
+                            "video": "mosei_grad_22_feat_132_sample_41.mp4",
+                            "text": "mosei_grad_text_22_feat_132_sample_41.png",
+                            "vision": "mosei_grad_vision_22_feat_132_sample_41.png",
+                            "audio": "mosei_grad_audio_22_feat_132_sample_41.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 151,
+                    "weight": 0.26590240001678467,
+                    "forward": {
+                        "video": "mosei_grad_22_feat_151.mp4",
+                        "text": "mosei_grad_text_22_feat_151.png",
+                        "vision": "mosei_grad_vision_22_feat_151.png",
+                        "audio": "mosei_grad_audio_22_feat_151.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 279,
+                            "orig_video": "125344.mp4",
+                            "orig_script": "Harry Potter and the Order of the Phoenix yes Harry Potter's back and I think he's forty seven in this one no no he's not that old but (stutter) he's starting to look old in the movies they're all starting to look all grown up, and (umm) I'll admit it that I'm I'm (stutter) a dork and I enjoy the Harry Potter movies not saying everybody that enjoys Harry Potter movie is necessarily a dork, but (umm) I'm an older gentleman and I enjoy the kid movies but (umm) it's a very good movie (stutter) I mean the the the (stutter) movies in general are very good they the first one was really good the second one was still pretty good, and they just went on downhill from down there, this one wasn't very good I mean I didn't think it was that good (umm) Harry's back in school yet again and I think this is his fifth year, and (umm) this time new people are taking over Hogwart the school, see I told you I'm a dork I know the names of the school, and (umm) they're trying to discredit Harry saying that Lord the the (stutter) bad guys coming back I don't know his name Valdemort, Valdemont (stutter) I know it begins with a V I know that much but they're trying to discredit him and (umm) to me it just seems I don't know maybe i'm growing up whenever the first one came out I was a little younger than I am now but (umm) I didn't enjoy this one and I'm sure kids will enjoy it, I I (stutter) mean there was a lot of magic and the acting in it was really good, and (umm) the scenes were really good the (umm) the magic scenes looked awesome, but (umm) I just didn't enjoy it\n",
+                            "video": "mosei_grad_22_feat_151_sample_279.mp4",
+                            "text": "mosei_grad_text_22_feat_151_sample_279.png",
+                            "vision": "mosei_grad_vision_22_feat_151_sample_279.png",
+                            "audio": "mosei_grad_audio_22_feat_151_sample_279.png"
+                        },
+                        {
+                            "id": 183,
+                            "orig_video": "DpZGnuj-BA8.mp4",
+                            "orig_script": "Once again, we are very sorry and to show how sorry we are, up next Super Junior with the song sorry sorry.\n",
+                            "video": "mosei_grad_22_feat_151_sample_183.mp4",
+                            "text": "mosei_grad_text_22_feat_151_sample_183.png",
+                            "vision": "mosei_grad_vision_22_feat_151_sample_183.png",
+                            "audio": "mosei_grad_audio_22_feat_151_sample_183.png"
+                        },
+                        {
+                            "id": 212,
+                            "orig_video": "XyP8bVmGX6M.mp4",
+                            "orig_script": "KPMG has partnered with Georgetown University to launch a new Consumer Research Institute based in Washington D.C.\n",
+                            "video": "mosei_grad_22_feat_151_sample_212.mp4",
+                            "text": "mosei_grad_text_22_feat_151_sample_212.png",
+                            "vision": "mosei_grad_vision_22_feat_151_sample_212.png",
+                            "audio": "mosei_grad_audio_22_feat_151_sample_212.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 147,
+                    "weight": 0.25895413756370544,
+                    "forward": {
+                        "video": "mosei_grad_22_feat_147.mp4",
+                        "text": "mosei_grad_text_22_feat_147.png",
+                        "vision": "mosei_grad_vision_22_feat_147.png",
+                        "audio": "mosei_grad_audio_22_feat_147.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 298,
+                            "orig_video": "icbUzboLcDQ.mp4",
+                            "orig_script": "RM: I LOVE YOU~ Jin: Are you say ''Hyung-nim, thank you\n",
+                            "video": "mosei_grad_22_feat_147_sample_298.mp4",
+                            "text": "mosei_grad_text_22_feat_147_sample_298.png",
+                            "vision": "mosei_grad_vision_22_feat_147_sample_298.png",
+                            "audio": "mosei_grad_audio_22_feat_147_sample_298.png"
+                        },
+                        {
+                            "id": 224,
+                            "orig_video": "xjsaS-LeZ14.mp4",
+                            "orig_script": "But when you are done, you have this great business card binder that is going to be really easy to just flip through and find the exact card when you need it.\n",
+                            "video": "mosei_grad_22_feat_147_sample_224.mp4",
+                            "text": "mosei_grad_text_22_feat_147_sample_224.png",
+                            "vision": "mosei_grad_vision_22_feat_147_sample_224.png",
+                            "audio": "mosei_grad_audio_22_feat_147_sample_224.png"
+                        },
+                        {
+                            "id": 214,
+                            "orig_video": "fPsy1co_nuw.mp4",
+                            "orig_script": "This absorbency is like so much different than like a menstrual pad and it's great for liquid Overall, it works great It does what it needs to do Yep, that is it!\n",
+                            "video": "mosei_grad_22_feat_147_sample_214.mp4",
+                            "text": "mosei_grad_text_22_feat_147_sample_214.png",
+                            "vision": "mosei_grad_vision_22_feat_147_sample_214.png",
+                            "audio": "mosei_grad_audio_22_feat_147_sample_214.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 18,
+                    "weight": 0.23220878839492798,
+                    "forward": {
+                        "video": "mosei_grad_22_feat_18.mp4",
+                        "text": "mosei_grad_text_22_feat_18.png",
+                        "vision": "mosei_grad_vision_22_feat_18.png",
+                        "audio": "mosei_grad_audio_22_feat_18.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 192,
+                            "orig_video": "tXQpm-nKxNA.mp4",
+                            "orig_script": "For those of you already pursuing an education abroad I'm very grateful and wish you well.\n",
+                            "video": "mosei_grad_22_feat_18_sample_192.mp4",
+                            "text": "mosei_grad_text_22_feat_18_sample_192.png",
+                            "vision": "mosei_grad_vision_22_feat_18_sample_192.png",
+                            "audio": "mosei_grad_audio_22_feat_18_sample_192.png"
+                        },
+                        {
+                            "id": 274,
+                            "orig_video": "76PsKs4kPXE.mp4",
+                            "orig_script": "Or report says clearly that was fantastic, but what next\n",
+                            "video": "mosei_grad_22_feat_18_sample_274.mp4",
+                            "text": "mosei_grad_text_22_feat_18_sample_274.png",
+                            "vision": "mosei_grad_vision_22_feat_18_sample_274.png",
+                            "audio": "mosei_grad_audio_22_feat_18_sample_274.png"
+                        },
+                        {
+                            "id": 73,
+                            "orig_video": "xUgAP84vsg4.mp4",
+                            "orig_script": "As you get a chance to search   through our web and participate in interactions with our faculty, you will find tremendous amounts of resources available to you.\n",
+                            "video": "mosei_grad_22_feat_18_sample_73.mp4",
+                            "text": "mosei_grad_text_22_feat_18_sample_73.png",
+                            "vision": "mosei_grad_vision_22_feat_18_sample_73.png",
+                            "audio": "mosei_grad_audio_22_feat_18_sample_73.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        }
+    }
+}

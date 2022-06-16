@@ -18,6 +18,8 @@ class MIMICDataset:
         else:
             raise NotImplementedError
         self.dataset = get_data(path)[theindex]
+        self.statics = ['age','acquired immunodeficiency syndrome','hematologic malignancy','metastatic cancer','admission type']
+        self.timeseries = ['glasgow coma scale','systolic blood pressure','heart rate','body temperature','pao2/fio2 ratio','urine output','serum urea nitrogen level','white blood cells count','serum bicabonate level','sodium level','potassium level','bilirubin level']
 
     def getdata(self, idx):
         return self.dataset[idx]
@@ -46,6 +48,25 @@ class MIMICDataset:
         for i in range(self.length()):
             a[i] = self.dataset[i][0]
         return a
+    def getcsvs(self,id):
+        d=self.getdata(id)
+        f=open('mimic'+str(id)+'-0.csv','w+')
+        for i in range(5):
+            f.write(self.statics[i]+','+str(d[0][i])+'\n')
+        f.close()
+
+        f=open('mimic'+str(id)+'-1.csv','w+')
+        for i in range(24):
+            f.write(','+str(i))
+        f.write('\n')
+        for i in range(12):
+            f.write(self.timeseries[i])
+            for j in range(24):
+                f.write(',')
+                f.write(str(d[1][j][i]))
+            f.write('\n')
+        f.close()
+
 
 
 # task: integer between -1 and 19 inclusive, -1 means mortality task, 0-19 means icd9 task

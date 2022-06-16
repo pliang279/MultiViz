@@ -1,0 +1,239 @@
+{
+    "metadata": {
+        "dataset": "MOSEI",
+        "split": "val",
+        "id": 25,
+        "labels": {
+            "1": "negative",
+            "0": "positive"
+        }
+    },
+    "instance": {
+        "video": "33170.mp4",
+        "script": " It's a lot of toilet humor and cheap laughs, and if you are really really really desperate for that kind of a comedy, I highly recommend this movie for you\n",
+        "correct-answer": "positive",
+        "correct-answer-id": 0,
+        "pred-answer": "negative",
+        "pred-id": 1
+    },
+    "labels": {
+        "1": {
+            "overviews": {
+                "gradient": {
+                    "description": "Gradient-based explanation on the text, vision and audio features ran directly on the output logit",
+                    "video": "mosei_grad_25.mp4",
+                    "text": "mosei_grad_text_25.png",
+                    "vision": "mosei_grad_vision_25.png",
+                    "audio": "mosei_grad_audio_25.png"
+                }
+            },
+            "features": [
+                {
+                    "id": 125,
+                    "weight": 0.5893133282661438,
+                    "forward": {
+                        "video": "mosei_grad_25_feat_125.mp4",
+                        "text": "mosei_grad_text_25_feat_125.png",
+                        "vision": "mosei_grad_vision_25_feat_125.png",
+                        "audio": "mosei_grad_audio_25_feat_125.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 183,
+                            "orig_video": "DpZGnuj-BA8.mp4",
+                            "orig_script": "Once again, we are very sorry and to show how sorry we are, up next Super Junior with the song sorry sorry.\n",
+                            "video": "mosei_grad_25_feat_125_sample_183.mp4",
+                            "text": "mosei_grad_text_25_feat_125_sample_183.png",
+                            "vision": "mosei_grad_vision_25_feat_125_sample_183.png",
+                            "audio": "mosei_grad_audio_25_feat_125_sample_183.png"
+                        },
+                        {
+                            "id": 167,
+                            "orig_video": "FxxJB8hBpyQ.mp4",
+                            "orig_script": "So there's a really lot of negative connotation around it, manipulation and all the horrible stuff, and then Mad Men.\n",
+                            "video": "mosei_grad_25_feat_125_sample_167.mp4",
+                            "text": "mosei_grad_text_25_feat_125_sample_167.png",
+                            "vision": "mosei_grad_vision_25_feat_125_sample_167.png",
+                            "audio": "mosei_grad_audio_25_feat_125_sample_167.png"
+                        },
+                        {
+                            "id": 143,
+                            "orig_video": "x2lOwQaAn4g.mp4",
+                            "orig_script": "This is not only better for your body, but also for your mind and morale\n",
+                            "video": "mosei_grad_25_feat_125_sample_143.mp4",
+                            "text": "mosei_grad_text_25_feat_125_sample_143.png",
+                            "vision": "mosei_grad_vision_25_feat_125_sample_143.png",
+                            "audio": "mosei_grad_audio_25_feat_125_sample_143.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 9,
+                    "weight": 0.31884387135505676,
+                    "forward": {
+                        "video": "mosei_grad_25_feat_9.mp4",
+                        "text": "mosei_grad_text_25_feat_9.png",
+                        "vision": "mosei_grad_vision_25_feat_9.png",
+                        "audio": "mosei_grad_audio_25_feat_9.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 16,
+                            "orig_video": "31474.mp4",
+                            "orig_script": " The acting was horrible in it\n",
+                            "video": "mosei_grad_25_feat_9_sample_16.mp4",
+                            "text": "mosei_grad_text_25_feat_9_sample_16.png",
+                            "vision": "mosei_grad_vision_25_feat_9_sample_16.png",
+                            "audio": "mosei_grad_audio_25_feat_9_sample_16.png"
+                        },
+                        {
+                            "id": 20,
+                            "orig_video": "mHGaQ_nv9UY.mp4",
+                            "orig_script": "This is especially frustrating when I have sent the project to compressor and I've already spent an hour processing I  get the failed response.\n",
+                            "video": "mosei_grad_25_feat_9_sample_20.mp4",
+                            "text": "mosei_grad_text_25_feat_9_sample_20.png",
+                            "vision": "mosei_grad_vision_25_feat_9_sample_20.png",
+                            "audio": "mosei_grad_audio_25_feat_9_sample_20.png"
+                        },
+                        {
+                            "id": 167,
+                            "orig_video": "FxxJB8hBpyQ.mp4",
+                            "orig_script": "So there's a really lot of negative connotation around it, manipulation and all the horrible stuff, and then Mad Men.\n",
+                            "video": "mosei_grad_25_feat_9_sample_167.mp4",
+                            "text": "mosei_grad_text_25_feat_9_sample_167.png",
+                            "vision": "mosei_grad_vision_25_feat_9_sample_167.png",
+                            "audio": "mosei_grad_audio_25_feat_9_sample_167.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 164,
+                    "weight": 0.21687094867229462,
+                    "forward": {
+                        "video": "mosei_grad_25_feat_164.mp4",
+                        "text": "mosei_grad_text_25_feat_164.png",
+                        "vision": "mosei_grad_vision_25_feat_164.png",
+                        "audio": "mosei_grad_audio_25_feat_164.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 280,
+                            "orig_video": "Lh8r-5eHX6Q.mp4",
+                            "orig_script": "ISA Director Yoram Cohen and his people are doing important and excellent work for the people of Israel and for the security of Israel I find the attacks on them to be unacceptable.\n",
+                            "video": "mosei_grad_25_feat_164_sample_280.mp4",
+                            "text": "mosei_grad_text_25_feat_164_sample_280.png",
+                            "vision": "mosei_grad_vision_25_feat_164_sample_280.png",
+                            "audio": "mosei_grad_audio_25_feat_164_sample_280.png"
+                        },
+                        {
+                            "id": 229,
+                            "orig_video": "NzvNW7vP-Co.mp4",
+                            "orig_script": "I know their dollar is finding lower pressure at the moment same as-- situation so let's pray to pass in the world economy and I think we can look forward to better times.\n",
+                            "video": "mosei_grad_25_feat_164_sample_229.mp4",
+                            "text": "mosei_grad_text_25_feat_164_sample_229.png",
+                            "vision": "mosei_grad_vision_25_feat_164_sample_229.png",
+                            "audio": "mosei_grad_audio_25_feat_164_sample_229.png"
+                        },
+                        {
+                            "id": 137,
+                            "orig_video": "128059.mp4",
+                            "orig_script": " You know, the people the people (stutter) who get this you know, Jessica Alba's a good actress too but (uhh) he just you know, gives a pretty decent performance or worthwhile performance you know, a bunch\n",
+                            "video": "mosei_grad_25_feat_164_sample_137.mp4",
+                            "text": "mosei_grad_text_25_feat_164_sample_137.png",
+                            "vision": "mosei_grad_vision_25_feat_164_sample_137.png",
+                            "audio": "mosei_grad_audio_25_feat_164_sample_137.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 69,
+                    "weight": 0.1355728954076767,
+                    "forward": {
+                        "video": "mosei_grad_25_feat_69.mp4",
+                        "text": "mosei_grad_text_25_feat_69.png",
+                        "vision": "mosei_grad_vision_25_feat_69.png",
+                        "audio": "mosei_grad_audio_25_feat_69.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 144,
+                            "orig_video": "UlTJmndbGHM.mp4",
+                            "orig_script": "why do we keep failing to take notice of the pressure put on girls too young to understand this\n",
+                            "video": "mosei_grad_25_feat_69_sample_144.mp4",
+                            "text": "mosei_grad_text_25_feat_69_sample_144.png",
+                            "vision": "mosei_grad_vision_25_feat_69_sample_144.png",
+                            "audio": "mosei_grad_audio_25_feat_69_sample_144.png"
+                        },
+                        {
+                            "id": 33,
+                            "orig_video": "rwNlqh0k1j4.mp4",
+                            "orig_script": "And fear of Daesh caused some Syrian groups to feel that they had no realistic option but to support the government.\n",
+                            "video": "mosei_grad_25_feat_69_sample_33.mp4",
+                            "text": "mosei_grad_text_25_feat_69_sample_33.png",
+                            "vision": "mosei_grad_vision_25_feat_69_sample_33.png",
+                            "audio": "mosei_grad_audio_25_feat_69_sample_33.png"
+                        },
+                        {
+                            "id": 95,
+                            "orig_video": "HmXXW45eZL4.mp4",
+                            "orig_script": "Never ever look hurt, look sad, look angry, start crying, run off stage.\n",
+                            "video": "mosei_grad_25_feat_69_sample_95.mp4",
+                            "text": "mosei_grad_text_25_feat_69_sample_95.png",
+                            "vision": "mosei_grad_vision_25_feat_69_sample_95.png",
+                            "audio": "mosei_grad_audio_25_feat_69_sample_95.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 28,
+                    "weight": 0.12872740626335144,
+                    "forward": {
+                        "video": "mosei_grad_25_feat_28.mp4",
+                        "text": "mosei_grad_text_25_feat_28.png",
+                        "vision": "mosei_grad_vision_25_feat_28.png",
+                        "audio": "mosei_grad_audio_25_feat_28.png"
+                    },
+                    "forward-descriptions": "Gradient-based explanation on the text, vision and audio features with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 16,
+                            "orig_video": "31474.mp4",
+                            "orig_script": " The acting was horrible in it\n",
+                            "video": "mosei_grad_25_feat_28_sample_16.mp4",
+                            "text": "mosei_grad_text_25_feat_28_sample_16.png",
+                            "vision": "mosei_grad_vision_25_feat_28_sample_16.png",
+                            "audio": "mosei_grad_audio_25_feat_28_sample_16.png"
+                        },
+                        {
+                            "id": 167,
+                            "orig_video": "FxxJB8hBpyQ.mp4",
+                            "orig_script": "So there's a really lot of negative connotation around it, manipulation and all the horrible stuff, and then Mad Men.\n",
+                            "video": "mosei_grad_25_feat_28_sample_167.mp4",
+                            "text": "mosei_grad_text_25_feat_28_sample_167.png",
+                            "vision": "mosei_grad_vision_25_feat_28_sample_167.png",
+                            "audio": "mosei_grad_audio_25_feat_28_sample_167.png"
+                        },
+                        {
+                            "id": 116,
+                            "orig_video": "f_ZJ7L14oYQ.mp4",
+                            "orig_script": "So you don't get that sludge sort of tracking in to your house.\n",
+                            "video": "mosei_grad_25_feat_28_sample_116.mp4",
+                            "text": "mosei_grad_text_25_feat_28_sample_116.png",
+                            "vision": "mosei_grad_vision_25_feat_28_sample_116.png",
+                            "audio": "mosei_grad_audio_25_feat_28_sample_116.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with gradient-based explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        }
+    }
+}

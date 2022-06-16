@@ -5,7 +5,7 @@ sys.path.insert(1, os.getcwd())
 
 from analysis.utils import processvqalxmertfeatsbinary
 
-vals = processvqalxmertfeatsbinary("tmp/VQAfeats/LXMERT_val_feats_1.pkl")
+vals = processvqalxmertfeatsbinary("tmp/VQAfeats/LXMERT_feats.pkl")
 
 import torch
 
@@ -31,3 +31,4 @@ for epoch in range(300):
     print("epoch " + str(epoch) + " loss " + str(totalloss / totals))
 
 torch.save(model, "binaryerrorpred.pt")
+print(model.data.weight)

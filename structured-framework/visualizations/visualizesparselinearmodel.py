@@ -31,8 +31,11 @@ def analyzepointandvisualizeall(
     glmres = params["path"][pathnum]
     topk = glmres["weight"][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
+    zzs = []
     for i in topk:
-        print(glmres["weight"][label][i])
+        zz=glmres["weight"][label][i]
+        print(zz)
+        zzs.append(zz.item())
     for i in range(len(analysismodel.getmodalitynames())):
         modalityname = analysismodel.getmodalitynames()[i]
         modalitytype = analysismodel.getmodalitytypes()[i]
@@ -67,6 +70,7 @@ def analyzepointandvisualizeall(
             )
     plt.savefig(prefixall + "-all-lime-feats.png")
     plt.close()
+    return topk.tolist(),zzs
 
 
 from visualizations.visualizegradient import *
@@ -214,6 +218,55 @@ def analyzefeaturesandvisualizeallgrad(
     plt.close()
 
 
+def onefeature(dataset,analysismodel,featnum,prefix,prefixall,datainstances,prelinear,dataprefix,k=3,numfeats=3):
+    idx = torch.argsort(prelinear[:,featnum])
+    minidx = idx[0:k]
+    maxidx = idx[-k:]
+
+    for i in range(len(analysismodel.getmodalitynames())):
+        ids=[]
+        modalityname = analysismodel.getmodalitynames()[i]
+        modalitytype = analysismodel.getmodalitytypes()[i]
+        for jj in range(2*k):
+            if jj >= k:
+                idd = maxidx[jj-k].item()
+            else:
+                idd = minidx[jj].item()
+            ids.append(idd)
+            retters = rununimodallime(
+                datainstances[idd],
+                modalityname,
+                modalitytype,
+                analysismodel,
+                [featnum],
+                on_sparse=True,
+            )
+            visualizelime(retters,modalitytype,featnum,
+                prefix+"-"+str(idd)+"-"+ modalityname+ "-lime-feat"+ str(featnum)+ "-"+ str(jj)+ ".png", num_features=numfeats)
+    for j in range(2*k): 
+        dataset.makepic(ids[j],pr=analysismodel.getpredlabel(analysismodel.forward(datainstances[ids[j]])))
+    plt.clf()
+    fig, ax = plt.subplots(
+        nrows=(1+len(analysismodel.getmodalitynames())),
+        ncols=2*k,
+        figsize=(30, 21),
+    )
+    for j in range(2*k):
+        ax[0][j].imshow(plt.imread(dataprefix+str(ids[j])+".png")) 
+        ax[0][j].title.set_text(str(ids[j]))
+
+    for i in range(len(analysismodel.getmodalitynames())):
+        modalityname = analysismodel.getmodalitynames()[i]
+        for jj in range(2*k):
+            ax[i+1][jj].imshow(plt.imread(prefix+"-"+str(ids[jj])+"-"+ modalityname+ "-lime-feat"+ str(featnum)+ "-"+ str(jj)+ ".png"))
+            ax[i+1][jj].title.set_text(str(ids[jj]))
+    plt.savefig(prefixall + "-"+str(featnum)+"-all-examples.png")
+    plt.close()
+
+
+
+
+
 def analyzefeaturesandvisualizeall(
     params,
     datainstances,
@@ -230,8 +283,10 @@ def analyzefeaturesandvisualizeall(
     glmres = params["path"][pathnum]
     topk = glmres["weight"][label].squeeze().numpy().argsort()[-k:][::-1]
     print(topk)
-    idxs = []
+    idxs=[]
+    mmidxs=[]
     for i in range(len(analysismodel.getmodalitynames())):
+        mmidxs=[]
         idxs.append([])
         modalityname = analysismodel.getmodalitynames()[i]
         modalitytype = analysismodel.getmodalitytypes()[i]
@@ -247,6 +302,7 @@ def analyzefeaturesandvisualizeall(
         for j in range(k):
             maximal_idxs = prelinear[:, topk[j]].argsort()[-pointsperfeat:]
             print(maximal_idxs)
+            mmidxs.append(maximal_idxs.cpu().tolist())
             for jj in range(pointsperfeat):
                 idxs[i].append(maximal_idxs[jj])
                 datainstance = datainstances[
@@ -302,6 +358,7 @@ def analyzefeaturesandvisualizeall(
                 )
     plt.savefig(prefixall + "-all-lime-feats.png")
     plt.close()
+    return mmidxs
 
 
 def makefeats(

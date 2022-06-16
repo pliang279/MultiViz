@@ -1,0 +1,1 @@
+How many objects are either metallic objects that are on the left side of the big metallic cube or shiny blocks behind the brown cube?

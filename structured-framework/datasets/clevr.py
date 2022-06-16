@@ -7,6 +7,7 @@ import random
 import numpy as np
 import PIL
 from PIL import Image
+import platform
 
 # download train, test, and val split
 def download_data():
@@ -70,7 +71,10 @@ class CLEVRDataset:
             + self.split
             + "/CLEVR_"
             + self.split
-            + f"_{image_id:06d}.png"
+            #+ f"_{image_id:06d}.png"
+            + "_"
+            + str(image_id).zfill(6)
+            + ".png"
         )
         image = np.asarray(Image.open(imgfile).convert("RGB"))
         label = self.answermapping.index(answer)

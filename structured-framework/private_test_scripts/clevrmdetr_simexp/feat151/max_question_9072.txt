@@ -1,0 +1,1 @@
+What number of objects are either things on the right side of the tiny cyan block or tiny red rubber blocks?

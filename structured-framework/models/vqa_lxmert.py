@@ -12,7 +12,7 @@ from models.lxmert_extras.processing_image import Preprocess
 from models.lxmert_extras.modeling_frcnn import GeneralizedRCNN
 import PIL
 import random
-
+from tqdm import tqdm
 
 class VQALXMERT(analysismodel):
     def __init__(self, device="cuda"):
@@ -56,6 +56,7 @@ class VQALXMERT(analysismodel):
                 return_tensors="pt",
                 location=self.device,
             )
+            self.frcnnout = output_dict
             normalized_boxes = output_dict.get("normalized_boxes")
             features = output_dict.get("roi_features")
             inputs = self.lxmert_tokenizer(
@@ -158,7 +159,8 @@ class VQALXMERT(analysismodel):
         output_vqa["question_answering_score"][0][target].backward()
         return images.grad.detach()[0]
 
-    def private_prep(self, datainstance):
+    def private_prep(self,datainstance):
+        # private method! do not use without permission
         with torch.no_grad():
             images, sizes, scales_yx = self.image_preprocess(datainstance[0])
             output_dict = self.frcnn(
@@ -182,4 +184,66 @@ class VQALXMERT(analysismodel):
                 add_special_tokens=True,
                 return_tensors="pt",
             )
-        return normalized_boxes.cpu(), features.cpu(), inputs
+        return normalized_boxes.cpu(),features.cpu(),inputs
+
+
+    def getfeatgrad(self,datainstance,targets,retfeatures=False):
+        images,sizes,scales_yx = self.image_preprocess(datainstance[0])
+        #images.requires_grad=True
+        output_dict = self.frcnn(
+            images.to(self.device),
+            sizes.to(self.device),
+            scales_yx=scales_yx.to(self.device),
+            padding="max_detections",
+            max_detections=self.frcnn_cfg.max_detections,
+            return_tensors="pt",
+            location=self.device
+        )
+        normalized_boxes = output_dict.get("normalized_boxes")
+        features = output_dict.get("roi_features")
+        features.requires_grad=True
+        def hook_backward(module,input,output):
+            nonlocal gradd
+            print('here')
+            gradd =  output[0][0]
+        handle=self.lxmert_vqa.lxmert.embeddings.word_embeddings.register_backward_hook(hook_backward)
+        inputs = self.lxmert_tokenizer(
+            [datainstance[1]],
+            padding="max_length",
+            max_length=20,
+            truncation=True,
+            return_token_type_ids=True,
+            return_attention_mask=True,
+            add_special_tokens=True,
+            return_tensors="pt"
+        )
+        print(inputs.input_ids)
+        output_vqa = self.lxmert_vqa(
+            input_ids=inputs.input_ids.to(self.device),
+            attention_mask=inputs.attention_mask.to(self.device),
+            visual_feats=features.to(self.device),
+            visual_pos=normalized_boxes.to(self.device),
+            token_type_ids=inputs.token_type_ids.to(self.device),
+            output_attentions=False,
+        )
+        totals = 0.0
+        gradd = None
+        for target in targets:
+            totals += output_vqa['question_answering_score'][0][target]
+        totals.backward(create_graph=True)
+        imggrad = features.grad.detach()
+        txtgrad = gradd
+        handle.remove()
+        if retfeatures:
+            return imggrad,txtgrad,features,normalized_boxes
+        return imggrad,txtgrad
+
+    def getdoublegrad(self,datainstance,targets,wordtargets):
+        _,txtgrad,feats,bboxs = self.getfeatgrad(datainstance,targets,True)
+        totalsgrad = torch.sum(txtgrad,dim=1)
+        totals = 0.0
+        for wt in wordtargets:
+            totals += torch.abs(totalsgrad[wt])
+        rets = torch.autograd.grad(totals,feats)
+        return rets,bboxs
+

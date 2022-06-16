@@ -3,16 +3,15 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 import cv2
-
+from matplotlib import ticker
 
 def normalize255(t, fac=255.0):
     upmost = torch.max(torch.abs(t))
     return (fac * t / upmost).long()
 
 
-def heatmap2d(t, savename, orig=None,fivebyfive=False):
+def heatmap2d(t, savename, orig=None,fivebyfive=True):
     plt.clf()
-    plt.axis('off')
     pxs = torch.zeros(len(t), len(t[0]), 3)
     t = torch.clamp(t, -255, 255)
     if fivebyfive:
@@ -27,7 +26,7 @@ def heatmap2d(t, savename, orig=None,fivebyfive=False):
     if orig is not None:
         img2 = cv2.resize(np.asarray(Image.open(orig)), (pxs.shape[1], pxs.shape[0]))
         plt.imshow(img2)
-        plt.imshow(img, alpha=0.6)
+        plt.imshow(img, alpha=0.4)
     else:
         plt.imshow(img)
     plt.savefig(savename)
@@ -63,4 +62,19 @@ def textmap(words, weights, savedir, tops=10):
     pos = np.arange(len(colors)) + 0.5
     plt.barh(pos, vals, align="center", color=colors)
     plt.yticks(pos, names)
-    plt.savefig(savedir)
+    plt.savefig(savedir,bbox_inches='tight')
+
+def heatmapts(xwords,ywords,grads,savedir):
+    plt.clf()
+    #print(grads)
+    cm = plt.get_cmap('PiYG')
+    fig,ax = plt.subplots()
+    cax = ax.imshow(grads,cmap=cm)
+    fig.colorbar(cax).set_label('first order gradient',rotation=270)
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+    xwords.insert(0,'none')
+    ywords.insert(0,'none')
+    ax.set_xticklabels(xwords)
+    ax.set_yticklabels(ywords)
+    plt.savefig(savedir,bbox_inches='tight')

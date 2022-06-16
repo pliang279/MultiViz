@@ -1,0 +1,1 @@
+What number of yellow objects are either large shiny balls or cylinders?
