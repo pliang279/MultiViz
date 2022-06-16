@@ -24,48 +24,27 @@ target_idx = 0
 # get the model
 analysismodel = Flickr30KVilt(target_idx=target_idx, device="cuda")
 
-# unimodal image gradient
-"""
-for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
-    instance = data.getdata(instance_idx)
+from misc.flickr30k_vilt_target_ids_low_scorers import *
 
-    # get the model predictions
-    preds = analysismodel.forward(instance)
 
-    # compute and print grad saliency with and without multiply orig:
-    saliency = get_saliency_map(instance, analysismodel, 0)
-    grads = saliency[0]
-
-    t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
-    heatmap2d(
-        t,
-        f"visuals/flickr30k-vilt-{instance_idx}-{target_idx}-saliency.png",
-        instance[0],
-    )
-"""
-from misc.flickr30k_vilt_target_ids import *
 
 id_to_tids = {
-    50: instance_text_target_ids_50,
-    100: instance_text_target_ids_100,
-    150: instance_text_target_ids_150,
-    200: instance_text_target_ids_200,
-    500: instance_text_target_ids_500,
-    250: instance_text_target_ids_250,
-    300: instance_text_target_ids_300,
-    400: instance_text_target_ids_400,
-    600: instance_text_target_ids_600,
-    700: instance_text_target_ids_700,
-    800: instance_text_target_ids_800,
-    900: instance_text_target_ids_900,
-    1000: instance_text_target_ids_1000,
-    350: instance_text_target_ids_350,
-    450: instance_text_target_ids_450,
-    550: instance_text_target_ids_550,
-    650: instance_text_target_ids_650,
-    750: instance_text_target_ids_750,
-    850: instance_text_target_ids_850,
-    950: instance_text_target_ids_950,
+    # 50: instance_text_target_ids_50,
+    808: instance_text_target_ids_808,
+    204: instance_text_target_ids_204,
+    654: instance_text_target_ids_654,
+    589: instance_text_target_ids_589,
+    711: instance_text_target_ids_711,
+    777: instance_text_target_ids_777,
+    # 411: instance_text_target_ids_411,
+    # 265: instance_text_target_ids_265,
+    # 169: instance_text_target_ids_169,
+    # 308: instance_text_target_ids_308,
+    # 259: instance_text_target_ids_259,
+    # 634: instance_text_target_ids_634,
+    391: instance_text_target_ids_391,
+    576: instance_text_target_ids_576
+    # 403
 }
 
 
@@ -99,27 +78,25 @@ def find_top_k_bounding_boxes(id_to_boxes, pixel_grads, num_gt_boxes):
 for instance_idx, tid_dict in id_to_tids.items():
     key_to_logits = {}
     key_to_logits[str(instance_idx)] = {}
-
-    # Get the Instance
-    instance = data.getdata(instance_idx)
-    (
-        first_sentence,
-        id_to_boxes,
-        id_to_phrase,
-    ) = data.get_entities_data_first_sentence(instance_idx)
-    # print(id_to_boxes, id_to_phrase)
-
-    # Get Original Logits
-    original_probs, _ = analysismodel.forward(instance)
-    original_logits = original_probs.detach().cpu().numpy()[0]
-    
-
     for key, value in tid_dict.items():
         key_to_logits[str(instance_idx)][key] = {}
+
+        # Get the Instance
+        instance = data.getdata(instance_idx)
+        (
+            first_sentence,
+            id_to_boxes,
+            id_to_phrase,
+        ) = data.get_entities_data_first_sentence(instance_idx)
+        # print(id_to_boxes, id_to_phrase)
+
+        # Get Original Logits
+        original_probs, _ = analysismodel.forward(instance)
+        original_logits = original_probs.detach().cpu().numpy()[0]
         key_to_logits[str(instance_idx)][key]["original_logits"] = original_logits
 
         # Calculate the Double Grad
-        # print(instance_idx)
+        print(instance_idx)
         processor = ViltProcessor.from_pretrained(
             "dandelin/vilt-b32-finetuned-flickr30k"
         )
@@ -128,15 +105,15 @@ for instance_idx, tid_dict in id_to_tids.items():
             instance, instance[-1], value["ids"]
         )
 
-        # print(
-        #     dict(
-        #         enumerate(
-        #             processor.tokenizer.convert_ids_to_tokens(
-        #                 tids[0].detach().cpu().numpy()
-        #             )
-        #         )
-        #     )
-        # )
+        print(
+            dict(
+                enumerate(
+                    processor.tokenizer.convert_ids_to_tokens(
+                        tids[0].detach().cpu().numpy()
+                    )
+                )
+            )
+        )
 
         grads = grads[0]
 
@@ -248,7 +225,6 @@ for instance_idx, tid_dict in id_to_tids.items():
                     ax.add_patch(rect)
 
         # Save the figure
-        plt.axis('off')
         plt.savefig(f"visuals/flickr30k-vilt-{key}-new_box_img_with_boxes.jpg")
         plt.close()
 

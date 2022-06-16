@@ -1,8 +1,8 @@
 import json
 import numpy as np
-# Read Key to Logits JSON
-with open("structured-framework/key_to_logits-box-acc.json") as f:
-    key_to_logits = json.loads(f.read())
+# # Read Key to Logits JSON
+# with open("structured-framework/key_to_logits-box-acc.json") as f:
+#     key_to_logits = json.loads(f.read())
 
 
 dg_acc = []
@@ -11,17 +11,22 @@ og_drops = []
 rd_drops = []
 gt_drops = []
 
-for instance_idx, inst_val in key_to_logits.items():
-    for key, key_val in inst_val.items():
-        num_dg_matching_boxes = key_val["num_dg_matching_boxes"]
-        num_random_matching_boxes = key_val["num_random_matching_boxes"]
-        num_gt_boxes = key_val["num_gt_boxes"]
-        if num_gt_boxes != 0:
-            dg_acc.append(num_dg_matching_boxes / num_gt_boxes)
-            rd_acc.append(num_random_matching_boxes / num_gt_boxes)
-            og_drops.append(key_val["doublegrad_box_logits"] - key_val["original_logits"])
-            rd_drops.append(key_val["random_box_logits"] - key_val["original_logits"])
-            gt_drops.append(key_val["ground_truth_logits"] - key_val["original_logits"])
+ids = [50, 100, 150, 200, 500, 250, 300, 400, 600, 700, 800, 900, 1000, 350, 450, 550, 650, 750, 850, 950]
+
+for instance_idx in ids:
+    with open(f"clip_key_to_logits/key_to_logits-box-acc-{instance_idx}.json") as f:
+        key_to_logits = json.loads(f.read())
+    for instance_idx, inst_val in key_to_logits.items():
+        for key, key_val in inst_val.items():
+            num_dg_matching_boxes = key_val["num_dg_matching_boxes"]
+            num_random_matching_boxes = key_val["num_random_matching_boxes"]
+            num_gt_boxes = key_val["num_gt_boxes"]
+            if num_gt_boxes != 0:
+                dg_acc.append(num_dg_matching_boxes / num_gt_boxes)
+                rd_acc.append(num_random_matching_boxes / num_gt_boxes)
+                og_drops.append(key_val["doublegrad_box_logits"] - key_val["original_logits"])
+                rd_drops.append(key_val["random_box_logits"] - key_val["original_logits"])
+                gt_drops.append(key_val["ground_truth_logits"] - key_val["original_logits"])
 
 
 
@@ -40,10 +45,10 @@ rd_drops_std = np.std(rd_drops)
 gt_drops_mean = np.mean(gt_drops)
 gt_drops_std = np.std(gt_drops)
 
-print("DG Acc Mean: {}".format(dg_acc_mean))
-print("DG Acc Std: {}".format(dg_acc_std))
-print("RD Acc Mean: {}".format(rd_acc_mean))
-print("RD Acc Std: {}".format(rd_acc_std))
+print("DG Object Acc Mean: {}".format(dg_acc_mean))
+print("DG Object Acc Std: {}".format(dg_acc_std))
+print("RD Object Acc Mean: {}".format(rd_acc_mean))
+print("RD Object Acc Std: {}".format(rd_acc_std))
 
 print("DG Drops Mean: {}".format(og_drops_mean))
 print("DG Drops Std: {}".format(og_drops_std))

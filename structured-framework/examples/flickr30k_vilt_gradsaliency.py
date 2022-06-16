@@ -37,6 +37,20 @@ for instance_idx in [
     900,
     950,
     1000,
+    808,
+    204,
+    654,
+    589,
+    711,
+    777,
+    411,
+    265,
+    169,
+    308,
+    259,
+    634,
+    391,
+    576
 ]:
     instance = data.getdata(instance_idx)
 
@@ -53,3 +67,11 @@ for instance_idx in [
         f"visuals/flickr30k-vilt-{instance_idx}-{target_idx}-saliency.png",
         instance[0],
     )
+
+    # copy images to directory
+    os.system(
+        f"cp {instance[0]} visuals/flickr30k-vilt-{instance_idx}-{target_idx}-image.png"
+    )
+    # save text to file
+    with open(f"visuals/flickr30k-vilt-{instance_idx}-{target_idx}-text.txt", "w") as f:
+        f.write(instance[1][target_idx])

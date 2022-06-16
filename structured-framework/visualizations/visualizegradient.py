@@ -10,8 +10,9 @@ def normalize255(t, fac=255.0):
     return (fac * t / upmost).long()
 
 
-def heatmap2d(t, savename, orig=None,fivebyfive=True):
+def heatmap2d(t, savename, orig=None,fivebyfive=False):
     plt.clf()
+    plt.axis('off')
     pxs = torch.zeros(len(t), len(t[0]), 3)
     t = torch.clamp(t, -255, 255)
     if fivebyfive:
@@ -26,7 +27,7 @@ def heatmap2d(t, savename, orig=None,fivebyfive=True):
     if orig is not None:
         img2 = cv2.resize(np.asarray(Image.open(orig)), (pxs.shape[1], pxs.shape[0]))
         plt.imshow(img2)
-        plt.imshow(img, alpha=0.5)
+        plt.imshow(img, alpha=0.6)
     else:
         plt.imshow(img)
     plt.savefig(savename)

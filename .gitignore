@@ -162,3 +162,4 @@ structured-framework/models/mmimdb_lf_extras/*.pth
 structured-framework/models/mmimdb_lf_extras/*.pt
 structured-framework/models/mmimdb_lf_extras/*.pth
 structured-framework/models/mmimdb_lf_extras/SLM_ckpt/*
+*_key_to_logits

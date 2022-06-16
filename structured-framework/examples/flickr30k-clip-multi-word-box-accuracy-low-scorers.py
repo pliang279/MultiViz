@@ -1,3 +1,4 @@
+import gc
 import sys
 import os
 
@@ -5,8 +6,8 @@ import json
 
 sys.path.insert(1, os.getcwd())
 from datasets.flickr30k import Flickr30kDataset
-from models.flickr30k_vilt import Flickr30KVilt
-from transformers import ViltProcessor
+from models.flickr30k_clip import Flickr30KClip
+from transformers import CLIPTokenizer
 import torch.nn.functional as F
 from visualizations.visualizegradient import *
 import random
@@ -22,7 +23,7 @@ data = Flickr30kDataset("valid")
 target_idx = 0
 
 # get the model
-analysismodel = Flickr30KVilt(target_idx=target_idx, device="cuda")
+analysismodel = Flickr30KClip(target_idx=target_idx, device="cuda")
 
 # unimodal image gradient
 """
@@ -39,35 +40,30 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
     t = normalize255(torch.sum(torch.abs(grads), dim=0), fac=255)
     heatmap2d(
         t,
-        f"visuals/flickr30k-vilt-{instance_idx}-{target_idx}-saliency.png",
+        f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-saliency.png",
         instance[0],
     )
 """
-from misc.flickr30k_vilt_target_ids import *
+from misc.flickr30k_clip_target_ids_low_scorers import *
 
 id_to_tids = {
-    50: instance_text_target_ids_50,
-    100: instance_text_target_ids_100,
-    150: instance_text_target_ids_150,
-    200: instance_text_target_ids_200,
-    500: instance_text_target_ids_500,
-    250: instance_text_target_ids_250,
-    300: instance_text_target_ids_300,
-    400: instance_text_target_ids_400,
-    600: instance_text_target_ids_600,
-    700: instance_text_target_ids_700,
-    800: instance_text_target_ids_800,
-    900: instance_text_target_ids_900,
-    1000: instance_text_target_ids_1000,
-    350: instance_text_target_ids_350,
-    450: instance_text_target_ids_450,
-    550: instance_text_target_ids_550,
-    650: instance_text_target_ids_650,
-    750: instance_text_target_ids_750,
-    850: instance_text_target_ids_850,
-    950: instance_text_target_ids_950,
+    # 50: instance_text_target_ids_50,
+    808: instance_text_target_ids_808,
+    204: instance_text_target_ids_204,
+    654: instance_text_target_ids_654,
+    589: instance_text_target_ids_589,
+    711: instance_text_target_ids_711,
+    777: instance_text_target_ids_777,
+    # 411: instance_text_target_ids_411,
+    # 265: instance_text_target_ids_265,
+    # 169: instance_text_target_ids_169,
+    # 308: instance_text_target_ids_308,
+    # 259: instance_text_target_ids_259,
+    # 634: instance_text_target_ids_634,
+    391: instance_text_target_ids_391,
+    576: instance_text_target_ids_576
+    # # 403
 }
-
 
 class NumpyFloatValuesEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -95,10 +91,22 @@ def find_top_k_bounding_boxes(id_to_boxes, pixel_grads, num_gt_boxes):
         top_k_box_ids.append(sorted_box_id_to_avg_grad[i][0])
     return top_k_box_ids
 
+tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-base-patch32")
 
 for instance_idx, tid_dict in id_to_tids.items():
     key_to_logits = {}
     key_to_logits[str(instance_idx)] = {}
+
+
+
+     # Write key_to_logits to JSON file
+    current_json_path = f"clip_key_to_logits/key_to_logits-box-acc-{instance_idx}.json"
+    if os.path.exists(current_json_path):
+        with open(current_json_path, "r") as f:
+            key_to_logits_old = json.load(f)
+    else:
+        key_to_logits_old = {str(instance_idx): {}}
+
 
     # Get the Instance
     instance = data.getdata(instance_idx)
@@ -110,28 +118,31 @@ for instance_idx, tid_dict in id_to_tids.items():
     # print(id_to_boxes, id_to_phrase)
 
     # Get Original Logits
-    original_probs, _ = analysismodel.forward(instance)
+    original_probs = analysismodel.forward(instance)[0]
+    # print(original_probs)
     original_logits = original_probs.detach().cpu().numpy()[0]
     
 
     for key, value in tid_dict.items():
+
+        if key in key_to_logits_old[str(instance_idx)]:
+            continue
+        torch.cuda.empty_cache()
+        gc.collect()
         key_to_logits[str(instance_idx)][key] = {}
         key_to_logits[str(instance_idx)][key]["original_logits"] = original_logits
 
         # Calculate the Double Grad
-        # print(instance_idx)
-        processor = ViltProcessor.from_pretrained(
-            "dandelin/vilt-b32-finetuned-flickr30k"
-        )
+        print(key)
 
         grads, di, tids = analysismodel.getdoublegrad(
             instance, instance[-1], value["ids"]
         )
 
-        # print(
+        # print(f"target_ids_{instance_idx} = ",
         #     dict(
         #         enumerate(
-        #             processor.tokenizer.convert_ids_to_tokens(
+        #             tokenizer.convert_ids_to_tokens(
         #                 tids[0].detach().cpu().numpy()
         #             )
         #         )
@@ -145,19 +156,19 @@ for instance_idx, tid_dict in id_to_tids.items():
 
         heatmap2d(
             normalized_grads_dg,
-            f"visuals/flickr30k-vilt-{key}-doublegrad.png",
+            f"visuals/flickr30k-clip-{key}-doublegrad.png",
             instance[0],
         )
 
         # Get the New Text
         new_tids = tids[0].detach().cpu().numpy().tolist()
         new_tids = new_tids[: value["ids"][0]] + new_tids[value["ids"][-1] + 1 :]
-        sep_index = new_tids.index(processor.tokenizer.sep_token_id)
+        sep_index = new_tids.index(tokenizer.eos_token_id)
 
-        new_text = processor.tokenizer.decode(new_tids[1:sep_index])
+        new_text = tokenizer.decode(new_tids[1:sep_index])
 
         # Save new text in a file
-        with open(f"visuals/flickr30k-vilt-{key}-new_text.txt", "w") as f:
+        with open(f"visuals/flickr30k-clip-{key}-new_text.txt", "w") as f:
             f.write(new_text)
 
         # Load and resize original image
@@ -167,11 +178,16 @@ for instance_idx, tid_dict in id_to_tids.items():
             .cpu()
             .numpy()
         )
-        img = cv2.resize(
-            np.asarray(Image.open(instance[0])),
-            (normalized_grads.shape[1], normalized_grads.shape[0]),
-        )
+        original_unresized_img = np.asarray(Image.open(instance[0]))
+        image_shape = original_unresized_img.shape
 
+        normalized_grads = cv2.resize(normalized_grads.astype(np.uint8), (image_shape[1], image_shape[0]))
+        # img = cv2.resize(
+        #     original_unresized_img,
+        #     (normalized_grads.shape[1], normalized_grads.shape[0]),
+        # )
+        img = original_unresized_img
+        
         gt_img = copy.deepcopy(img)
         random_box_img = copy.deepcopy(img)
         new_box_img = copy.deepcopy(img)
@@ -201,14 +217,15 @@ for instance_idx, tid_dict in id_to_tids.items():
                 gt_box_ids.append(box_id)
                 num_gt_boxes += 1
             else:
-                print("Couldn't find box with box_id: ", box_id)
-        gt_img_path = f"visuals/flickr30k-vilt-{key}-gt_img.jpg"
+                pass
+                # print("Couldn't find box with box_id: ", box_id)
+        gt_img_path = f"visuals/flickr30k-clip-{key}-gt_img.jpg"
 
         plt.imsave(gt_img_path, gt_img)
 
         new_instance = (gt_img_path, [new_text])
 
-        new_probs, _ = analysismodel.forward(new_instance)
+        new_probs = analysismodel.forward(new_instance)[0]
         new_logits = new_probs.detach().cpu().numpy()[0]
         key_to_logits[str(instance_idx)][key]["ground_truth_logits"] = new_logits
 
@@ -222,7 +239,7 @@ for instance_idx, tid_dict in id_to_tids.items():
                     x1, y1, x2, y2 = box_iter
                     new_box_img[y1:y2, x1:x2] = 0
 
-        new_box_img_path = f"visuals/flickr30k-vilt-{key}-new_box_img.jpg"
+        new_box_img_path = f"visuals/flickr30k-clip-{key}-new_box_img.jpg"
         plt.imsave(new_box_img_path, new_box_img)
 
         new_box_img_unmasked = copy.deepcopy(img)
@@ -249,14 +266,14 @@ for instance_idx, tid_dict in id_to_tids.items():
 
         # Save the figure
         plt.axis('off')
-        plt.savefig(f"visuals/flickr30k-vilt-{key}-new_box_img_with_boxes.jpg")
+        plt.savefig(f"visuals/flickr30k-clip-{key}-new_box_img_with_boxes.jpg")
         plt.close()
 
-        print("Key: ", key)
-        print(gt_box_ids, dg_box_ids)
+        # print("Key: ", key)
+        # print(gt_box_ids, dg_box_ids)
         new_instance = (new_box_img_path, [new_text])
 
-        new_probs, _ = analysismodel.forward(new_instance)
+        new_probs = analysismodel.forward(new_instance)[0]
         new_logits = new_probs.detach().cpu().numpy()[0]
         key_to_logits[str(instance_idx)][key]["doublegrad_box_logits"] = new_logits
 
@@ -270,12 +287,12 @@ for instance_idx, tid_dict in id_to_tids.items():
                     x1, y1, x2, y2 = box_iter
                     random_box_img[y1:y2, x1:x2] = 0
 
-        random_box_img_path = f"visuals/flickr30k-vilt-{key}-random_box_img.jpg"
+        random_box_img_path = f"visuals/flickr30k-clip-{key}-random_box_img.jpg"
         plt.imsave(random_box_img_path, random_box_img)
 
         new_instance = (random_box_img_path, [new_text])
 
-        new_probs, _ = analysismodel.forward(new_instance)
+        new_probs = analysismodel.forward(new_instance)[0]
         new_logits = new_probs.detach().cpu().numpy()[0]
         key_to_logits[str(instance_idx)][key]["random_box_logits"] = new_logits
 
@@ -289,6 +306,6 @@ for instance_idx, tid_dict in id_to_tids.items():
         ] = num_random_matching_boxes
         key_to_logits[str(instance_idx)][key]["num_gt_boxes"] = num_gt_boxes
 
-    # Write key_to_logits to JSON file
-    with open(f"key_to_logits-box-acc-{instance_idx}.json", "w") as f:
-        json.dump(key_to_logits, f, cls=NumpyFloatValuesEncoder)
+    with open(current_json_path, "w") as f:
+        key_to_logits_old[str(instance_idx)].update(key_to_logits[str(instance_idx)])
+        json.dump(key_to_logits_old, f, cls=NumpyFloatValuesEncoder)

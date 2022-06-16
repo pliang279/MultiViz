@@ -16,7 +16,42 @@ target_idx = 0
 # get the model
 analysismodel = Flickr30KClip(target_idx=target_idx)
 
-for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
+for instance_idx in[
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350,
+    400,
+    450,
+    500,
+    550,
+    600,
+    650,
+    700,
+    750,
+    800,
+    850,
+    900,
+    950,
+    1000,
+    808,
+    204,
+    654,
+    589,
+    711,
+    777,
+    411,
+    265,
+    169,
+    308,
+    259,
+    634,
+    391,
+    576
+]:
     instance = data.getdata(instance_idx)
 
     # get the model predictions
@@ -31,3 +66,12 @@ for instance_idx in [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]:
         f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-saliency.png",
         instance[0],
     )
+
+    # copy images to directory
+    os.system(
+        f"cp {instance[0]} visuals/flickr30k-clip-{instance_idx}-{target_idx}-image.png"
+    )
+    
+    # save text to file
+    with open(f"visuals/flickr30k-clip-{instance_idx}-{target_idx}-text.txt", "w") as f:
+        f.write(instance[1][target_idx])
