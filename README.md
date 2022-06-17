@@ -58,6 +58,12 @@ Note that the version of LXMERT used is directly from the HuggingFace Transforme
 
 # Usage: CLEVR
 
+To download the dataset, run the following command to obtain and unzip data into a folder named ``structured-framework/data``
+```
+wget https://dl.fbaipublicfiles.com/clevr/CLEVR_v1.0.zip
+unzip CLEVR_v1.0.zip
+```
+
 # Usage: CMU-MOSEI
 
 # Usage: MM-IMDb
