@@ -16,139 +16,18 @@ Correspondence to:
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/) (morency@cs.cmu.edu)
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/) (rsalakhu@cs.cmu.edu)
 
-## Methods & Usage
-### EMAP
+## Code framework for visualization of multimodal model analysis
 
-```python
-import numpy as np
-from mma.analysis.metrics.emap import Emap
+We designed a structured framework that allows easy analysis and visualization of multimodal models. To run anything within the structured framework, you should have ``structured-framework/`` as your working directory.
 
-# This can be a list of numpy arrays, a dict of numpy arrays or a dict of dict of numpy arrays.
-# It is assumed that the predictor function takes in the keys of the dictionary.
+In the structured framework, there are 4 main modules: datasets, models, analysis and visualizations. 
 
-dataset = {
-  'visual_inputs': {
-    'features': all_image_features,
-    'normalized_boxes': all_normalized_boxes
-  },
-  'textual_inputs': {
-    'input_ids': all_text_input_ids,
-    'attention_mask': all_text_attention_masks,
-    'token_type_ids': all_text_token_type_ids
-  }
-}
+Each script in the datasets module loads data points from a specific dataset, and also interfaces all necessary information that directly comes from the dataset (such as label-id-to-answer mappings). To add a new dataset to the framework, simply add another file under this module following the same format as the existing ones.
 
-def predictor_fn(visual_inputs, textual_inputs):
-  ...
+Each script in the models module contains a wrapper class for a specific multimodal model for a particular dataset. All such classes should be subclass of the AnalysisModel class defined in ``models/analysismodel.py``, which specifies certain functionalities the class must implement such as ``forward``, ``getpredlabel``, etc. To add a new model to the framework, add another file under this module and write a wrapper class for your model that extends the AnalysisModel class.
 
-emap = Emap(predictor_fn, dataset)
+Under the analysis module there are scripts that runs various analysis methods on arbitrary dataset and model combinations. This is enabled by calling on common functionalities specified in AnalysisModel class. These scripts outputs raw analysis results (usually just a bunch of numbers), and scripts in the visualizations module are tools to create visualizations of these raw results. To add additional analysis and visualization methods, simply add some functions to these modules.
 
-emap_scores = emap.compute_emap_scores(batch_size=4) # Computers Emap Logit Scores
-orig_scores = emap.compute_predictions('orig', batch_size=4) # Compute Original Logit Scores
 
-# Text
-orig_score = accuracy_score(orig_labels, orig_preds)
-emap_score = accuracy_score(orig_labels, emap_preds)
-```
 
-### LIME
-#### Unimodal
-
-```python
-import numpy as np
-from mma.analysis.surrogates.lime.lime import Lime
-
-image = ...
-text = ...
-label_idx = ...
-
-def text_predictor_fn(texts):
-  ...
-def image_predictor_fn(images):
-  ...
-
-# Image
-image_init_params = {} # See lime parameters
-image_explanation_params = {
-  'top_labels': 1,
-  'hide_color': 0,
-  'num_samples': 30,
-  'batch_size': 5
-} # See lime parameters
-
-image_exp = Lime.explain_image_instance(
-  image_predictor_fn,
-  np.array(image),
-  image_init_params,
-  image_explanation_params
-)
-
-temp, mask = image_exp.get_image_and_mask(
-  image_exp.top_labels[0],
-  positive_only=False,
-  num_features=10,
-  hide_rest=False
-)
-
-img_boundary = mark_boundaries(temp/255.0, mask)
-plt.imshow(img_boundary)
-plt.show()
-
-# Text
-
-text_init_params = {
-  'class_names': class_names # list of class names in order
-}
-
-text_explanation_params = {
-  'num_features': 5,
-  'num_samples': 100,
-  'top_labels': 1
-}
-
-text_exp = Lime.explain_text_instance(
-   text_predictor_fn,
-   text,
-   text_init_params,
-   text_explanation_params
-)
-
-fig = text_exp.as_pyplot_figure(label=label_idx)
-plt.show()
-```
-#### Lime Image-Text Explainer
-```python
-import numpy as np
-from mma.analysis.surrogates.lime.lime_image_text import LimeImageTextExplainer
-
-image = ...
-text = ...
-label_idx = ...
-
-def predictor_fn(images, texts):
-  ...
-
-explainer = LimeImageTextExplainer()
-
-out = explainer.explain_instance(
-  np.array(images),
-  text,
-  classifier_fn,
-  labels=(1403,) # Index of the predicted label
-  num_image_samples=5,
-  num_text_samples=5
-)
-
-(
-  intercept,
-  coefs,
-  features,
-  prediction_scores,
-  local_predictions,
-  split_index,
-  image,
-  segments,
-  indexed_string
-) = out
-```
 
