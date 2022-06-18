@@ -49,7 +49,7 @@ def unzip_transcripts(dataset):
 
 
 # draw top-k features to the video
-def process_data(dataset, model, idx, topk=1, feat=None, backward=None, target_idxs=None, reverse=False):
+def process_data(dataset, model, idx, topk=3, feat=None, backward=None, target_idxs=None, reverse=False):
     data = dataset.getrawdata(idx)
     datainstance = dataset.getdata(idx)
     info = data[1]
