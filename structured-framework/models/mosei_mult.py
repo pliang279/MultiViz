@@ -1,5 +1,4 @@
 import torch
-#from torch.utils.data import DataLoader
 import os
 import sys
 import copy
@@ -120,40 +119,5 @@ class MOSEIMULT(analysismodel):
         feat = feats_list[2] if modality == 'image' else feats_list[1]
         rets = torch.autograd.grad(ac, feat)
         return rets[0]   
-
-
-
-
-if __name__=='__main__':
-    dataset = MOSEIDataset()
-    model = MOSEIMULT()
-
-    idx = 13
-    datainstance = dataset.getdata(idx)
-    resobj = model.forward(datainstance)
-    g = model.getgrad(datainstance, 'text', 10, True)
-    gg = model.getdoublegrad(datainstance, 'audio', [30, 31])
-    print(gg.shape)
-
-    ###############################
-    # Sparse Linear Model         #
-    ###############################
-    '''
-    from analysis.SparseLinearEncoding import*
-
-    val_dataset = MOSEIDataset_orig()
-    train_dataset = MOSEIDataset_orig('train')
-    test_dataset = MOSEIDataset_orig('test')
-
-    val_instances = [val_dataset.getdata(i) for i in tqdm(range(val_dataset.length()))]
-    train_instances = [train_dataset.getdata(i) for i in tqdm(range(train_dataset.length()))]
-    test_instances = [test_dataset.getdata(i) for i in tqdm(range(test_dataset.length()))]
-
-    val_embeds = getembeds(val_instances, model)
-    train_embeds = getembeds(train_instances, model)
-    test_embeds = getembeds(test_instances, model)
-
-    params, (accuracies,sparse_cnts) = get_sparse_linear_model(model, train_embeds, val_embeds, 
-                                                               test_embeds, modelsavedir='ckpt/moseisparselinearmodel.pt')
-    '''                                           
+                                    
     
