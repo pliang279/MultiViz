@@ -1,7 +1,6 @@
 import json
 import sys
 import os
-sys.path.insert(1,os.getcwd())
 
 from visualizations.visualizevideo import*
 from visualizations.visualizemosei import*
@@ -11,10 +10,6 @@ model = MOSEIMULT()
 params = torch.load('ckpt/moseisparselinearmodel.pt') 
 sparse_info = get_sparse_info(dataset, model, params)
 correct_sparse_info = get_sparse_info_correct(dataset, model, params)
-targets = [[12,13,14,16,18,19,20], [4,5,6,7,8,10,11], [19,20,21,22], [3,4,5,6,7], [12,14,15,16,17], 
-               [9,11,13,14,15], [1,3,4,6,7,8], [2,3,4,5,6,7,8], [2,3,4,5], [0,2,3,4], [2,3,4],
-               [1,2,3,4,5,6], [3,4,5,6,7], [0,1,2], [8,9,10,11,12,14,15], [2,3,4,5], [2,4,5,7], 
-               [16,18,19,20,21], [2,3,4,6], [4,5,6,7]]
 
 def generate_json(idx):
     datainstance = dataset.getdata(idx)
@@ -161,49 +156,6 @@ def generate_json(idx):
     return info
 
 
-def add_correct_label_analysis(idx):
-    datainstance = dataset.getdata(idx)
-    correct_label = dataset.get_correct_label(datainstance)
-    resobj = model.forward(datainstance)
-    pred_label = model.getpredlabel(resobj)
-    if correct_label == pred_label:
-        return
-
-    # video
-    generate_video_data(idx, reverse=True)
-
-    # heatmap
-    visualize_grad(dataset, model, idx, reverse=True)
-
-def add_second_order_grad_analysis(idx):
-    datainstance = dataset.getdata(idx)
-    resobj = model.forward(datainstance)
-    pred_label = model.getpredlabel(resobj)
-
-    # json
-    with open('private_test_scripts/mosei_simexp/mosei'+str(idx)+'/mosei'+str(idx)+'.json', 'r') as f:
-        info = json.load(f)
-
-    target_idxs = targets[idx]
-    words = model.getwords(datainstance)[:50]
-    target_words = [words[k] for k in target_idxs] 
-    sog = dict()
-    sog['description'] = "Second order gradient explanation on vision and text features ran on the first order gradients of the target words"
-    sog['words'] = words
-    sog['target-words-id'] = target_idxs
-    sog['target-words'] = target_words
-    sog['vision'] = 'mosei_doublegrad_vision_'+ str(idx) + '.png'
-    sog['audio'] = 'mosei_doublegrad_audio_'+ str(idx) + '.png'
-    info['labels'][str(pred_label)]['overviews']['SOG'] = sog
-
-    with open('private_test_scripts/mosei_simexp/mosei'+str(idx)+'/mosei'+str(idx)+'.json', 'w') as outfile:
-        json.dump(info, outfile, indent=4)
-
-    # heatmap
-    visualize_grad_double(dataset, model, idx, target_idxs)
-
-
-
 def generate_video_data(idx):
     datainstance = dataset.getdata(idx)
     video_name = datainstance[4] + '.mp4'
@@ -292,17 +244,3 @@ def generate_heatmap_data(idx):
             visualize_grad_sparse(dataset, model, instance_id, feat=feat, backward=idx, reverse=True)                    
 
 
-
-
-if __name__=='__main__':
-    #for idx in range(0, 30):
-    #    generate_heatmap_data(idx)
-    #    generate_video_data(idx)
-    #    with open('private_test_scripts/mosei_simexp/mosei'+str(idx)+'/mosei'+str(idx)+'.json', 'w') as outfile:
-    #        json.dump(generate_json(idx), outfile, indent=4)    
-
-    for idx in [3, 9, 10]:
-        generate_heatmap_data(idx)
-        #generate_video_data(idx)
-        #with open('private_test_scripts/mosei_simexp/mosei'+str(idx)+'/mosei'+str(idx)+'.json', 'w') as outfile:
-        #    json.dump(generate_json(idx), outfile, indent=4)
