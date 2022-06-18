@@ -66,6 +66,22 @@ unzip CLEVR_v1.0.zip
 
 # Usage: CMU-MOSEI
 
+This repository contains a processed version of CMU-MOSEI validation split in ``structured-framework/data/MOSEI/mosei_valid_processed_features_list.pkl``. 
+
+If you would like to process the data yourself or visualize the analysis results in the form of videos using our provided methods, you need to download the original data from the link posted on the CMU-MultimodalSDK github: http://immortal.multicomp.cs.cmu.edu/raw_datasets/. Put the downloaded zip file into ``structured-framework/data/``.
+
+This repository also contains a pretrained Multimodal Transformer for CMU-MOSEI in ``structured-framework/models/mult/mosei_sentimult_MULT_a_0.3_e_0.2_o_0.3_res_0.1.pt``. For more information about the MulT model and its training, refer to the [original github repository](https://github.com/yaohungt/Multimodal-Transformer).
+
+Here are a few example scripts on running analysis methods onCMU-MOSEI with MulT model:
+
+(1) First Order Gradient: ``structured-framework/examples/mosei_mult_gradient.py``
+
+(2) Sparse Linear Model together with local and global representation feature analysis: ``structured-framework/examples/mosei_mult_sparselinearmodel.py``
+
+(3) Second Order Gradient: ``structured-framework/examples/mosei_mult_secondordergradient.py``
+
+(4) Generate all analysis results and the json file: ``structured-framework/examples/mosei_mult_runandmakejson.py``
+
 # Usage: MM-IMDb
 
 # Usage: Flickr
