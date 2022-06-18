@@ -72,7 +72,7 @@ If you would like to process the data yourself or visualize the analysis results
 
 This repository also contains a pretrained Multimodal Transformer for CMU-MOSEI in ``structured-framework/models/mult/mosei_sentimult_MULT_a_0.3_e_0.2_o_0.3_res_0.1.pt``. For more information about the MulT model and its training, refer to the [original github repository](https://github.com/yaohungt/Multimodal-Transformer).
 
-Here are a few example scripts on running analysis methods onCMU-MOSEI with MulT model:
+Here are a few example scripts on running analysis methods on CMU-MOSEI with MulT model:
 
 (1) First Order Gradient: ``structured-framework/examples/mosei_mult_gradient.py``
 
