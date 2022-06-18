@@ -8,9 +8,7 @@ import cv2
 from imutils import face_utils
 import numpy as np
 import argparse
-import imutils
 import dlib
-sys.path.insert(1,os.getcwd())
 
 from datasets.mosei2 import*
 from models.mosei_mult import*
@@ -251,10 +249,4 @@ def get_script(dataset, model, idx):
             script = parts[4]
             break
     return script        
-    
-
-if __name__ == '__main__':
-    dataset = MOSEIDataset()
-    model = MOSEIMULT()
-    #process_data(dataset, model, 11, target_idxs=[1,2,3,4,5,6])
-    clip_data(dataset, model, 3)      
+     
