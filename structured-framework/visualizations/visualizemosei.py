@@ -115,7 +115,6 @@ def visualize_grad(dataset, model, idx, reverse=False):
     
 
 def visualize_grad_sparse(dataset, model, idx, feat, backward=None, reverse=False):
-    #savedir = 'visuals/mosei_grad/mosei_'+str(idx)
     savedir = 'private_test_scripts/mosei_simexp/mosei'+str(idx)+'/'
     if backward != None:
         savedir = 'private_test_scripts/mosei_simexp/mosei'+str(backward)+'/'
@@ -191,7 +190,6 @@ def visualize_grad_sparse(dataset, model, idx, feat, backward=None, reverse=Fals
 
 
 def visualize_grad_double(dataset, model, idx, target_idxs, reverse=False):
-    #savedir = 'visuals/mosei_grad/mosei_'+str(idx)
     savedir = 'private_test_scripts/mosei_simexp/mosei'+str(idx)+'/'
     if not os.path.exists(savedir):
         os.mkdir(savedir)
@@ -298,35 +296,3 @@ def get_sparse_info_correct(dataset, model, params, pathnum=95, k=5):
         res.append((idx, name, info))
 
     return res    
-
-
-        
-
-if __name__=='__main__':
-
-    params = torch.load('ckpt/moseisparselinearmodel.pt') 
-    dataset = MOSEIDataset()
-    model = MOSEIMULT()
-    #sparse_info = get_sparse_info(dataset, model, params) 
-    #print(sparse_info[3])
-
-    '''
-    #idx = 13
-    #datainstance = dataset.getdata(idx)
-    #resobj = model.forward(datainstance)
-    #pred = model.getpredlabel(resobj)
-    for i in [j*10 for j in range(1)]:
-        datainstance = dataset.getdata(i)
-        resobj = model.forward(datainstance)
-        pred = model.getpredlabel(resobj)
-        #visualize_grad(model, i)
-        analyzepointandvisualizeallgrad(
-            params, i, model, pred, pathnum=95, k=5)'''  
-    targets = [[12,13,14,16,18,19,20], [4,5,6,7,8,10,11], [19,20,21,22], [3,4,5,6,7], [12,14,15,16,17], 
-               [9,11,13,14,15], [1,3,4,6,7,8], [2,3,4,5,6,7,8], [2,3,4,5], [0,2,3,4], [2,3,4],
-               [1,2,3,4,5,6], [3,4,5,6,7], [0,1,2], [8,9,10,11,12,14,15], [2,3,4,5], [2,4,5,7], 
-               [16,18,19,20,21], [2,3,4,6], [4,5,6,7]]
-    for i in range(11,12):
-        if not os.path.isdir('private_test_scripts/mosei_doublegrad/mosei'+str(i)):
-            os.mkdir('private_test_scripts/mosei_doublegrad/mosei'+str(i))
-        visualize_grad_double(dataset, model, i, targets[i])            
