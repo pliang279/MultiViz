@@ -4,7 +4,7 @@ import torch
 import sys
 import os
 import json
-sys.path.insert(1,os.getcwd())
+
 from datasets.mosei2 import*
 from models.mosei_mult import*
 
