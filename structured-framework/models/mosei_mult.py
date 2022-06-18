@@ -1,13 +1,13 @@
 import torch
-from torch.utils.data import DataLoader
+#from torch.utils.data import DataLoader
 import os
 import sys
-sys.path.insert(1,os.getcwd())
-sys.path.insert(2,'/home/paul/yiwei/multimodal_analysis/structured-framework/models/mult')
-from models.analysismodel import analysismodel
 import copy
 
-from datasets.mosei2 import*
+sys.path.insert(1,os.getcwd())
+sys.path.insert(2,'/home/paul/yiwei/multimodal_analysis/structured-framework/models/mult')
+
+from models.analysismodel import analysismodel
 
 
 class MOSEIMULT(analysismodel):
@@ -42,13 +42,6 @@ class MOSEIMULT(analysismodel):
         outs=[]
         for di in datainstances:
             outs.append(self.forward(di))
-        #texts = [datainstance[0] for datainstance in datainstances]
-        #audios = [datainstance[0] for datainstance in datainstances]
-        #visions = [datainstance[0] for datainstance in datainstances]
-        #tb = torch.stack(texts)
-        #ab = torch.stack(audios)
-        #vb = torch.stack(visions)
-        #logit, last_hs = self.model(tb, ab, vb)
         return outs
 
     def getlogitsize(self):
@@ -100,17 +93,18 @@ class MOSEIMULT(analysismodel):
         ab = torch.unsqueeze(a,0).to(self.device)
         vb = torch.unsqueeze(v,0).to(self.device)
         feats_list = [tb, ab, vb]
-        modality_with_grad = feats_list[self.modalitynames.index(modality)]
-        #modality_with_grad.requires_grad = True   
+        modality_with_grad = feats_list[self.modalitynames.index(modality)]  
         for modality in feats_list:
             modality.requires_grad = True    
         logit, _, = self.model(tb, ab, vb)
+
         if alltarget:
             logit.backward(create_graph=True)
         elif reverse:
             (-logit).backward()    
         else:
             logit.backward()    
+
         grad = modality_with_grad.grad
 
         return grad, feats_list
