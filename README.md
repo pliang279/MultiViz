@@ -58,11 +58,26 @@ Note that the version of LXMERT used is directly from the HuggingFace Transforme
 
 # Usage: CLEVR
 
-To download the dataset, run the following command to obtain and unzip data into a folder named ``structured-framework/data``
+To download the dataset, run the following command. Then unzip data into a folder named ``structured-framework/data``
 ```
 wget https://dl.fbaipublicfiles.com/clevr/CLEVR_v1.0.zip
 unzip CLEVR_v1.0.zip
 ```
+We use both MDETR and CNNLSTMSA models on the CLEVR dataset. These are pretrained models from the [MDETR github repository](https://github.com/ashkamath/mdetr) and [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep), respectively. The MDETR model achieves nearly prefect score on the CLEVR dataset, whereas CNNLSTMSA is a baseline proposed in the original CLEVR paper.
+
+Below are a few example scripts on running analysis methods on CLEVR with MDETR model. To use the CNNLSTMSA model, you should create a new conda environment with python3.5 and install all the requirements from the [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep).
+
+(1) First Order Gradient: 
+
+(2) Sparse Linear Model together with local and global representation feature analysis:
+
+(3) Second Order Gradient:
+
+(4) Unimodal LIME:
+
+(5) EMAP:
+
+(6) DIME: 
 
 # Usage: CMU-MOSEI
 
