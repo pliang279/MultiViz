@@ -67,9 +67,9 @@ We use both MDETR and CNNLSTMSA models on the CLEVR dataset. These are pretraine
 
 Below are a few example scripts on running analysis methods on CLEVR with MDETR model. To use the CNNLSTMSA model, you should create a new conda environment with python3.5 and install all the requirements from the [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep).
 
-(1) First Order Gradient: ``structured-framework/examples/clevr_mdetr_gradient.py``
+(1) First Order Gradient: ``structured-framework/examples/clevr-mdetr-gradient.py``
 
-(2) Sparse Linear Model together with local and global representation feature analysis:``structured-framework/examples/clevr_mdetr_slm.py``
+(2) Sparse Linear Model together with local and global representation feature analysis:``structured-framework/examples/clevr-mdetr-slm.py``
 
 # Usage: CMU-MOSEI
 
