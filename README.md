@@ -63,7 +63,7 @@ To download the dataset, run the following command. Then unzip data into a folde
 wget https://dl.fbaipublicfiles.com/clevr/CLEVR_v1.0.zip
 unzip CLEVR_v1.0.zip
 ```
-We use both MDETR and CNNLSTMSA models on the CLEVR dataset. These are pretrained models from the [MDETR github repository](https://github.com/ashkamath/mdetr) and [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep), respectively. The MDETR model achieves nearly prefect score on the CLEVR dataset, whereas CNNLSTMSA is a baseline proposed in the original CLEVR paper.
+We use both MDETR and CNNLSTMSA models on the CLEVR dataset. These are pretrained models from the [MDETR github repository](https://github.com/ashkamath/mdetr) and [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep), respectively. The MDETR model achieves nearly prefect score on the CLEVR dataset, whereas CNNLSTMSA is a baseline proposed in the [original CLEVR paper](https://arxiv.org/abs/1612.06890).
 
 Below are a few example scripts on running analysis methods on CLEVR with MDETR model. To use the CNNLSTMSA model, you should create a new conda environment with python3.5 and install all the requirements from the [clevr-iep github repository](https://github.com/facebookresearch/clevr-iep).
 
