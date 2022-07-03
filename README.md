@@ -91,7 +91,31 @@ Here are a few example scripts on running analysis methods on CMU-MOSEI with Mul
 
 # Usage: MM-IMDb
 
-# Usage: Flickr
+# Usage: Flickr30k
+
+To download the Flickr30k dataset, follow the instructions shared on the [official page](http://shannon.cs.illinois.edu/DenotationGraph/) provided in the Downloads section. If you are interested in evaluating the cross-modal interpretations against ground-truth annotations, the Flickr30k Entities annotations can be found on [this GitHub repository](https://github.com/BryanPlummer/flickr30k_entities). 
+
+Then unzip data into a folder named ``structured-framework/data``. It should have the following structure:
+
+```
+│   ├── data
+│   │   └── flickr30k
+│   │       ├── Annotations
+│   │       ├── flickr30k-images
+│   │       └── Sentences
+```
+
+The `Annotations` and `Sentences` folders come from the Flickr30k Entities dataset.
+
+We use both [CLIP](https://huggingface.co/openai/clip-vit-base-patch32) and [ViT](https://huggingface.co/dandelin/vilt-b32-finetuned-flickr30k) models on the Flickr30k dataset, which are present on the HuggingFace model ecosystem. The ViLT model is fine-tuned on the Flicrk30k dataset.
+
+Below are a few example scripts on running analysis methods on Flickr30k with ViLT model.
+
+(1) First Order Gradient: ``structured-framework/examples/flickr30k_vilt_gradsaliency.py``
+
+(2) Second Order Gradient: ``structured-framework/examples/flickr30k_vilt_gradient.py``
+
+There are examples for the CLIP model present as well.
 
 # Usage: MIMIC
 
