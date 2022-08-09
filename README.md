@@ -131,3 +131,10 @@ Here are a few example scripts on running analysis methods on MIMIC with LF mode
 
 (3) First Order Gradient: ``structured-framework/examples/mimic_lf_firstordergradient.py``
 
+# Extending the code framework with your own dataset/model/analysis methods.
+
+MultiViz is designed in a way such that it can easily be extended to other datasets, models, and analysis methods.
+
+If you wish to add your own dataset or model and use the existing analysis scripts in the repository, just follow the same format of existing dataset and model classes in this repository. All existing analysis scripts assumes that the model being analyzed implements the functions in ``models/analysismodel.py``, so if you write your model class implementing these functions, you can directly apply existing analysis scripts to your dataset and model.
+
+If you wish to add your own analysis method and make it applicable to multiple existing datasets and models, simply make your analysis function takes a "analysismodel" object as input and only use the functions specified within ``models/analysismodel.py`` to interact with the model, and the resulting script should be applicable to all currently existing datasets and models in this repository.
