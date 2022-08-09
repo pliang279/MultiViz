@@ -16,11 +16,11 @@ Correspondence to:
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/) (morency@cs.cmu.edu)
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/) (rsalakhu@cs.cmu.edu)
 
-## Code framework for visualization of multimodal model analysis
+# Code framework for visualization of multimodal model analysis
 
 We designed a structured framework that allows easy analysis and visualization of multimodal models. To run anything within the structured framework, you should have ``structured-framework/`` as your working directory.
 
-# Structure of the code framework
+## Structure of the code framework
 
 In the structured framework, there are 4 main modules: datasets, models, analysis and visualizations. 
 
@@ -30,7 +30,7 @@ Each script in the models module contains a wrapper class for a specific multimo
 
 Under the analysis module there are scripts that runs various analysis methods on arbitrary dataset and model combinations. This is enabled by calling on common functionalities specified in AnalysisModel class. These scripts outputs raw analysis results (usually just a bunch of numbers), and scripts in the visualizations module are tools to create visualizations of these raw results. To add additional analysis and visualization methods, simply add some functions to these modules.
 
-# Usage: VQA
+## Usage: VQA
 
 To download the dataset, you need to download the following things from these urls and unzip all in a folder named ``structured-framework/data``
 
@@ -56,7 +56,7 @@ Here are a few example scripts on running analysis methods on VQA with LXMERT mo
 
 Note that the version of LXMERT used is directly from the HuggingFace Transformers pipeline, which contains a bug in image preprocessing that flips the red and blue values of pixels. To use the bug-free version, simply comment out line 571 of ``structured-framework/models/lxmert_extras/utils.py``
 
-# Usage: CLEVR
+## Usage: CLEVR
 
 To download the dataset, run the following command. Then unzip data into a folder named ``structured-framework/data``
 ```
@@ -71,7 +71,7 @@ Below are a few example scripts on running analysis methods on CLEVR with MDETR 
 
 (2) Sparse Linear Model together with local and global representation feature analysis:``structured-framework/examples/clevr-mdetr-slm.py``
 
-# Usage: CMU-MOSEI
+## Usage: CMU-MOSEI
 
 This repository contains a processed version of CMU-MOSEI validation split in ``structured-framework/data/MOSEI/mosei_valid_processed_features_list.pkl``. 
 
@@ -89,7 +89,7 @@ Here are a few example scripts on running analysis methods on CMU-MOSEI with Mul
 
 (4) Generate all analysis results and the json file: ``structured-framework/examples/mosei_mult_runandmakejson.py``
 
-# Usage: MM-IMDb
+## Usage: MM-IMDb
 
 # Usage: Flickr30k
 
@@ -117,7 +117,7 @@ Below are a few example scripts on running analysis methods on Flickr30k with Vi
 
 There are examples for the CLIP model present as well.
 
-# Usage: MIMIC
+## Usage: MIMIC
 
 To download the dataset, follow the instructions at https://github.com/pliang279/MultiBench to obtain the ``im.pk`` file. When loading the dataset in ``structured-framework/datasets/mimic.py``, set the path to the path to ``im.pk``. 
 
@@ -131,7 +131,7 @@ Here are a few example scripts on running analysis methods on MIMIC with LF mode
 
 (3) First Order Gradient: ``structured-framework/examples/mimic_lf_firstordergradient.py``
 
-# Extending the code framework with your own dataset/model/analysis methods.
+## Extending the code framework with your own dataset/model/analysis methods.
 
 MultiViz is designed in a way such that it can easily be extended to other datasets, models, and analysis methods.
 
