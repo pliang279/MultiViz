@@ -91,7 +91,7 @@ Here are a few example scripts on running analysis methods on CMU-MOSEI with Mul
 
 ## Usage: MM-IMDb
 
-# Usage: Flickr30k
+## Usage: Flickr30k
 
 To download the Flickr30k dataset, follow the instructions shared on the [official page](http://shannon.cs.illinois.edu/DenotationGraph/) provided in the Downloads section. If you are interested in evaluating the cross-modal interpretations against ground-truth annotations, the Flickr30k Entities annotations can be found on [this GitHub repository](https://github.com/BryanPlummer/flickr30k_entities). 
 
