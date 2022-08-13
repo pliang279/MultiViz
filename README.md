@@ -91,6 +91,19 @@ Here are a few example scripts on running analysis methods on CMU-MOSEI with Mul
 
 ## Usage: MM-IMDb
 
+The raw MM-IMDb dataset can be downloaded from [here](https://archive.org/download/mmimdb/multimodal_imdb.hdf5). The `.hdf5` file downloaded can be used directly in the example scripts below.
+
+The analyses presented in the paper use an LRTF model for predicting the genres of movies from their posters and movie synopsis. To train this model on the MM-IMDb data, follow the instructions [here](https://archive.org/download/mmimdb/multimodal_imdb.hdf5).
+
+Here are a few example scripts for running the analyses presented in the paper with the LRTF model on the MM-IMDb dataset:
+
+(1) First & Second Order Gradients: ``structured-framework/examples/imdb_lrtf_gradsaliency.py``
+
+(2) Sparse Linear Model training and visualization: ``structured-framework/examples/imdb_lrtf_sparselinearmodel.py``
+
+(3) Unimodal LIME: ``structured-framework/examples/imdb_lrtf_unimodallime.py``
+
+
 ## Usage: Flickr30k
 
 To download the Flickr30k dataset, follow the instructions shared on the [official page](http://shannon.cs.illinois.edu/DenotationGraph/) provided in the Downloads section. If you are interested in evaluating the cross-modal interpretations against ground-truth annotations, the Flickr30k Entities annotations can be found on [this GitHub repository](https://github.com/BryanPlummer/flickr30k_entities). 
