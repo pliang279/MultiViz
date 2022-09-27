@@ -1,6 +1,6 @@
 import sys
 
-multibench_path = "/home/paul/yiwei/MultiBench"
+multibench_path = "/home/anon/anon/MultiBench"
 sys.path.append(multibench_path)
 
 import torch
@@ -55,8 +55,8 @@ def get_dataloader(
     return train_dataloader, val_dataloader, test_dataloader
 
 
-data_path = "/home/paul/nihalj/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_vgg_bert.pkl"
-# data_path = '/home/paul/nihalj/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl'
+data_path = "/home/anon/anon/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_vgg_bert.pkl"
+# data_path = '/home/anon/anon/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl'
 
 traindata, validdata, testdata = get_dataloader(data_path, batch_size=128)
 encoders = [

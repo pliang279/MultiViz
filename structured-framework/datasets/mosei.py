@@ -21,7 +21,7 @@ torch.multiprocessing.set_sharing_strategy("file_system")
 
 
 class MOSEIDataset:
-    def __init__(self, split="test", path="/home/paul/MultiBench/mosei_senti_data.pkl"):
+    def __init__(self, split="test", path="/home/anon/MultiBench/mosei_senti_data.pkl"):
         if split == "train":
             theindex = 0
         elif split == "val":
@@ -294,7 +294,7 @@ def get_dataloader(
     flatten_time_series: bool = False,
     task=None,
     robust_test=True,
-    raw_path="/home/paul/MultiBench/mosi.hdf5",
+    raw_path="/home/anon/MultiBench/mosi.hdf5",
     no_robust=False,
     fracs=1,
     repeats=1,
@@ -614,7 +614,7 @@ def get_simple_processed_data(path, raw_path=None):
 
 if __name__ == "__main__":
     traindata, validdata, test_robust = get_dataloader(
-        "/home/paul/MultiBench/mosi_data.pkl", robust_test=False, max_pad=False
+        "/home/anon/MultiBench/mosi_data.pkl", robust_test=False, max_pad=False
     )
 
     keys = list(test_robust.keys())

@@ -25,11 +25,11 @@ from visuals.imdb_make_json import make_json
 random.seed(0)
 np.random.seed(0)
 
-table_path = '/home/paul/yiwei/MultiBench/multimodal_imdb.hdf5'
+table_path = '/home/anon/anon/MultiBench/multimodal_imdb.hdf5'
 dataset = h5py.File(table_path, 'r')
-model_path = '/home/paul/nihalj/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_lrtf.pth'
-multibench_path = '/home/paul/nihalj/MultiBench'
-raw_imdb_root_path = '/home/paul/nihalj/MultiBench/datasets/imdb/mmimdb/dataset'
+model_path = '/home/anon/anon/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_lrtf.pth'
+multibench_path = '/home/anon/anon/MultiBench'
+raw_imdb_root_path = '/home/anon/anon/MultiBench/datasets/imdb/mmimdb/dataset'
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 # device = 'cpu'
 vgg16_model = torchvision.models.vgg16(pretrained=True).to(device)

@@ -2,7 +2,7 @@ import os
 import sys
 import torch
 
-multibench_path = "/home/paul/yiwei/MultiBench"
+multibench_path = "/home/anon/anon/MultiBench"
 sys.path.append(multibench_path)
 
 from torch.utils.data import Dataset, DataLoader
@@ -67,7 +67,7 @@ from unimodals.common_models import Linear, MaxOut_MLP
 from fusions.common_fusions import Concat
 from training_structures.Supervised_Learning import train
 
-data_path = "/home/paul/nihalj/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl"
+data_path = "/home/anon/anon/multimodal_analysis/structured-framework/datasets/mmimdb_extras/imdb_torch_vgg.pkl"
 
 traindata, validdata, testdata = get_dataloader(
     data_path, "../video/mmimdb", vgg=True, batch_size=128, no_robust=True
@@ -81,7 +81,7 @@ head = Linear(1024, 23).cuda()
 fusion = Concat().cuda()
 
 
-model_save_fn = "imdb_best_lf_vgg_torch_yiwei.pth"
+model_save_fn = "imdb_best_lf_vgg_torch_anon.pth"
 train(
     encoders,
     fusion,

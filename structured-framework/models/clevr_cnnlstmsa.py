@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.insert(1, os.getcwd())
-sys.path.insert(1, "/home/paul/yiwei/multimodal_analysis/structured-framework/models/clevr-iep")
+sys.path.insert(1, "/home/anon/anon/multimodal_analysis/structured-framework/models/clevr-iep")
 
 import torch
 from torch.autograd import Variable

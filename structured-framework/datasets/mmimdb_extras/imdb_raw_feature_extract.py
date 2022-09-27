@@ -11,13 +11,13 @@ import pandas as pd
 from tqdm.auto import tqdm
 
 
-data_path = "/home/paul/yiwei/MultiBench/multimodal_imdb.hdf5"
-multibench_path = "/home/paul/nihalj/MultiBench"
+data_path = "/home/anonymous/MultiBench/multimodal_imdb.hdf5"
+multibench_path = "/home/anonymous/MultiBench"
 dataset = h5py.File(data_path, "r")
 word2vec_path = (
-    "/home/paul/nihalj/MultiBench/datasets/imdb/GoogleNews-vectors-negative300.bin.gz"
+    "/home/anonymous/MultiBench/datasets/imdb/GoogleNews-vectors-negative300.bin.gz"
 )
-raw_imdb_root_path = "/home/paul/nihalj/MultiBench/datasets/imdb/mmimdb/dataset"
+raw_imdb_root_path = "/home/anonymous/MultiBench/datasets/imdb/mmimdb/dataset"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 googleword2vec = KeyedVectors.load_word2vec_format(word2vec_path, binary=True)

@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 import os
 import sys
 sys.path.insert(1,os.getcwd())
-sys.path.insert(2,'/home/paul/yiwei/multimodal_analysis/structured-framework/models/mult')
+sys.path.insert(2,'/home/anon/anon/multimodal_analysis/structured-framework/models/mult')
 from models.analysismodel import analysismodel
 import copy
 

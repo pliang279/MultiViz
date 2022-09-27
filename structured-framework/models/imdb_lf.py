@@ -77,8 +77,8 @@ class IMDb_LF(analysismodel):
 
 
 def main():
-    pretrained_model_path = "/home/paul/nihalj/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch_yiwei.pth"
-    multibench_path = "/home/paul/yiwei/MultiBench"
+    pretrained_model_path = "/home/anon/anon/multimodal_analysis/structured-framework/models/mmimdb_lf_extras/imdb_best_lf_vgg_torch_anon.pth"
+    multibench_path = "/home/anon/anon/MultiBench"
     imdb_lf = IMDb_LF(
         pretrained_model_path, multibench_path, device="cuda", batch_size=128
     )

@@ -11,9 +11,9 @@ from tqdm.auto import tqdm
 from transformers import BertTokenizer, BertModel
 
 
-data_path = "/home/paul/yiwei/MultiBench/multimodal_imdb.hdf5"
+data_path = "/home/anonymous/MultiBench/multimodal_imdb.hdf5"
 dataset = h5py.File(data_path, "r")
-raw_imdb_root_path = "/home/paul/nihalj/MultiBench/datasets/imdb/mmimdb/dataset"
+raw_imdb_root_path = "/home/anonymous/MultiBench/datasets/imdb/mmimdb/dataset"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 vgg16_model = torchvision.models.vgg16(pretrained=True).to(device)

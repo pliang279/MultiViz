@@ -8,7 +8,7 @@ import copy
 
 
 class MIMICDataset:
-    def __init__(self, split="test", path="/home/paul/yiwei/im.pk"):
+    def __init__(self, split="test"):
         if split == "train":
             theindex = 0
         elif split == "val":

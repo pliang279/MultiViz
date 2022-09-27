@@ -12,7 +12,7 @@ from visualizations.visualizelime import visualizelime
 datas = MOSEIDataset("test")
 # get the model
 analysismodel = MOSEILF(
-    "/home/paul/yiwei/MultiBench/mosei_lf_best.pt", "/home/paul/yiwei/MultiBench"
+    "/home/anon/anon/MultiBench/mosei_lf_best.pt", "/home/anon/anon/MultiBench"
 )
 # pick data instance you want to explain
 instance = datas.getdata(0)

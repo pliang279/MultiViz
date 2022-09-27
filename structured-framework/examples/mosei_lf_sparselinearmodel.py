@@ -15,7 +15,7 @@ datas2 = MOSEIDataset("val")
 datas3 = MOSEIDataset("test")
 # get the model
 analysismodel = MOSEILF(
-    "/home/paul/yiwei/MultiBench/mosei_lf_best.pt", "/home/paul/yiwei/MultiBench"
+    "/home/anon/anon/MultiBench/mosei_lf_best.pt", "/home/anon/anon/MultiBench"
 )
 # get train/valid/test data
 instance1 = datas1.sample(datas1.length())

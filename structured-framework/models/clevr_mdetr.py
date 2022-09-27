@@ -1,9 +1,9 @@
 import os
 import sys
 
-sys.path.insert(1, "/home/paul/yiwei/multimodal_analysis/structured-framework")
+sys.path.insert(1, "/home/anon/anon/multimodal_analysis/structured-framework")
 sys.path.insert(
-    1, "/home/paul/yiwei/multimodal_analysis/structured-framework/models/mdetr"
+    1, "/home/anon/anon/multimodal_analysis/structured-framework/models/mdetr"
 )
 
 
