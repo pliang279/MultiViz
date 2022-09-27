@@ -2,19 +2,9 @@
 
 This repository contains code and experiments for performing interpretability analysis in a multimodal setting.
 
-[MultiViz website](https://andy-xingbowang.com/multiviz/)
-
 ## Contributors
 
-Correspondence to: 
-  - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
-  - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
-  - [Gunjan Chhablani](https://gchhablani.github.io/) (chhablani.gunjan@gmail.com)
-  - [Nihal Jain](https://nihaljn.github.io/) (nihalj@cs.cmu.edu)
-  - Zihao Deng (zihaoden@andrew.cmu.edu)
-  - [Xingbo Wang](https://andy-xingbowang.com/) (xingbo.wang@connect.ust.hk)
-  - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/) (morency@cs.cmu.edu)
-  - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/) (rsalakhu@cs.cmu.edu)
+Anonymous
 
 # Code framework for visualization of multimodal model analysis
 
@@ -75,7 +65,7 @@ Below are a few example scripts on running analysis methods on CLEVR with MDETR 
 
 This repository contains a processed version of CMU-MOSEI validation split in ``structured-framework/data/MOSEI/mosei_valid_processed_features_list.pkl``. 
 
-If you would like to process the data yourself or visualize the analysis results in the form of videos using our provided methods, you need to download the original data from the link posted on the CMU-MultimodalSDK github: http://immortal.multicomp.cs.cmu.edu/raw_datasets/. Put the downloaded zip file into ``structured-framework/data/``.
+If you would like to process the data yourself or visualize the analysis results in the form of videos using our provided methods, you need to download the original data from the link posted on the [CMU-MultimodalSDK github](http://immortal.multicomp.cs.cmu.edu/raw_datasets/). Put the downloaded zip file into ``structured-framework/data/``.
 
 This repository also contains a pretrained Multimodal Transformer for CMU-MOSEI in ``structured-framework/models/mult/mosei_sentimult_MULT_a_0.3_e_0.2_o_0.3_res_0.1.pt``. For more information about the MulT model and its training, refer to the [original github repository](https://github.com/yaohungt/Multimodal-Transformer).
 
@@ -132,7 +122,7 @@ There are examples for the CLIP model present as well.
 
 ## Usage: MIMIC
 
-To download the dataset, follow the instructions at https://github.com/pliang279/MultiBench to obtain the ``im.pk`` file. When loading the dataset in ``structured-framework/datasets/mimic.py``, set the path to the path to ``im.pk``. 
+To download the dataset, follow the instructions at [MultiBench](https://github.com/pliang279/MultiBench) to obtain the ``im.pk`` file. When loading the dataset in ``structured-framework/datasets/mimic.py``, set the path to the path to ``im.pk``. 
 
 To use the LF model, clone the MultiBench repository from the same link above and then follow instructions in there to train a LF model for MIMIC. Then input both the path to the saved checkpoint and the path to the cloned repository into the constructor of MIMICLF. See the examples below for details.
 
