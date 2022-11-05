@@ -1,0 +1,71 @@
+{
+    "name": "frontend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "deploy": "npm run build && gh-pages -d dist"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
+        "@logicflow/core": "^0.6.1",
+        "@logicflow/extension": "^0.6.1",
+        "axios": "^0.21.1",
+        "bootstrap": "^4.4.1",
+        "core-js": "^2.6.11",
+        "d3": "^5.15.0",
+        "element-ui": "^2.15.6",
+        "jquery": "^3.6.0",
+        "lodash": "^4.17.21",
+        "popper.js": "^1.16.1",
+        "tabulator-tables": "^4.5.3",
+        "vg-editor": "^2.7.2",
+        "video.js": "^7.6.6",
+        "vue": "^2.6.12",
+        "vue-select": "^3.11.2",
+        "vuedraggable": "^2.24.3",
+        "vuex": "^3.1.2"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.12.1",
+        "@vue/cli-plugin-eslint": "^3.12.1",
+        "@vue/cli-service": "^4.1.2",
+        "babel-eslint": "^10.0.3",
+        "deepmerge": "^4.2.2",
+        "eslint": "^5.16.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "gh-pages": "^3.2.3",
+        "sass": "^1.32.13",
+        "sass-loader": "^12.1.0",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "rules": {
+            "no-console": 0,
+            "no-unused-vars": "off",
+            "no-unused-labels": "off"
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions"
+    ]
+}

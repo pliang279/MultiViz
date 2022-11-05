@@ -1,0 +1,76 @@
+{
+    "metadata": {
+      "dataset": "flickr30k",
+      "split": "val",
+      "id": "100",
+      "labels": null
+    },
+    "instance": {
+      "image": "image.png",
+      "text": "A large bearded man flips a crepe or omelet in midair with his frying pan.",
+      "pred-logit": 4.098826885223389
+    },
+    "labels": {
+      "0": {
+        "overviews": {
+          "UnimodalGradient": {
+            "description": "Unimodal gradient saliency on image and text ran directly on the logit of the class",
+            "image": "unimodal.png",
+            "text": null
+          },
+          "SecondOrderGradient": {
+            "100_1": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_1-doublegrad.png",
+              "text": "large"
+            },
+            "100_2": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_2-doublegrad.png",
+              "text": "bearded"
+            },
+            "100_3": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_3-doublegrad.png",
+              "text": "man"
+            },
+            "100_4": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_4-doublegrad.png",
+              "text": "crepe"
+            },
+            "100_5": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_5-doublegrad.png",
+              "text": "omelet"
+            },
+            "100_6": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_6-doublegrad.png",
+              "text": "frying pan"
+            },
+            "100_7": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_7-doublegrad.png",
+              "text": "large bearded man"
+            },
+            "100_8": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_8-doublegrad.png",
+              "text": "large bearded man flips a crepe"
+            },
+            "100_9": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_9-doublegrad.png",
+              "text": "large bearded man flips a crepe or omelet"
+            },
+            "100_10": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "100_10-doublegrad.png",
+              "text": "omelet in mid air"
+            }
+          }
+        }
+      }
+    }
+  }

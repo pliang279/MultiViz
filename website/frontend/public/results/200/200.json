@@ -1,0 +1,86 @@
+{
+    "metadata": {
+      "dataset": "flickr30k",
+      "split": "val",
+      "id": "200",
+      "labels": null
+    },
+    "instance": {
+      "image": "image.png",
+      "text": "A man is taking photographs of a large garden of white and orange tulips.",
+      "pred-logit": 9.754570960998535
+    },
+    "labels": {
+      "0": {
+        "overviews": {
+          "UnimodalGradient": {
+            "description": "Unimodal gradient saliency on image and text ran directly on the logit of the class",
+            "image": "unimodal.png",
+            "text": null
+          },
+          "SecondOrderGradient": {
+            "200_1": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_1-doublegrad.png",
+              "text": "man"
+            },
+            "200_2": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_2-doublegrad.png",
+              "text": "photographs"
+            },
+            "200_3": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_3-doublegrad.png",
+              "text": "garden"
+            },
+            "200_4": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_4-doublegrad.png",
+              "text": "white"
+            },
+            "200_5": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_5-doublegrad.png",
+              "text": "orange"
+            },
+            "200_6": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_6-doublegrad.png",
+              "text": "tulips"
+            },
+            "200_7": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_7-doublegrad.png",
+              "text": "a man is taking photographs"
+            },
+            "200_8": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_8-doublegrad.png",
+              "text": "large garden"
+            },
+            "200_9": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_9-doublegrad.png",
+              "text": "a man is taking photographs of a large garden"
+            },
+            "200_10": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_10-doublegrad.png",
+              "text": "a large garden of white and orange tulips"
+            },
+            "200_11": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_11-doublegrad.png",
+              "text": "white and orange tulips"
+            },
+            "200_12": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "200_12-doublegrad.png",
+              "text": "a man is taking photographs of a large garden of white and orange tulips"
+            }
+          }
+        }
+      }
+    }
+  }

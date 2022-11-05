@@ -1,0 +1,101 @@
+{
+    "metadata": {
+      "dataset": "flickr30k",
+      "split": "val",
+      "id": "150",
+      "labels": null
+    },
+    "instance": {
+      "image": "image.png",
+      "text": "A black dog with white facial and chest markings standing in chest high water.",
+      "pred-logit": 6.418622970581055
+    },
+    "labels": {
+      "0": {
+        "overviews": {
+          "UnimodalGradient": {
+            "description": "Unimodal gradient saliency on image and text ran directly on the logit of the class",
+            "image": "unimodal.png",
+            "text": null
+          },
+          "SecondOrderGradient": {
+            "150_1": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_1-doublegrad.png",
+              "text": "black"
+            },
+            "150_2": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_2-doublegrad.png",
+              "text": "dog"
+            },
+            "150_3": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_3-doublegrad.png",
+              "text": "white"
+            },
+            "150_4": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_4-doublegrad.png",
+              "text": "facial"
+            },
+            "150_5": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_5-doublegrad.png",
+              "text": "chest"
+            },
+            "150_6": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_6-doublegrad.png",
+              "text": "markings"
+            },
+            "150_7": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_7-doublegrad.png",
+              "text": "standing"
+            },
+            "150_8": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_8-doublegrad.png",
+              "text": "in"
+            },
+            "150_9": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_9-doublegrad.png",
+              "text": "chest"
+            },
+            "150_10": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_10-doublegrad.png",
+              "text": "high"
+            },
+            "150_11": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_11-doublegrad.png",
+              "text": "water"
+            },
+            "150_12": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_12-doublegrad.png",
+              "text": "black dog"
+            },
+            "150_13": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_13-doublegrad.png",
+              "text": "white facial"
+            },
+            "150_14": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_14-doublegrad.png",
+              "text": "white facial and chest markings"
+            },
+            "150_15": {
+              "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+              "image": "150_15-doublegrad.png",
+              "text": "chest high water"
+            }
+          }
+        }
+      }
+    }
+  }

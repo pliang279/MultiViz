@@ -1,0 +1,202 @@
+{
+    "metadata": {
+        "dataset": "mmIMDb",
+        "split": "val",
+        "id": 1427,
+        "labels": {
+            "7": "Horror"
+        }
+    },
+    "instance": {
+        "image": "1427.png",
+        "text": "After forty years in prison, the evil gravedigger Josefel Zanatas a.k.a. Z\u00e9 do Caix\u00e3o is released by the lawyer Lucy Pontes in accordance with Brazilian Laws. He moves to the slums with his followers that worship him, and he seeks out the perfect woman to bear his children while haunted by the ghosts of his victims. The vigilante brothers Captain Osvaldo Pontes and his brother Coronel Claudiomiro from the Military Police chase Z\u00e9 do Caix\u00e3o in the slums to kill him and they find a track of tortured and mutilated bodies.",
+        "pred-answer": "Horror",
+        "pred-id": 7,
+        "correct-answer": "Horror",
+        "correct-id": 7
+    },
+    "labels": {
+        "7": {
+            "classname": "Horror",
+            "overviews": {
+                "UnimodalGradient": {
+                    "description": "Unimodal gradient saliency on image and text ran directly on the logit of the class",
+                    "image": "gs1427_pred.png",
+                    "text": "gs_text_1427_pred.png"
+                },
+                "SecondOrderGradient": {
+                    "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+                    "image": "secondgs1427_pred.png",
+                    "text": "brazilian, ghosts, followers, evil, haunted, tortured, ##tila, grave, ##gger, victims"
+                }
+            },
+            "features": [
+                {
+                    "id": 0,
+                    "weight": 3.6814987659454346,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1427-pred-image-feat-454.png",
+                        "text": "imdb-lf-sparse-point-grad-1427-pred-text-feat-454.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 892,
+                            "orig": "892.png",
+                            "origDesc": "In this remake of Alfred Hitchcock's masterpiece, Anne Heche takes over Janet Leigh's role of Marion Crane, a young secretary whose boyfriend, Sam Loomis, has troubles paying off a debt and his wife's alimony. One day, a rich client of her boss buys a house with $400,000 in cash. To fix her problems, Marion steals the money and heads out to California to live her dream life with Sam. But she gets lost in a bad storm and stops at the Bates Motel, where the proprietor, Norman Bates, lives a very troubled life with his dominating mother, whom he lives with in their house on the hill next to the motel. A week later, Marion has vanished and no one can find her or the stolen money, not even Sam, her sister, Lila, or a private detective who has been hired to find Marion and the money. But a deadly secret is waiting to be discovered inside the Bates house.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat454-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat454-0.png"
+                        },
+                        {
+                            "id": 157,
+                            "orig": "157.png",
+                            "origDesc": "Kristof, an eccentric rich kid, tricks his high school friends into getting back together for a reunion of sorts, under the pretense of a funeral. The group of twenty-somethings is forced to spend the night in an old abandoned witches' prison. During a Ouija Board s\u00e9ance, the schoolmates accidentally unearth three dead executioners from their graves. A little confused, and quite a bit angry, the Crypt Keepers initiate a killing spree that will only end when everyone is dead. Fortunately, the schoolmates all wore black. Too bad it's for their own funerals...",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat454-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat454-1.png"
+                        },
+                        {
+                            "id": 154,
+                            "orig": "154.png",
+                            "origDesc": "A 19th century vampire stalks a more powerful vampire lord in his quest to gain revenge over the death of his mistress. In his search for the vampire lord in Eastern Europe he kills many of his servants and fellow vampires while cursing another to vampirism as well.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat454-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat454-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1,
+                    "weight": 3.181403636932373,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1427-pred-image-feat-132.png",
+                        "text": "imdb-lf-sparse-point-grad-1427-pred-text-feat-132.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 513,
+                            "orig": "513.png",
+                            "origDesc": "1000 AD, for years, One Eye, a mute warrior of supernatural strength, has been held prisoner by the Norse chieftain Barde. Aided by Are, a boy slave, One Eye slays his captor and together he and Are escape, beginning a journey into the heart of darkness. On their flight, One Eye and Are board a Viking vessel, but the ship is soon engulfed by an endless fog that clears only as the crew sights an unknown land. As the new world reveals its secrets and the Vikings confront their terrible and bloody fate, One Eye discovers his true self.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat132-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat132-0.png"
+                        },
+                        {
+                            "id": 154,
+                            "orig": "154.png",
+                            "origDesc": "A 19th century vampire stalks a more powerful vampire lord in his quest to gain revenge over the death of his mistress. In his search for the vampire lord in Eastern Europe he kills many of his servants and fellow vampires while cursing another to vampirism as well.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat132-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat132-1.png"
+                        },
+                        {
+                            "id": 493,
+                            "orig": "493.png",
+                            "origDesc": "Upon the death of his brother, Larry Talbot returns from America to his ancestral home in Wales. He visits a gypsy camp with village girl Jenny Williams, who is attacked by Bela, a gypsy who has turned into a werewolf. Larry kills the werewolf but is bitten during the fight. Bela's mother tells him that this will cause him to become a werewolf at each full moon. Larry confesses his plight to his unbelieving father, Sir John, who then joins the villagers in a hunt for the wolf. Transformed by the full moon, Larry heads for the forest and a fateful meeting with both Sir John and Gwen Conliffe.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat132-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat132-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 2,
+                    "weight": 2.558551549911499,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1427-pred-image-feat-441.png",
+                        "text": "imdb-lf-sparse-point-grad-1427-pred-text-feat-441.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 493,
+                            "orig": "493.png",
+                            "origDesc": "Upon the death of his brother, Larry Talbot returns from America to his ancestral home in Wales. He visits a gypsy camp with village girl Jenny Williams, who is attacked by Bela, a gypsy who has turned into a werewolf. Larry kills the werewolf but is bitten during the fight. Bela's mother tells him that this will cause him to become a werewolf at each full moon. Larry confesses his plight to his unbelieving father, Sir John, who then joins the villagers in a hunt for the wolf. Transformed by the full moon, Larry heads for the forest and a fateful meeting with both Sir John and Gwen Conliffe.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat441-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat441-0.png"
+                        },
+                        {
+                            "id": 841,
+                            "orig": "841.png",
+                            "origDesc": "A biker gang visits a monastery where they encounter black-robed monks engaged in worshipping Satan. When the monks try to persuade one of the female bikers, Helen, to become a satanic sacrifice the bikers smash up the monastery and leave. The monks have the last laugh, though, as Helen, as a result of the satanic rituals, is now possessed and at night changes into a werewolf, with dire results for the biker gang.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat441-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat441-1.png"
+                        },
+                        {
+                            "id": 231,
+                            "orig": "231.png",
+                            "origDesc": "During the last days of WW2, several female prisoners arrive at Camp 5 to work as sex slaves for officers and guinea pigs for horrific experiments by Nazi doctors who are trying to find a cure for burns. But these women are not going to die without a fight... Can they stay alive until the closing Red army comes to their rescue?",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat441-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat441-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 3,
+                    "weight": 1.672176718711853,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1427-pred-image-feat-107.png",
+                        "text": "imdb-lf-sparse-point-grad-1427-pred-text-feat-107.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 610,
+                            "orig": "610.png",
+                            "origDesc": "One night at a secluded farmhouse deep in the Northern California woods, a small group of hardened young bikers and their girlfriends are tormented when one of the girls becomes savagely possessed and a gang of \"Rockabillies\" seemingly from the 1950's descends upon them to collect what is growing inside her.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat107-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat107-0.png"
+                        },
+                        {
+                            "id": 157,
+                            "orig": "157.png",
+                            "origDesc": "Kristof, an eccentric rich kid, tricks his high school friends into getting back together for a reunion of sorts, under the pretense of a funeral. The group of twenty-somethings is forced to spend the night in an old abandoned witches' prison. During a Ouija Board s\u00e9ance, the schoolmates accidentally unearth three dead executioners from their graves. A little confused, and quite a bit angry, the Crypt Keepers initiate a killing spree that will only end when everyone is dead. Fortunately, the schoolmates all wore black. Too bad it's for their own funerals...",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat107-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat107-1.png"
+                        },
+                        {
+                            "id": 154,
+                            "orig": "154.png",
+                            "origDesc": "A 19th century vampire stalks a more powerful vampire lord in his quest to gain revenge over the death of his mistress. In his search for the vampire lord in Eastern Europe he kills many of his servants and fellow vampires while cursing another to vampirism as well.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat107-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat107-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 4,
+                    "weight": 1.2534748315811157,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1427-pred-image-feat-341.png",
+                        "text": "imdb-lf-sparse-point-grad-1427-pred-text-feat-341.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 67,
+                            "orig": "67.png",
+                            "origDesc": "Five college women buy the old Hokstedter place for their new sorority house. They got it cheap because of the bloody incidents from five years before. They decide to stay in it for the night so they can meet the movers in the morning, but begin to get the creeps when the weird neighbor Orville Ketchum starts poking around. Shortly after the women take showers and consult a Ouija board they begin experiencing an attrition problem.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat341-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat341-0.png"
+                        },
+                        {
+                            "id": 152,
+                            "orig": "152.png",
+                            "origDesc": "After the death of their beloved daughter Alice by a savage dog, the veterinary Patrick and the pharmacist Louise move to Wake Wood, a small town in the countryside. Patrick befriends the local leader Arthur and the couple grieves the death of Alice. Sooner Louise witnesses part of a bloody ritual in the woods and they learn that the villagers practice a pagan ritual to bring back to life the beloved deceased one for three days for a better farewell within the first month of the casualty and within the village limits. Patrick and Louise accept the conditions and lie to Arthur about the date that Alice died. They succeed in resuscitating Alice but something goes deadly wrong.",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat341-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat341-1.png"
+                        },
+                        {
+                            "id": 575,
+                            "orig": "575.png",
+                            "origDesc": "Kate & Humphrey and their 3 wolf cubs (Stinky, Claudette and Runt) are happily preparing to celebrate their first winter together when their smallest cub, Runt, mysteriously disappears. They must now go on a new journey across the wilderness to find and bring back Runt before the winter snows block their way home. While their adventure does not end exactly as planned, Kate & Humphrey discover that \"Home is where the Family Is.\"",
+                            "image": "imdb-lf-sparse-feature-grad-1427-pred-image-feat341-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1427-pred-text-feat341-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        }
+    }
+}

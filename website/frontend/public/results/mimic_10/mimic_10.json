@@ -1,0 +1,28 @@
+{
+    "metadata":{
+        "dataset": "MIMIC",
+        "split": "test",
+        "id": 10,
+        "labels": { "0": "no disease"}
+    },
+    "instance":{
+        "static": "st.png",
+        "timeseries": "ts.png",
+        "correct-answer": "no disease",
+        "correct-answer-id": 0,
+        "pred-answer": "no disease",
+        "pred-id": 0
+    },
+    "labels":{
+        "0": {
+            "classname": "no disease",
+            "overviews":{
+                "First Order Gradient": {
+                    "description": "First Order Gradient visualization on both static and timeseries modalities with respect to the logit of the label",
+                    "static": "staticgrad.png",
+                    "timeseries": "tsgrad.png"
+                }
+            }
+        }
+    }
+}

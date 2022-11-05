@@ -1,0 +1,359 @@
+{
+    "metadata": {
+        "dataset": "VQA",
+        "split": "val",
+        "id": 255,
+        "labels": {
+            "841": "2",
+            "2195": "1"
+        }
+    },
+    "instance": {
+        "image": "vqa-lxmert-255-origimage.png",
+        "text": "How many birds?",
+        "correct-answer": "2",
+        "correct-answer-id": 841,
+        "pred-answer": "1",
+        "pred-id": 2195
+    },
+    "labels": {
+        "841": {
+            "classname": "2",
+            "overviews": {
+                "LIME": {
+                    "description": "Unimodal LIME explanation on image and text ran directly on the logit of the class",
+                    "image": "vqa-lxmert-255-image-lime-correct.png",
+                    "text": "vqa-lxmert-255-text-lime-correct.png"
+                },
+                "DIME": {
+                    "description": "DIME explanations: disentangling the model into unimodal contribution and multimodal interaction, then run LIME on image/text on each disentangled part",
+                    "image-uni": "vqa-lxmert-255-image-dime-correct-uni.png",
+                    "text-uni": "vqa-lxmert-255-text-dime-correct-uni.png",
+                    "image-multi": "vqa-lxmert-255-image-dime-correct-multi.png",
+                    "text-multi": "vqa-lxmert-255-text-dime-correct-multi.png"
+                }
+            },
+            "features": [
+                {
+                    "id": 756,
+                    "weight": 0.246,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-correct-255--image-lime-feat756.png",
+                        "text": "vqa-lxmert-sparse-correct-255--text-lime-feat756.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 3351,
+                            "orig": "vqa-val-3351.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat756-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat756-0.png"
+                        },
+                        {
+                            "id": 7670,
+                            "orig": "vqa-val-7670.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat756-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat756-1.png"
+                        },
+                        {
+                            "id": 1630,
+                            "orig": "vqa-val-1630.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat756-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat756-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 710,
+                    "weight": 0.2131,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-correct-255--image-lime-feat710.png",
+                        "text": "vqa-lxmert-sparse-correct-255--text-lime-feat710.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 5648,
+                            "orig": "vqa-val-5648.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat710-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat710-0.png"
+                        },
+                        {
+                            "id": 1647,
+                            "orig": "vqa-val-1647.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat710-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat710-1.png"
+                        },
+                        {
+                            "id": 7075,
+                            "orig": "vqa-val-7075.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat710-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat710-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 113,
+                    "weight": 0.1321,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-correct-255--image-lime-feat113.png",
+                        "text": "vqa-lxmert-sparse-correct-255--text-lime-feat113.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 6350,
+                            "orig": "vqa-val-6350.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat113-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat113-0.png"
+                        },
+                        {
+                            "id": 7741,
+                            "orig": "vqa-val-7741.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat113-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat113-1.png"
+                        },
+                        {
+                            "id": 3420,
+                            "orig": "vqa-val-3420.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat113-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat113-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1344,
+                    "weight": 0.1273,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-correct-255--image-lime-feat1344.png",
+                        "text": "vqa-lxmert-sparse-correct-255--text-lime-feat1344.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 2237,
+                            "orig": "vqa-val-2237.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1344-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1344-0.png"
+                        },
+                        {
+                            "id": 1407,
+                            "orig": "vqa-val-1407.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1344-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1344-1.png"
+                        },
+                        {
+                            "id": 7873,
+                            "orig": "vqa-val-7873.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1344-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1344-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1375,
+                    "weight": 0.1242,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-correct-255--image-lime-feat1375.png",
+                        "text": "vqa-lxmert-sparse-correct-255--text-lime-feat1375.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 8711,
+                            "orig": "vqa-val-8711.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1375-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1375-0.png"
+                        },
+                        {
+                            "id": 2827,
+                            "orig": "vqa-val-2827.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1375-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1375-1.png"
+                        },
+                        {
+                            "id": 3351,
+                            "orig": "vqa-val-3351.png",
+                            "image": "vqa-lxmert-sparse-255-sampled-correct--image-lime-feat1375-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled-correct--text-lime-feat1375-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        },
+        "2195": {
+            "classname": "1",
+            "overviews": {
+                "LIME": {
+                    "description": "Unimodal LIME explanation on image and text ran directly on the logit of the class",
+                    "image": "vqa-lxmert-255-image-lime-pred.png",
+                    "text": "vqa-lxmert-255-text-lime-pred.png"
+                },
+                "DIME": {
+                    "description": "DIME explanations: disentangling the model into unimodal contribution and multimodal interaction, then run LIME on image/text on each disentangled part",
+                    "image-uni": "vqa-lxmert-255-image-dime-pred-uni.png",
+                    "text-uni": "vqa-lxmert-255-text-dime-pred-uni.png",
+                    "image-multi": "vqa-lxmert-255-image-dime-pred-multi.png",
+                    "text-multi": "vqa-lxmert-255-text-dime-pred-multi.png"
+                }
+            },
+            "features": [
+                {
+                    "id": 845,
+                    "weight": 0.3221,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-255--image-lime-feat845.png",
+                        "text": "vqa-lxmert-sparse-255--text-lime-feat845.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 5929,
+                            "orig": "vqa-val-5929.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat845-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat845-0.png"
+                        },
+                        {
+                            "id": 5019,
+                            "orig": "vqa-val-5019.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat845-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat845-1.png"
+                        },
+                        {
+                            "id": 9213,
+                            "orig": "vqa-val-9213.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat845-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat845-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 93,
+                    "weight": 0.3068,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-255--image-lime-feat93.png",
+                        "text": "vqa-lxmert-sparse-255--text-lime-feat93.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 1669,
+                            "orig": "vqa-val-1669.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat93-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat93-0.png"
+                        },
+                        {
+                            "id": 8976,
+                            "orig": "vqa-val-8976.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat93-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat93-1.png"
+                        },
+                        {
+                            "id": 3299,
+                            "orig": "vqa-val-3299.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat93-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat93-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1080,
+                    "weight": 0.2647,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-255--image-lime-feat1080.png",
+                        "text": "vqa-lxmert-sparse-255--text-lime-feat1080.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 1237,
+                            "orig": "vqa-val-1237.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1080-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1080-0.png"
+                        },
+                        {
+                            "id": 1361,
+                            "orig": "vqa-val-1361.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1080-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1080-1.png"
+                        },
+                        {
+                            "id": 1407,
+                            "orig": "vqa-val-1407.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1080-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1080-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 359,
+                    "weight": 0.1153,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-255--image-lime-feat359.png",
+                        "text": "vqa-lxmert-sparse-255--text-lime-feat359.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 4248,
+                            "orig": "vqa-val-4248.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat359-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat359-0.png"
+                        },
+                        {
+                            "id": 8435,
+                            "orig": "vqa-val-8435.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat359-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat359-1.png"
+                        },
+                        {
+                            "id": 2373,
+                            "orig": "vqa-val-2373.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat359-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat359-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1163,
+                    "weight": 0.0941,
+                    "forward": {
+                        "image": "vqa-lxmert-sparse-255--image-lime-feat1163.png",
+                        "text": "vqa-lxmert-sparse-255--text-lime-feat1163.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 6763,
+                            "orig": "vqa-val-6763.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1163-0.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1163-0.png"
+                        },
+                        {
+                            "id": 6953,
+                            "orig": "vqa-val-6953.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1163-1.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1163-1.png"
+                        },
+                        {
+                            "id": 2014,
+                            "orig": "vqa-val-2014.png",
+                            "image": "vqa-lxmert-sparse-255-sampled--image-lime-feat1163-2.png",
+                            "text": "vqa-lxmert-sparse-255-sampled--text-lime-feat1163-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        }
+    }
+}

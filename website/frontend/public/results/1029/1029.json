@@ -1,0 +1,202 @@
+{
+    "metadata": {
+        "dataset": "mmIMDb",
+        "split": "val",
+        "id": 1029,
+        "labels": {
+            "10": "Sci-Fi"
+        }
+    },
+    "instance": {
+        "image": "1029.png",
+        "text": "Sometime in the late twenty-first century, the space craft Zero-X is embarking on a manned mission to Mars, the first mission of its kind. Almost immediately after launching, Zero-X faces technical difficulties, forcing its crew to abort the mission and eject from the craft before it crashes back down to Earth into the sea. Two years later, a redesigned and reconstructed Zero-X is ready for a second manned attempt to reach Mars, which coincides with the Space Exploration Center's finding that the first mission was sabotaged. As such, they recruit the Thunderbirds - ex-astronaut Jeff Tracy and his four sons Scott Tracy, Virgil Tracy, Alan Tracy and Gordon Tracy, each in his own Thunderbird air craft - to oversee security. By their side in the Fab1 mobile center on Earth is the beautiful Lady Penelope Creighton-Ward. The Thunderbirds not only have to prevent possible sabotage a second time around, but also deal with any other possible technical difficulties that may arise that requires on hands support. Through the Thunderbirds' mission, Alan begins to feel under-appreciated in his role, which culminates with a life and death task for both himself and the crew of Zero-X.",
+        "pred-answer": "Sci-Fi",
+        "pred-id": 10,
+        "correct-answer": "Sci-Fi",
+        "correct-id": 10
+    },
+    "labels": {
+        "10": {
+            "classname": "Sci-Fi",
+            "overviews": {
+                "UnimodalGradient": {
+                    "description": "Unimodal gradient saliency on image and text ran directly on the logit of the class",
+                    "image": "gs1029_pred.png",
+                    "text": "gs_text_1029_pred.png"
+                },
+                "SecondOrderGradient": {
+                    "description": "Cross-modal second-order gradient saliency on image and text ran directly on the logit of the class",
+                    "image": "secondgs1029_pred.png",
+                    "text": "ward, gordon, beautiful, redesigned, virgil, mobile, astronaut, tracy, penelope, reconstructed"
+                }
+            },
+            "features": [
+                {
+                    "id": 0,
+                    "weight": 7.8781232833862305,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1029-pred-image-feat-490.png",
+                        "text": "imdb-lf-sparse-point-grad-1029-pred-text-feat-490.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 340,
+                            "orig": "340.png",
+                            "origDesc": "In a Caribbean island, a couple is found dead inside a sunken ship. The scuba diving instructor of the local resort Anne Kimbrough breaks in the morgue with her acquaintance Tyler Sherman and finds that the bodies have been eaten in many parts. They have one night stand and Tyler tells her that he is a biochemist that have developed a specimen of genetically modified piranha capable of flying to be the ultimate weapon. Unfortunately they had lost a cylinder full of the new breed in the water. During the fishing party promoted by the resort, the piranhas attack the guests. Anne and Tyler decide to explode the ship to destroy the nest of the predator.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat490-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat490-0.png"
+                        },
+                        {
+                            "id": 200,
+                            "orig": "200.png",
+                            "origDesc": "It has been 73 years since Alex failed and the Humans lost the Cyborg Wars. Since then, the Humans have been enslaved. Scientists have developed a new DNA strain, which could signal the end of the Cyborgs, and they inject it into a volunteer. When the Cyborgs learn of the woman and the baby they list both for termination. To escape, she takes a stolen Cyborg ship and transports back in time to East Africa in 1980, where the mother is killed, but the baby is saved. It takes 20 years, but the Cyborg bounty hunter Nebula finally locates the girl, named Alex, and travels back in time to terminate her.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat490-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat490-1.png"
+                        },
+                        {
+                            "id": 394,
+                            "orig": "394.png",
+                            "origDesc": "When an experimental space voyage goes awry, four people are forever changed by cosmic rays: Reed Richards, inventor and leader of the group gains the ability to stretch his body and takes the name Mr. Fantastic. His girlfriend, Sue Storm, gains the ability to turn invisible and create force fields becoming The Invisible Girl. Her little brother, Johnny Storm, becomes The Human Torch with the ability to control fire, including covering his own body with flame. The pilot Ben Grimm is turned into the super-strong, super-tough Thing. Together they become a team of super-heroes and use their unique powers to foil the evil plans of villains.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat490-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat490-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 1,
+                    "weight": 6.484486103057861,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1029-pred-image-feat-284.png",
+                        "text": "imdb-lf-sparse-point-grad-1029-pred-text-feat-284.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 115,
+                            "orig": "115.png",
+                            "origDesc": "In this H.P. Lovecraft tale, Herbert West is a Swiss scientist who has discovered a fluid which brings dead tissue back to life. After the suspicious death of his professor in Switzerland, West moves to Miskatonic University to continue his research. He involves fellow student Dan Cain and his fianc\u00e9e Megan Halsey in his research by experimenting on their dead cat. Dan, fascinated by West's research, agrees to smuggle him into the hospital morgue with predictable results.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat284-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat284-0.png"
+                        },
+                        {
+                            "id": 36,
+                            "orig": "36.png",
+                            "origDesc": "Set in the golden era of Grand Prix Racing '1' tells the story of a generation of charismatic drivers who raced on the edge, risking their lives during Formula 1's deadliest period, and the men who stood up and changed the sport forever.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat284-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat284-1.png"
+                        },
+                        {
+                            "id": 757,
+                            "orig": "757.png",
+                            "origDesc": "Cowspiracy: The Sustainability Secret is a groundbreaking feature-length environmental documentary following intrepid filmmaker Kip Andersen as he uncovers the most destructive industry facing the planet today and investigates why the world's leading environmental organizations are too afraid to talk about it. As eye-opening as Blackfish and as inspiring as An Inconvenient Truth, this shocking yet humorous documentary reveals the absolutely devastating environmental impact large-scale factory farming has on our planet, and offers a path to global sustainability for a growing population.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat284-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat284-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 2,
+                    "weight": 2.422609329223633,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1029-pred-image-feat-81.png",
+                        "text": "imdb-lf-sparse-point-grad-1029-pred-text-feat-81.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 841,
+                            "orig": "841.png",
+                            "origDesc": "A biker gang visits a monastery where they encounter black-robed monks engaged in worshipping Satan. When the monks try to persuade one of the female bikers, Helen, to become a satanic sacrifice the bikers smash up the monastery and leave. The monks have the last laugh, though, as Helen, as a result of the satanic rituals, is now possessed and at night changes into a werewolf, with dire results for the biker gang.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat81-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat81-0.png"
+                        },
+                        {
+                            "id": 948,
+                            "orig": "948.png",
+                            "origDesc": "In the far distant future, vampires rule the night. But because of the fearless bounty hunters, their numbers dwindle. One such is D, a half-breed born of a human mother and a vampire father. He is hired by a father-son team to retrieve Charlotte, a lovely young lady, who was abducted by the vampire Meier Link. However, they also hired the Marcus Brothers for competition. In a race against time and across the lands, D and the Brothers fight their way through demons and monsters to save the woman, and slowly begin to suspect that she wasn't taken against her will...and that another threat looms in the distance...",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat81-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat81-1.png"
+                        },
+                        {
+                            "id": 391,
+                            "orig": "391.png",
+                            "origDesc": "Planet Earth is a devastated wasteland, and what's left of humanity has colonized the Moon in domed cities. Humanity's continued survival depends on an anti-radiation drug only available on planet Delta Three, which has been taken over by Omus, a brilliant but mad mechanic who places no value on human life. Omus wants to come to the Moon to rule and intends to attack it by ramming robot-controlled spaceships into the domes. Dr. John Caball, his son Jason, Jason's friend, Kim, and a robot named Sparks embark on Caball's space battlecruiser on an unauthorized mission to Delta Three to stop Omus.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat81-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat81-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 3,
+                    "weight": 1.595563530921936,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1029-pred-image-feat-507.png",
+                        "text": "imdb-lf-sparse-point-grad-1029-pred-text-feat-507.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 394,
+                            "orig": "394.png",
+                            "origDesc": "When an experimental space voyage goes awry, four people are forever changed by cosmic rays: Reed Richards, inventor and leader of the group gains the ability to stretch his body and takes the name Mr. Fantastic. His girlfriend, Sue Storm, gains the ability to turn invisible and create force fields becoming The Invisible Girl. Her little brother, Johnny Storm, becomes The Human Torch with the ability to control fire, including covering his own body with flame. The pilot Ben Grimm is turned into the super-strong, super-tough Thing. Together they become a team of super-heroes and use their unique powers to foil the evil plans of villains.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat507-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat507-0.png"
+                        },
+                        {
+                            "id": 771,
+                            "orig": "771.png",
+                            "origDesc": "Apple. Intel. Genentech. Atari. Google. Cisco. Stratospheric successes with high stakes all around. Behind some of the world's most revolutionary companies are a handful of men who (through timing, foresight, a keen ability to size up other people, and a lot of luck) saw opportunity where others did not: these are the original venture capitalists. All were backing and building companies before the term 'venture capital' had been coined: companies that led to the birth of biotechnology and the spectacular growth in microprocessors, personal computers and the web. SOMETHING VENTURED uncovers the ups and downs of the building of some of the greatest companies of the twentieth century, and the hidden dramas behind some of the most famous names in business.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat507-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat507-1.png"
+                        },
+                        {
+                            "id": 36,
+                            "orig": "36.png",
+                            "origDesc": "Set in the golden era of Grand Prix Racing '1' tells the story of a generation of charismatic drivers who raced on the edge, risking their lives during Formula 1's deadliest period, and the men who stood up and changed the sport forever.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat507-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat507-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                },
+                {
+                    "id": 4,
+                    "weight": 1.0921428203582764,
+                    "forward": {
+                        "image": "imdb-lf-sparse-point-grad-1029-pred-image-feat-148.png",
+                        "text": "imdb-lf-sparse-point-grad-1029-pred-text-feat-148.png"
+                    },
+                    "forward-descriptions": "Unimodal LIME explanation on image and text with respect to the value of this feature neuron",
+                    "backward": [
+                        {
+                            "id": 108,
+                            "orig": "108.png",
+                            "origDesc": "After a series of bad experiences with men, Shae teams up with her co-worker, Lu, who has a simple, deadly way of dealing with the opposite sex.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat148-0.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat148-0.png"
+                        },
+                        {
+                            "id": 391,
+                            "orig": "391.png",
+                            "origDesc": "Planet Earth is a devastated wasteland, and what's left of humanity has colonized the Moon in domed cities. Humanity's continued survival depends on an anti-radiation drug only available on planet Delta Three, which has been taken over by Omus, a brilliant but mad mechanic who places no value on human life. Omus wants to come to the Moon to rule and intends to attack it by ramming robot-controlled spaceships into the domes. Dr. John Caball, his son Jason, Jason's friend, Kim, and a robot named Sparks embark on Caball's space battlecruiser on an unauthorized mission to Delta Three to stop Omus.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat148-1.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat148-1.png"
+                        },
+                        {
+                            "id": 951,
+                            "orig": "951.png",
+                            "origDesc": "An enormous and angry 35 foot Great White Shark takes revenge on humans when they build a beach just for swimmers by a coastal town. After several shark attacks, and the Mayor does nothing to stop it, James Franisscus and Vic Morrow sail in pursuit to stop it.",
+                            "image": "imdb-lf-sparse-feature-grad-1029-pred-image-feat148-2.png",
+                            "text": "imdb-lf-sparse-feature-grad-1029-pred-text-feat148-2.png"
+                        }
+                    ],
+                    "backward-descriptions": "Three examples selected from the validation set that activates this feature neuron the most, along with Unimodal LIME explanation with respect to the value of this feature neuron in each example"
+                }
+            ]
+        }
+    }
+}
