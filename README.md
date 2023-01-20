@@ -9,7 +9,7 @@ This repository contains code and experiments for performing interpretability an
 Correspondence to: 
   - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
   - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
-  - [Gunjan Chhablani](https://gchhablani.github.io/) (chhablani.gunjan@gmail.com)
+  - [Gunjan Chhablani](https://gchhablani.github.io/) (gchhablani@gatech.edu)
   - [Nihal Jain](https://nihaljn.github.io/) (nihalj@cs.cmu.edu)
   - Zihao Deng (zihaoden@andrew.cmu.edu)
   - [Xingbo Wang](https://andy-xingbowang.com/) (xingbo.wang@connect.ust.hk)
