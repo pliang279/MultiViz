@@ -1,8 +1,8 @@
 # MultiViz: Towards Visualizing and Understanding Multimodal Models
 
-This repository contains code and experiments for MultiViz, a general-purpose framework for visualizing and interpreting multimodal models.
+This repository contains code and experiments for MultiViz, a general-purpose framework for visualizing and interpreting multimodal models. Check out the [MultiViz visualization website](https://multivizweb.github.io/).
 
-[MultiViz website](https://multivizweb.github.io/)
+![](/images/overview.png)
 
 ## Contributors
 
