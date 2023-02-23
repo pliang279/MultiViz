@@ -1,4 +1,4 @@
-# MultiViz: An Analysis Benchmark for Visualizing and Understanding Multimodal Models
+# MultiViz: TowardsVisualizing and Understanding Multimodal Models
 
 This repository contains code and experiments for performing interpretability analysis in a multimodal setting.
 
