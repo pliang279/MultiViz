@@ -1,6 +1,6 @@
 # MultiViz: Towards Visualizing and Understanding Multimodal Models
 
-This repository contains code and experiments for performing interpretability analysis in a multimodal setting.
+This repository contains code and experiments for MultiViz, a general-purpose framework for visualizing and interpreting multimodal models.
 
 [MultiViz website](https://multivizweb.github.io/)
 
@@ -15,6 +15,22 @@ Correspondence to:
   - [Xingbo Wang](https://andy-xingbowang.com/) (xingbo.wang@connect.ust.hk)
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/) (morency@cs.cmu.edu)
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/) (rsalakhu@cs.cmu.edu)
+  
+## Paper
+
+[**MultiViz: Towards Visualizing and Understanding Multimodal Models**](https://arxiv.org/abs/2207.00056)<br>
+Paul Pu Liang, Yiwei Lyu, Gunjan Chhablani, Nihal Jain, Zihao Deng, Xingbo Wang, Louis-Philippe Morency, Ruslan Salakhutdinov<br>
+ICLR 2023.
+
+If you find this repository useful, please cite our paper:
+```
+@inproceedings{liang2023multiviz,
+  title={MultiViz: Towards Visualizing and Understanding Multimodal Models},
+  author={Liang, Paul Pu and Lyu, Yiwei and Chhablani, Gunjan and Jain, Nihal and Deng, Zihao and Wang, Xingbo and Morency, Louis-Philippe and Salakhutdinov, Ruslan},
+  booktitle={International Conference on Learning Representations},
+  year={2023}
+}
+```
 
 # Code framework for visualization of multimodal model analysis
 
