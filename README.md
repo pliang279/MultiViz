@@ -32,7 +32,7 @@ If you find this repository useful, please cite our paper:
 }
 ```
 
-# Code framework for visualization of multimodal model analysis
+# Code framework
 
 We designed a structured framework that allows easy analysis and visualization of multimodal models. To run anything within the structured framework, you should have ``structured-framework/`` as your working directory.
 
