@@ -2,7 +2,7 @@
 
 This repository contains code and experiments for performing interpretability analysis in a multimodal setting.
 
-[MultiViz website](https://andy-xingbowang.com/multiviz/)
+[MultiViz website](https://multivizweb.github.io/)
 
 ## Contributors
 
