@@ -39,6 +39,8 @@ deps = [
     "transformers==4.9.2",
     "typing-extensions==3.10.0.0",
     "urllib3==1.26.6",
+    "h5py==3.1.0",
+    "glm_saga==0.1.2"
 ]
 
 setup(
