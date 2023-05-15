@@ -89,7 +89,7 @@ Below are a few example scripts on running analysis methods on CLEVR with MDETR 
 
 ## Usage: CMU-MOSEI
 
-This repository contains a processed version of CMU-MOSEI validation split in ``structured-framework/data/MOSEI/mosei_valid_processed_features_list.pkl``. 
+This repository contains a processed version of CMU-MOSEI validation split in ``structured-framework/data/MOSEI/mosei_valid_processed_features_list.pkl`` (if not in the repo, it can be downloaded [here](https://drive.google.com/file/d/1BGxFd2RZOLUnsMG5nrY7vf_QZlE1MoUe/view?usp=sharing)). 
 
 If you would like to process the data yourself or visualize the analysis results in the form of videos using our provided methods, you need to download the original data from the link posted on the CMU-MultimodalSDK github: http://immortal.multicomp.cs.cmu.edu/raw_datasets/. Put the downloaded zip file into ``structured-framework/data/``.
 
