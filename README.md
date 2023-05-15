@@ -8,7 +8,7 @@ This repository contains code and experiments for MultiViz, a general-purpose fr
 
 Correspondence to: 
   - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
-  - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
+  - [Yiwei Lyu](https://github.com/lvyiwei1) (yiweilyu@umich.edu)
   - [Gunjan Chhablani](https://gchhablani.github.io/) (gchhablani@gatech.edu)
   - [Nihal Jain](https://nihaljn.github.io/) (nihalj@cs.cmu.edu)
   - Zihao Deng (zihaoden@andrew.cmu.edu)
