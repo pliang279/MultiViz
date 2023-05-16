@@ -40,7 +40,8 @@ deps = [
     "typing-extensions==3.10.0.0",
     "urllib3==1.26.6",
     "h5py==3.1.0",
-    "glm_saga==0.1.2"
+    "glm_saga==0.1.2",
+    "python-opencv==4.5.3.56"
 ]
 
 setup(
