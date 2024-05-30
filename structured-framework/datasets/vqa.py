@@ -23,7 +23,7 @@ class VQADataset:
             self.a = json.load(f)
         self.split = split
 
-    def getdata(self, idx):
+    def getdata(self, idx, store_pkl=False):
         qinfo = self.q["questions"][idx]
         image_id = qinfo["image_id"]
         ques = qinfo["question"]
@@ -33,11 +33,18 @@ class VQADataset:
         assert qid == ainfo["question_id"]
         imgfile = f"data/{self.split}2014/COCO_{self.split}2014_{image_id:012d}.jpg"
         try:
+
             label = self.answermapping.index(aword)
         except:
             print("Warning: no LXMERT label for this point")
-            return imgfile, ques, aword, None
-        return imgfile, ques, aword, label
+            if not store_pkl:
+                return imgfile, ques, aword, None
+            else:
+                return qid, image_id, imgfile, ques, aword, None
+        if not store_pkl:
+            return imgfile, ques, aword, label
+        else:
+            return qid, image_id, imgfile, ques, aword, label
 
     def length(self):
         return len(self.q["questions"])
