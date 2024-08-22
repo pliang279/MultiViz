@@ -8,6 +8,7 @@ from datasets.clevr import CLEVRDataset
 from visualizations.visualizegradient import *
 from visualizations.visualizesparselinearmodel import *
 
+traindatas = CLEVRDataset("train")
 datas = CLEVRDataset("val")
 analysismodel = CLEVRMDETR()
 
@@ -23,8 +24,11 @@ for i in tqdm(range(0,200)):
 instance = datas.getdata(223)
 # params,res = getresonly(torch.load('ckpt/',analysismodel,vals))
 sampledata = [datas.getdata(i) for i in range(15000)]
-# pl = [analysismodel.getprelinear(res).cpu() for res in analysismodel.forwardbatch(sampledata)]
-params = torch.load("ckpt/clevrsparselinearmodel_random.pt")
+sampletraindata = [datas.getdata(i) for i in range(15000)]
+trains = [analysismodel.getprelinear(res).cpu() for res in analysismodel.forwardbatch(sampletraindata)]
+vals = [analysismodel.getprelinear(res).cpu() for res in analysismodel.forwardbatch(sampledata)]
+# params = torch.load("ckpt/clevrsparselinearmodel_random.pt")
+params, res = get_sparse_linear_model(analysismodel,trains,vals,vals)
 predlabel = analysismodel.getpredlabel(analysismodel.forward(instance))
 analyzepointandvisualizeallgrad(
     params,
